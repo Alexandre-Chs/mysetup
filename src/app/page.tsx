@@ -1,3 +1,7 @@
 export default function Home() {
-  return <div className="text-4xl">First setup ! 🎉</div>;
+  return (
+    <div>
+      <h1>Hello, world!</h1>
+    </div>
+  );
 }
