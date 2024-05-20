@@ -6,14 +6,16 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "updateBDD": "pnpm drizzle-kit generate && npx tsx src/app/db/migrate.ts"
   },
   "dependencies": {
     "drizzle-orm": "^0.30.10",
     "next": "14.2.3",
     "pg": "^8.11.5",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "tsx": "^4.10.5"
   },
   "devDependencies": {
     "@types/node": "^20",
