@@ -4,7 +4,17 @@ Un site qui permet facilement de retrouver pleins d’idées de setup autant gam
 
 ## Commandes disponibles
 
-Voici une liste des commandes disponibles pour ce projet :
+Lancer le server de developpement :
+```bash
+npm install
+npm run dev
+```
 
-1. npm run dev - lance le projet
-2. updateBDD - permet de mettre à jour la BDD si un schema drizzle doit changer
+Base de donnée :
+
+```bash
+# lancer drizzle studio
+npm run db:ui
+# crée les fichiers de migrations liés aux schéma et les migres sur la base de donnée 
+npm run db:migrate 
+```
