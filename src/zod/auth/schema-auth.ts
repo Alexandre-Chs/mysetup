@@ -1,0 +1,10 @@
+import { z } from "zod";
+
+export const validSchemaAuth = z.object({
+  username: z
+    .string()
+    .min(3)
+    .max(255)
+    .regex(/^[a-zA-Z0-9_]+$/),
+  password: z.string().min(8).max(255),
+});

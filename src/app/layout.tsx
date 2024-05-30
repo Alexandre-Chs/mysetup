@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { lato, montserrat } from "./font";
-import NavBar from "@/components/navbar/navBar";
+import NavBar from "@/components/navbar/NavBar";
 
 export const metadata: Metadata = {
   title: "My setup",
