@@ -26,7 +26,6 @@ const config = {
         secondaryText: "#424242",
         blueHighlight: "#1E88E5",
         greenSuccess: "#43A047",
-        redError: "#D32F2F",
         yellowWarning: "#FFA000",
         // Colors from shadcn
         border: "hsl(var(--border))",
