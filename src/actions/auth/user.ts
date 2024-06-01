@@ -2,15 +2,34 @@
 
 import { db } from "@/app/db/db";
 import { userTable } from "@/app/db/schemas/user";
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 
-export async function ifUsernameExistInDatabase(username: string) {
+export async function ifUsernameExistInDatabase(
+  username: string
+): Promise<boolean> {
   const response = await db
     .select()
     .from(userTable)
     .where(eq(userTable.username, username.toLowerCase()));
 
   return response.length > 0;
+}
+
+export async function getUserFromDatabaseIfExist(username: string) {
+  const response = await db
+    .select({
+      id: userTable.id,
+      username: userTable.username,
+      password_hash: userTable.password_hash,
+    })
+    .from(userTable)
+    .where(eq(sql`LOWER(${userTable.username})`, username.toLowerCase()));
+
+  if (response.length === 0) {
+    return false;
+  } else {
+    return response[0];
+  }
 }
 
 export async function addUserToDatabase(
