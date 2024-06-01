@@ -1,16 +1,15 @@
 "use client";
 
-import React, { useState } from "react";
-import { signup } from "@/actions/auth/signup";
-import { toast } from "sonner";
+import { login } from "@/actions/auth/login";
 import { validSchemaAuth } from "@/zod/auth/schema-auth";
+import React, { useState } from "react";
+import { toast } from "sonner";
 
-const SignUp = () => {
+const Login = () => {
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setErrorMessage("");
     const formData = new FormData(event.target as HTMLFormElement);
     const username = formData.get("username") as string;
     const password = formData.get("password") as string;
@@ -27,18 +26,18 @@ const SignUp = () => {
       return;
     }
 
-    const result = await signup(formData);
+    const result = await login(formData);
     if (result && result.status === "error") {
       setErrorMessage(result.message);
       return;
     }
 
-    toast.success("Account created successfully");
+    toast.success("Logged in successfully");
   };
 
   return (
-    <>
-      <h1>Create an account</h1>
+    <div>
+      <h1>Log in page</h1>
       <form onSubmit={handleSubmit}>
         <label htmlFor="username">Username</label>
         <input name="username" id="username" />
@@ -49,10 +48,10 @@ const SignUp = () => {
         {errorMessage && (
           <p className="text-red-500 font-bold">{errorMessage}</p>
         )}
-        <button type="submit">Continue</button>
+        <button>Continue</button>
       </form>
-    </>
+    </div>
   );
 };
 
-export default SignUp;
+export default Login;

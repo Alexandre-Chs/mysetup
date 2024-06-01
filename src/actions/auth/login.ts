@@ -1,29 +1,59 @@
 "use server";
 
-import { ActionResult } from "next/dist/server/app-render/types";
-import { ifUserExistInDatabase } from "./user";
 import { validSchemaAuth } from "@/zod/auth/schema-auth";
+import { ActionResult } from "next/dist/server/app-render/types";
+import { getUserFromDatabaseIfExist } from "./user";
+import { verify } from "@node-rs/argon2";
+import { lucia } from "@/lib/auth/auth";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
-//TODO : err, revoir le login
 export async function login(formData: FormData): Promise<ActionResult> {
+  //check if data is valid
   const username = formData.get("username") as string;
   const password = formData.get("password") as string;
+  const parseResult = validSchemaAuth.safeParse({ username, password });
 
-  try {
-    const parseData = validSchemaAuth.parse({ username, password });
-    const existingUser = await ifUserExistInDatabase(parseData.username);
-
-    if (!existingUser) {
-      return {
-        status: "error",
-        message: "Incorrect username or password",
-      };
-    }
-
-    //TODO : continuer sur validation du pw avec sign in tutoriel
-    return { status: "success", message: "reussi youpi" };
-  } catch (error) {
-    console.log(error);
-    return { status: "error", message: "An error has occurred" };
+  if (!parseResult.success) {
+    return;
   }
+
+  const parseData = parseResult.data;
+
+  //check if user exist in database
+  const ifUsernameAlreadyExist = await getUserFromDatabaseIfExist(
+    parseData.username
+  );
+
+  //if user does not exist
+  if (!ifUsernameAlreadyExist) {
+    return {
+      status: "error",
+      message: "Incorrect username or password",
+    };
+  }
+  //else check if password is correct
+
+  const validPassword = await verify(
+    ifUsernameAlreadyExist.password_hash,
+    parseData.password,
+    { memoryCost: 19456, timeCost: 2, outputLen: 32, parallelism: 1 }
+  );
+
+  if (!validPassword) {
+    return {
+      status: "error",
+      message: "Incorrect username or password",
+    };
+  }
+
+  const session = await lucia.createSession(ifUsernameAlreadyExist.id, {});
+  const sessionCookie = lucia.createSessionCookie(session.id);
+  cookies().set(
+    sessionCookie.name,
+    sessionCookie.value,
+    sessionCookie.attributes
+  );
+
+  return redirect("/");
 }

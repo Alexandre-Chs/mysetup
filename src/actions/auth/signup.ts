@@ -1,18 +1,18 @@
 "use server";
 
-import { validSchemaSignup } from "@/zod/auth/schema-auth";
 import { hash } from "@node-rs/argon2";
 import { generateIdFromEntropySize } from "lucia";
 import { addUserToDatabase, ifUsernameExistInDatabase } from "./user";
 import { lucia } from "@/lib/auth/auth";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { validSchemaAuth } from "@/zod/auth/schema-auth";
 
 export async function signup(formData: FormData) {
   //check if data is valid
   const username = formData.get("username") as string;
   const password = formData.get("password") as string;
-  const parseResult = validSchemaSignup.safeParse({ username, password });
+  const parseResult = validSchemaAuth.safeParse({ username, password });
 
   if (!parseResult.success) {
     return;
