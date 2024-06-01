@@ -2,18 +2,38 @@
 
 import React, { useState } from "react";
 import { signup } from "@/actions/auth/signup";
+import { validSchemaSignup } from "@/zod/auth/schema-auth";
+import { toast } from "sonner";
 
 const SignUp = () => {
   const [errorMessage, setErrorMessage] = useState("");
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setErrorMessage("");
     const formData = new FormData(event.target as HTMLFormElement);
+    const username = formData.get("username") as string;
+    const password = formData.get("password") as string;
+    const parseDataWithZod = validSchemaSignup.safeParse({
+      username,
+      password,
+    });
+
+    if (!parseDataWithZod.success) {
+      const errorMessages = parseDataWithZod.error.errors
+        .map((error) => error.message)
+        .join(", ");
+      setErrorMessage(errorMessages);
+      return;
+    }
+
     const result = await signup(formData);
     if (result && result.status === "error") {
       setErrorMessage(result.message);
       return;
     }
+
+    toast.success("Account created successfully");
   };
 
   return (
