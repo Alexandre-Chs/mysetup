@@ -11,21 +11,27 @@
     "db:ui": "npx drizzle-kit studio"
   },
   "dependencies": {
+    "@lucia-auth/adapter-drizzle": "^1.0.7",
+    "@node-rs/argon2": "^1.8.3",
     "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-slot": "^1.0.2",
+    "argon2": "^0.40.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "drizzle-orm": "^0.30.10",
     "gridstack": "^10.1.2",
+    "lucia": "^3.2.0",
     "lucide-react": "^0.379.0",
     "next": "14.2.3",
     "pg": "^8.11.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-infinite-scroll-component": "^6.1.0",
+    "sonner": "^1.4.41",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
-    "tsx": "^4.10.5"
+    "tsx": "^4.10.5",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/node": "^20",

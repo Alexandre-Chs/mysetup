@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { lato, montserrat } from "./font";
-import NavBar from "@/components/navbar/navBar";
+import NavBar from "@/components/navbar/NavBar";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: "My setup",
@@ -18,6 +19,7 @@ export default function RootLayout({
       <body>
         <NavBar />
         {children}
+        <Toaster />
       </body>
     </html>
   );
