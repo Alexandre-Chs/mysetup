@@ -2,9 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { lato, montserrat } from "./font";
 import { Toaster } from "sonner";
-import NavBar from "@/components/navbar/NavBar";
-import { validateRequest } from "@/lib/auth/validate-request";
 import Providers from "./providers";
+import NavBar from "@/components/navbar/NavBar";
 
 export const metadata: Metadata = {
   title: "My setup",
@@ -16,7 +15,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { user } = await validateRequest();
   return (
     <html lang="en" className={`${montserrat.variable} ${lato.variable}`}>
       <body>
