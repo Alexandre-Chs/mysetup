@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "db:migrate": "pnpm drizzle-kit generate && npx tsx src/app/db/migrate.ts",
+    "db:migrate": "pnpm drizzle-kit generate && npx tsx src/db/migrate.ts",
     "db:ui": "npx drizzle-kit studio"
   },
   "dependencies": {
@@ -19,6 +19,8 @@
     "@node-rs/argon2": "^1.8.3",
     "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-slot": "^1.0.2",
+    "@tanstack/react-query": "^5.40.0",
+    "arctic": "^1.9.0",
     "argon2": "^0.40.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
@@ -28,6 +30,7 @@
     "lucia": "^3.2.0",
     "lucide-react": "^0.379.0",
     "next": "14.2.3",
+    "oslo": "^1.2.0",
     "pg": "^8.11.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
