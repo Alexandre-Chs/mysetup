@@ -8,3 +8,5 @@ export const oauthAccount = pgTable("oauth_account", {
     .notNull()
     .references(() => userTable.id),
 });
+
+export type oauthAccount = typeof oauthAccount.$inferSelect;

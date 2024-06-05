@@ -42,6 +42,8 @@ export async function GET(request: Request) {
     );
     const googleUser: GoogleUser = await googleUserResponse.json();
 
+    console.log({ googleUser });
+
     // const existingUser = await db.query.userTable.findFi
 
     // if (existingUser) {
