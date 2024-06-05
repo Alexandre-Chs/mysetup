@@ -6,6 +6,11 @@ declare global {
   var drizzle: NodePgDatabase<typeof schema> | undefined;
 }
 
-const connectionString = process.env.DATABASE_URL;
-const pool = new Pool({ connectionString: connectionString });
+export const pool = new Pool({
+  host: "127.0.0.1",
+  port: 5432,
+  user: "postgres",
+  password: "root",
+  database: "mysetup",
+});
 export const db = global.drizzle || drizzle(pool, { schema });
