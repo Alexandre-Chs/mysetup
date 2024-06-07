@@ -13,4 +13,5 @@ export const pool = new Pool({
   password: "root",
   database: "mysetup",
 });
+
 export const db = global.drizzle || drizzle(pool, { schema });

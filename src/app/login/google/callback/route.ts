@@ -44,7 +44,10 @@ export async function GET(request: Request) {
 
     console.log({ googleUser });
 
-    // const existingUser = await db.query.userTable.findFi
+    //TODO : continuer quand j'aurais un email dans la userTable + ensuite continuer le flow, pas zapper le rediect / pour pas crash app.
+    // const existingUser = await db.query.userTable.findFirst({
+    //   where: (user, { eq }) => eq(user.email, googleUser.email),
+    // });
 
     // if (existingUser) {
     //   const session = await lucia.createSession(existingUser.id, {});

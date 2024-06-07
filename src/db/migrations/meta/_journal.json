@@ -22,6 +22,13 @@
       "when": 1717309273000,
       "tag": "0002_cultured_wrecker",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1717605837193,
+      "tag": "0003_clean_nekra",
+      "breakpoints": true
     }
   ]
 }

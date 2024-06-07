@@ -12,6 +12,7 @@ export async function login(formData: FormData): Promise<ActionResult> {
   //check if data is valid
   const username = formData.get("username") as string;
   const password = formData.get("password") as string;
+
   const parseResult = validSchemaAuth.safeParse({ username, password });
 
   if (!parseResult.success) {

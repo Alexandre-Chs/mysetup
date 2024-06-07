@@ -14,9 +14,11 @@ const SignUp = () => {
     const formData = new FormData(event.target as HTMLFormElement);
     const username = formData.get("username") as string;
     const password = formData.get("password") as string;
+    const email = formData.get("email") as string;
     const parseDataWithZod = validSchemaAuth.safeParse({
       username,
       password,
+      email,
     });
 
     if (!parseDataWithZod.success) {
@@ -42,6 +44,9 @@ const SignUp = () => {
       <form onSubmit={handleSubmit}>
         <label htmlFor="username">Username</label>
         <input name="username" id="username" />
+        <br />
+        <label htmlFor="username">Email</label>
+        <input name="email" id="email" />
         <br />
         <label htmlFor="password">Password</label>
         <input type="password" name="password" id="password" />

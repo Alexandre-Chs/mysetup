@@ -12,4 +12,5 @@ export const validSchemaAuth = z.object({
     .string()
     .min(6, { message: "Password must be at least 6 characters long" })
     .max(255, { message: "Password must be at most 255 characters long" }),
+  email: z.string().email(),
 });
