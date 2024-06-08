@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "db:migrate": "pnpm drizzle-kit generate && npx tsx src/db/migrate.ts",
-    "db:ui": "npx drizzle-kit studio"
+    "db:ui": "npx drizzle-kit studio",
+    "email": "email dev"
   },
   "dependencies": {
     "@lucia-auth/adapter-drizzle": "^1.0.7",
@@ -36,6 +37,7 @@
     "react-dom": "^18.2.0",
     "react-icons": "^5.2.1",
     "react-infinite-scroll-component": "^6.1.0",
+    "resend": "^3.2.0",
     "sonner": "^1.4.41",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",

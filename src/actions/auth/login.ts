@@ -7,6 +7,7 @@ import { verify } from "@node-rs/argon2";
 import { lucia } from "@/lib/auth/auth";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { sendEmail } from "@/lib/resend";
 export async function login(formData: FormData): Promise<ActionResult> {
   //check if data is valid
   const username = formData.get("username") as string;
@@ -35,7 +36,7 @@ export async function login(formData: FormData): Promise<ActionResult> {
   //else check if password is correct
 
   const validPassword = await verify(
-    ifUsernameAlreadyExist.password_hash,
+    ifUsernameAlreadyExist.password_hash as string,
     parseData.password,
     { memoryCost: 19456, timeCost: 2, outputLen: 32, parallelism: 1 }
   );
@@ -55,5 +56,11 @@ export async function login(formData: FormData): Promise<ActionResult> {
     sessionCookie.attributes
   );
 
+  //send email
+  try {
+    await sendEmail();
+  } catch (e) {
+    console.log(e);
+  }
   return redirect("/");
 }
