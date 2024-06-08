@@ -1,16 +1,18 @@
+import { ifEmailExistInDatabase } from "@/actions/auth/user";
 import { db } from "@/db/db";
+import { oauthAccount, userTable } from "@/db/schemas";
 import { lucia } from "@/lib/auth/auth";
 import { google } from "@/lib/auth/providers";
+import { user } from "@nextui-org/theme";
 import {
   generateCodeVerifier,
   generateState,
   OAuth2RequestError,
 } from "arctic";
-import { generateIdFromEntropySize } from "lucia";
+import { generateId, generateIdFromEntropySize } from "lucia";
 import { cookies } from "next/headers";
 
 export async function GET(request: Request) {
-  console.log("GET request received");
   const url = new URL(request.url);
   const code = url.searchParams.get("code");
   const state = url.searchParams.get("state");
@@ -42,55 +44,89 @@ export async function GET(request: Request) {
     );
     const googleUser: GoogleUser = await googleUserResponse.json();
 
-    console.log({ googleUser });
+    const existingUser = await db.query.userTable.findFirst({
+      where: (user, { eq }) => eq(user.email, googleUser.email),
+    });
 
-    //TODO : continuer quand j'aurais un email dans la userTable + ensuite continuer le flow, pas zapper le rediect / pour pas crash app.
-    // const existingUser = await db.query.userTable.findFirst({
-    //   where: (user, { eq }) => eq(user.email, googleUser.email),
-    // });
+    const existingAccount = await db.query.oauthAccount.findFirst({
+      where: (user, { eq, and }) =>
+        and(
+          eq(user.providerId, "google"),
+          eq(user.providerUserId, googleUser.sub.toString())
+        ),
+    });
 
-    // if (existingUser) {
-    //   const session = await lucia.createSession(existingUser.id, {});
-    //   const sessionCookie = lucia.createSessionCookie(session.id);
-    //   cookies().set(
-    //     sessionCookie.name,
-    //     sessionCookie.value,
-    //     sessionCookie.attributes
-    //   );
-    //   return new Response(null, {
-    //     status: 302,
-    //     headers: {
-    //       Location: "/",
-    //     },
-    //   });
-    // }
+    if (existingAccount) {
+      const session = await lucia.createSession(existingAccount.userId, {});
+      const sessionCookie = lucia.createSessionCookie(session.id);
+      cookies().set(
+        sessionCookie.name,
+        sessionCookie.value,
+        sessionCookie.attributes
+      );
+      return new Response(null, {
+        status: 302,
+        headers: {
+          Location: "/",
+        },
+      });
+    }
 
-    // const userId = generateIdFromEntropySize(10); // 16 characters long
+    if (existingUser && !existingAccount) {
+      await db.insert(oauthAccount).values({
+        providerId: "google",
+        providerUserId: googleUser.sub.toString(),
+        userId: existingUser.id,
+      });
 
-    // // Replace this with your own DB client.
-    // await db.table("user").insert({
-    //   id: userId,
-    //   github_id: githubUser.id,
-    //   username: githubUser.login,
-    // });
+      const session = await lucia.createSession(existingUser.id, {});
+      const sessionCookie = lucia.createSessionCookie(session.id);
+      cookies().set(
+        sessionCookie.name,
+        sessionCookie.value,
+        sessionCookie.attributes
+      );
+      return new Response(null, {
+        status: 302,
+        headers: {
+          Location: "/",
+        },
+      });
+    }
 
-    // const session = await lucia.createSession(userId, {});
-    // const sessionCookie = lucia.createSessionCookie(session.id);
-    // cookies().set(
-    //   sessionCookie.name,
-    //   sessionCookie.value,
-    //   sessionCookie.attributes
-    // );
-    // return new Response(null, {
-    //   status: 302,
-    //   headers: {
-    //     Location: "/",
-    //   },
-    // });
+    const userId = generateIdFromEntropySize(10);
+
+    try {
+      await db.insert(userTable).values({
+        id: userId,
+        email: googleUser.email,
+        username: null,
+      });
+
+      await db.insert(oauthAccount).values({
+        providerId: "google",
+        providerUserId: googleUser.sub.toString(),
+        userId,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+
+    const session = await lucia.createSession(userId, {});
+    const sessionCookie = lucia.createSessionCookie(session.id);
+    cookies().set(
+      sessionCookie.name,
+      sessionCookie.value,
+      sessionCookie.attributes
+    );
+    return new Response(null, {
+      status: 302,
+      headers: {
+        Location: "/",
+      },
+    });
   } catch (e) {
-    // the specific error message depends on the provider
     if (e instanceof OAuth2RequestError) {
-      // invalid code
       return new Response(null, {
         status: 400,
       });

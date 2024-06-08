@@ -10,7 +10,7 @@ import {
 import { lucia } from "@/lib/auth/auth";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { validSchemaAuth } from "@/zod/auth/schema-auth";
+import { validSchemaAuthWithEmail } from "@/zod/auth/schema-auth";
 
 //TODO: vérifier si email valide, si pas déjà existante dans la BDD.
 
@@ -20,7 +20,11 @@ export async function signup(formData: FormData) {
   const password = formData.get("password") as string;
   const email = formData.get("email") as string;
 
-  const parseResult = validSchemaAuth.safeParse({ username, password, email });
+  const parseResult = validSchemaAuthWithEmail.safeParse({
+    username,
+    password,
+    email,
+  });
 
   if (!parseResult.success) {
     return;

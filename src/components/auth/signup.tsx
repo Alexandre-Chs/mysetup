@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { signup } from "@/actions/auth/signup";
 import { toast } from "sonner";
-import { validSchemaAuth } from "@/zod/auth/schema-auth";
+import { validSchemaAuthWithEmail } from "@/zod/auth/schema-auth";
 
 const SignUp = () => {
   const [errorMessage, setErrorMessage] = useState("");
@@ -15,7 +15,7 @@ const SignUp = () => {
     const username = formData.get("username") as string;
     const password = formData.get("password") as string;
     const email = formData.get("email") as string;
-    const parseDataWithZod = validSchemaAuth.safeParse({
+    const parseDataWithZod = validSchemaAuthWithEmail.safeParse({
       username,
       password,
       email,

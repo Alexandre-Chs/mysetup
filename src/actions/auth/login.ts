@@ -7,7 +7,6 @@ import { verify } from "@node-rs/argon2";
 import { lucia } from "@/lib/auth/auth";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-
 export async function login(formData: FormData): Promise<ActionResult> {
   //check if data is valid
   const username = formData.get("username") as string;

@@ -17,7 +17,9 @@ const SignOut = ({ username }: { username?: string }) => {
   return (
     <Dropdown>
       <DropdownTrigger>
-        <div className="cursor-pointer font-semibold">{username}</div>
+        <div className="cursor-pointer font-semibold">
+          {"USERNAME : " + username}
+        </div>
       </DropdownTrigger>
       <DropdownMenu aria-label="Static Actions">
         <DropdownItem key="profile">Profile</DropdownItem>
