@@ -8,7 +8,7 @@ export const google = new Google(
 );
 
 export const reddit = new Reddit(
-  "gcWAWcDjvc1EWSjOilarNw",
-  "qPO5OYSBt5C_AachRHoUSx_rw2k0dg",
+  process.env.REDDIT_ID!,
+  process.env.REDDIT_SECRET!,
   `${process.env.BASE_URL}/login/reddit/callback`
 );
