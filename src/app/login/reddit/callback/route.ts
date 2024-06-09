@@ -1,7 +1,7 @@
 import { db } from "@/db/db";
 import { oauthAccount, userTable } from "@/db/schemas";
 import { lucia } from "@/lib/auth/auth";
-import { google } from "@/lib/auth/providers";
+import { reddit } from "@/lib/auth/providers";
 import { OAuth2RequestError } from "arctic";
 import { generateIdFromEntropySize } from "lucia";
 import { cookies } from "next/headers";
@@ -11,9 +11,7 @@ export async function GET(request: Request) {
   const code = url.searchParams.get("code");
   const state = url.searchParams.get("state");
 
-  const storedState = cookies().get("google_oauth_state")?.value ?? null;
-  const storedStateVerifier =
-    cookies().get("google_oauth_code_verifier")?.value ?? null;
+  const storedState = cookies().get("reddit_oauth_state")?.value ?? null;
 
   //throw error if nothing matches
   if (!code || !state || !storedState || state !== storedState) {
@@ -23,30 +21,28 @@ export async function GET(request: Request) {
   }
 
   try {
-    const tokens = await google.validateAuthorizationCode(
-      code,
-      storedStateVerifier as string
-    );
-
-    const googleUserResponse = await fetch(
-      "https://openidconnect.googleapis.com/v1/userinfo",
+    const tokens = await reddit.validateAuthorizationCode(code);
+    const redditUserResponse = await fetch(
+      "https://oauth.reddit.com/api/v1/me",
       {
         headers: {
           Authorization: `Bearer ${tokens.accessToken}`,
         },
       }
     );
-    const googleUser: GoogleUser = await googleUserResponse.json();
+    const redditUser = await redditUserResponse.json();
+
+    const redditUserId = redditUser.id;
 
     const existingUser = await db.query.userTable.findFirst({
-      where: (user, { eq }) => eq(user.email, googleUser.email),
+      where: (user, { eq }) => eq(user.id, redditUserId),
     });
 
     const existingAccount = await db.query.oauthAccount.findFirst({
       where: (user, { eq, and }) =>
         and(
-          eq(user.providerId, "google"),
-          eq(user.providerUserId, googleUser.sub.toString())
+          eq(user.providerId, "reddit"),
+          eq(user.providerUserId, redditUserId)
         ),
     });
 
@@ -68,8 +64,8 @@ export async function GET(request: Request) {
 
     if (existingUser && !existingAccount) {
       await db.insert(oauthAccount).values({
-        providerId: "google",
-        providerUserId: googleUser.sub.toString(),
+        providerId: "reddit",
+        providerUserId: redditUserId,
         userId: existingUser.id,
       });
 
@@ -92,14 +88,13 @@ export async function GET(request: Request) {
 
     try {
       await db.insert(userTable).values({
-        id: userId,
-        email: googleUser.email,
+        id: redditUserId,
         username: null,
       });
 
       await db.insert(oauthAccount).values({
-        providerId: "google",
-        providerUserId: googleUser.sub.toString(),
+        providerId: "reddit",
+        providerUserId: redditUserId,
         userId,
       });
     } catch (err) {
@@ -129,15 +124,4 @@ export async function GET(request: Request) {
       status: 500,
     });
   }
-}
-
-interface GoogleUser {
-  sub: string;
-  name: string;
-  given_name: string;
-  family_name: string;
-  picture: string;
-  email: string;
-  email_verified: boolean;
-  locale: string;
 }
