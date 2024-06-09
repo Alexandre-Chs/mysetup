@@ -3,7 +3,7 @@ import "./globals.css";
 import { lato, montserrat } from "./font";
 import { Toaster } from "sonner";
 import Providers from "./providers";
-import NavBar from "@/components/navbar/NavBar";
+import NavBar from "@/components/navbar/navBar";
 
 export const metadata: Metadata = {
   title: "My setup",

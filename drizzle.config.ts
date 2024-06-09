@@ -6,4 +6,5 @@ export default defineConfig({
   dbCredentials: {
     url: "postgresql://postgres:root@localhost:5432/mysetup",
   },
+  verbose: true,
 });

@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { signup } from "@/actions/auth/signup";
 import { toast } from "sonner";
-import { validSchemaAuth } from "@/zod/auth/schema-auth";
+import { validSchemaAuthWithEmail } from "@/zod/auth/schema-auth";
 
 const SignUp = () => {
   const [errorMessage, setErrorMessage] = useState("");
@@ -14,9 +14,11 @@ const SignUp = () => {
     const formData = new FormData(event.target as HTMLFormElement);
     const username = formData.get("username") as string;
     const password = formData.get("password") as string;
-    const parseDataWithZod = validSchemaAuth.safeParse({
+    const email = formData.get("email") as string;
+    const parseDataWithZod = validSchemaAuthWithEmail.safeParse({
       username,
       password,
+      email,
     });
 
     if (!parseDataWithZod.success) {
@@ -42,6 +44,9 @@ const SignUp = () => {
       <form onSubmit={handleSubmit}>
         <label htmlFor="username">Username</label>
         <input name="username" id="username" />
+        <br />
+        <label htmlFor="username">Email</label>
+        <input name="email" id="email" />
         <br />
         <label htmlFor="password">Password</label>
         <input type="password" name="password" id="password" />

@@ -2,17 +2,29 @@
 
 import { hash } from "@node-rs/argon2";
 import { generateIdFromEntropySize } from "lucia";
-import { addUserToDatabase, ifUsernameExistInDatabase } from "./user";
+import {
+  addUserToDatabase,
+  ifEmailExistInDatabase,
+  ifUsernameExistInDatabase,
+} from "./user";
 import { lucia } from "@/lib/auth/auth";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { validSchemaAuth } from "@/zod/auth/schema-auth";
+import { validSchemaAuthWithEmail } from "@/zod/auth/schema-auth";
+
+//TODO: vérifier si email valide, si pas déjà existante dans la BDD.
 
 export async function signup(formData: FormData) {
   //check if data is valid
   const username = formData.get("username") as string;
   const password = formData.get("password") as string;
-  const parseResult = validSchemaAuth.safeParse({ username, password });
+  const email = formData.get("email") as string;
+
+  const parseResult = validSchemaAuthWithEmail.safeParse({
+    username,
+    password,
+    email,
+  });
 
   if (!parseResult.success) {
     return;
@@ -27,6 +39,7 @@ export async function signup(formData: FormData) {
     parallelism: 1,
   });
   const userId = generateIdFromEntropySize(10);
+
   const ifUsernameAlreadyExist = await ifUsernameExistInDatabase(
     parseData.username
   );
@@ -37,8 +50,17 @@ export async function signup(formData: FormData) {
     };
   }
 
+  //check if email is already in database
+  const ifEmailAlreadyExist = await ifEmailExistInDatabase(parseData.email);
+  if (ifEmailAlreadyExist) {
+    return {
+      status: "error",
+      message: "Email already exists",
+    };
+  }
+
   //add user in database if username does not exist
-  await addUserToDatabase(userId, parseData.username, passwordHash);
+  await addUserToDatabase(userId, parseData.username, passwordHash, email);
 
   //config session
   const session = await lucia.createSession(userId, {});

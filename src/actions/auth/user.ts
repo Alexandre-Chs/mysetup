@@ -15,6 +15,15 @@ export async function ifUsernameExistInDatabase(
   return response.length > 0;
 }
 
+export async function ifEmailExistInDatabase(email: string): Promise<boolean> {
+  const response = await db
+    .select()
+    .from(userTable)
+    .where(eq(userTable.email, email));
+
+  return response.length > 0;
+}
+
 export async function getUserFromDatabaseIfExist(username: string) {
   const response = await db
     .select({
@@ -35,11 +44,13 @@ export async function getUserFromDatabaseIfExist(username: string) {
 export async function addUserToDatabase(
   id: string,
   username: string,
-  password_hash: string
+  password_hash: string,
+  email: string
 ) {
   await db.insert(userTable).values({
     id,
     username,
     password_hash,
+    email,
   });
 }

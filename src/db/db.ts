@@ -1,7 +1,12 @@
-import { drizzle } from "drizzle-orm/node-postgres";
-import { Client } from "pg";
+import { drizzle, NodePgDatabase } from "drizzle-orm/node-postgres";
+import { Pool } from "pg";
+import * as schema from "./schemas/index";
 
-export const client = new Client({
+declare global {
+  var drizzle: NodePgDatabase<typeof schema> | undefined;
+}
+
+export const pool = new Pool({
   host: "127.0.0.1",
   port: 5432,
   user: "postgres",
@@ -9,5 +14,4 @@ export const client = new Client({
   database: "mysetup",
 });
 
-client.connect();
-export const db = drizzle(client);
+export const db = global.drizzle || drizzle(pool, { schema });
