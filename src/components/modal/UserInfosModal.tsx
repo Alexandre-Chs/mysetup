@@ -38,6 +38,9 @@ export default function UserInfosModal({ infos }: { infos: InfosProps }) {
   const [errorMessage, setErrorMessage] = React.useState("");
   const [isSubmitting, setIsSubmitting] = React.useState(false);
 
+  let usernameNeeded = !infos.username;
+  let emailNeeded = !infos.email;
+
   // Effects
   React.useEffect(() => {
     setIsMounted(true);
@@ -86,7 +89,7 @@ export default function UserInfosModal({ infos }: { infos: InfosProps }) {
     setErrorMessage("");
 
     try {
-      if (username && email) {
+      if (usernameNeeded && emailNeeded) {
         const parseDataWithZod = updateUserInfosUsernameAndEmailZod.safeParse({
           username,
           email,
@@ -101,7 +104,7 @@ export default function UserInfosModal({ infos }: { infos: InfosProps }) {
           return;
         }
         updateUsername.mutate();
-      } else if (username) {
+      } else if (usernameNeeded) {
         const parseDataWithZod = updateUserInfosUsernameZod.safeParse({
           username,
         });
@@ -115,7 +118,7 @@ export default function UserInfosModal({ infos }: { infos: InfosProps }) {
           return;
         }
         updateUsername.mutate();
-      } else if (email) {
+      } else if (emailNeeded) {
         const parseDataWithZod = updateUserInfosEmailZod.safeParse({
           email,
         });
@@ -136,10 +139,6 @@ export default function UserInfosModal({ infos }: { infos: InfosProps }) {
     }
   };
 
-  //TODO: si username et email, et que l'on met que username ou email, ca envoie quand meme.
-  //faire un check sur les inputs pour savoir si on a un username ou un email ou besoin des deux. Et en fonction, alors on check.
-  // si 2 inputs -> on check si username et email sont valides, et si c'est le cas, on met les 2 inputs dans le db.
-  // si 1 input -> on check si username ou email est valide, et si c'est le cas, on met le 1 input dans le db.
   return (
     <Dialog open={isOpenModal}>
       <DialogContent className="sm:max-w-[425px]">
