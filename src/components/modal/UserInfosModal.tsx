@@ -23,6 +23,7 @@ import {
   updateUserInfosUsernameAndEmailZod,
   updateUserInfosUsernameZod,
 } from "@/zod/auth/update-user";
+import { useRouter } from "next/navigation";
 
 type InfosProps = {
   id: string;
@@ -36,10 +37,11 @@ export default function UserInfosModal({ infos }: { infos: InfosProps }) {
   const [username, setUsername] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [errorMessage, setErrorMessage] = React.useState("");
-  const [isSubmitting, setIsSubmitting] = React.useState(false);
 
   let usernameNeeded = !infos.username;
   let emailNeeded = !infos.email;
+
+  const router = useRouter();
 
   // Effects
   React.useEffect(() => {
@@ -56,11 +58,11 @@ export default function UserInfosModal({ infos }: { infos: InfosProps }) {
         updateEmail.mutate();
       } else {
         setIsOpenModal(false);
+        router.refresh();
       }
     },
     onError: (error: any) => {
       setErrorMessage(error.message);
-      setIsSubmitting(false);
     },
   });
 
@@ -69,11 +71,11 @@ export default function UserInfosModal({ infos }: { infos: InfosProps }) {
       return await updateUserInfosEmail(infos.id, email);
     },
     onSuccess: () => {
+      router.refresh();
       setIsOpenModal(false);
     },
     onError: (error: any) => {
       setErrorMessage(error.message);
-      setIsSubmitting(false);
     },
   });
 
@@ -85,7 +87,6 @@ export default function UserInfosModal({ infos }: { infos: InfosProps }) {
   // Handlers
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setIsSubmitting(true);
     setErrorMessage("");
 
     try {
@@ -100,7 +101,6 @@ export default function UserInfosModal({ infos }: { infos: InfosProps }) {
             .map((error) => error.message)
             .join(", ");
           setErrorMessage(errorMessages);
-          setIsSubmitting(false);
           return;
         }
         updateUsername.mutate();
@@ -114,7 +114,6 @@ export default function UserInfosModal({ infos }: { infos: InfosProps }) {
             .map((error) => error.message)
             .join(", ");
           setErrorMessage(errorMessages);
-          setIsSubmitting(false);
           return;
         }
         updateUsername.mutate();
@@ -128,14 +127,12 @@ export default function UserInfosModal({ infos }: { infos: InfosProps }) {
             .map((error) => error.message)
             .join(", ");
           setErrorMessage(errorMessages);
-          setIsSubmitting(false);
           return;
         }
         updateEmail.mutate();
       }
     } catch (e) {
       setErrorMessage("An unexpected error occurred.");
-      setIsSubmitting(false);
     }
   };
 

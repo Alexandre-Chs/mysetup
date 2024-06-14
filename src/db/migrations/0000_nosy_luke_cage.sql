@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS "oauth_account" (
-	"provider_id" text PRIMARY KEY NOT NULL,
+	"provider_id" text NOT NULL,
 	"provider_user_id" text NOT NULL,
 	"user_id" text NOT NULL
 );

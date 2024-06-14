@@ -7,7 +7,6 @@ import SignOut from "../auth/SignOut";
 
 const NavBar = async () => {
   const { user } = await validateRequest();
-
   return (
     <header className="flex h-20 w-full shrink-0 items-center px-4 md:px-6">
       <SignOut />
@@ -21,7 +20,7 @@ const NavBar = async () => {
         <SheetContent side="left">
           <Link className="mr-6 hidden lg:flex" href="#"></Link>
           <div className="flex flex-col py-6 gap-y-6">
-            {user ? (
+            {user && user.username && user.email ? (
               <div className="w-full block items-center py-2 text-lg font-semibold bg-transparent text-black border-2 border-black rounded-md text-center h-[44px]">
                 <SignOut />
               </div>
@@ -45,10 +44,10 @@ const NavBar = async () => {
       </Sheet>
       <Link className="mr-6 hidden lg:flex" href="/">
         <h1 className="text-2xl font-semibold">My setup</h1>
-        <span className="sr-only">Acme Inc</span>
+        <span className="sr-only">My setup</span>
       </Link>
       <nav className="ml-auto hidden lg:flex gap-6">
-        {user ? (
+        {user && user.email && user.username ? (
           <div className="flex items-center justify-center">
             <SignOut username={user.username} />
           </div>

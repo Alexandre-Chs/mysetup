@@ -88,7 +88,7 @@ export async function GET(request: Request) {
 
     try {
       await db.insert(userTable).values({
-        id: redditUserId,
+        id: userId,
         username: null,
       });
 

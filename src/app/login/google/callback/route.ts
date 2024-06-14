@@ -67,19 +67,23 @@ export async function GET(request: Request) {
     }
 
     if (existingUser && !existingAccount) {
-      await db.insert(oauthAccount).values({
-        providerId: "google",
-        providerUserId: googleUser.sub.toString(),
-        userId: existingUser.id,
-      });
+      try {
+        await db.insert(oauthAccount).values({
+          providerId: "google",
+          providerUserId: googleUser.sub.toString(),
+          userId: existingUser.id,
+        });
 
-      const session = await lucia.createSession(existingUser.id, {});
-      const sessionCookie = lucia.createSessionCookie(session.id);
-      cookies().set(
-        sessionCookie.name,
-        sessionCookie.value,
-        sessionCookie.attributes
-      );
+        const session = await lucia.createSession(existingUser.id, {});
+        const sessionCookie = lucia.createSessionCookie(session.id);
+        cookies().set(
+          sessionCookie.name,
+          sessionCookie.value,
+          sessionCookie.attributes
+        );
+      } catch (err) {
+        console.log(err);
+      }
       return new Response(null, {
         status: 302,
         headers: {

@@ -35,6 +35,14 @@ export async function login(formData: FormData): Promise<ActionResult> {
   }
   //else check if password is correct
 
+  if (!ifUsernameAlreadyExist.password_hash) {
+    return {
+      status: "error",
+      message:
+        "A problem occured, please contact the support or login with google or reddit",
+    };
+  }
+
   const validPassword = await verify(
     ifUsernameAlreadyExist.password_hash as string,
     parseData.password,
@@ -56,11 +64,12 @@ export async function login(formData: FormData): Promise<ActionResult> {
     sessionCookie.attributes
   );
 
+  //TODO : send email
   //send email
-  try {
-    await sendEmail();
-  } catch (e) {
-    console.log(e);
-  }
+  // try {
+  //   await sendEmail();
+  // } catch (e) {
+  //   console.log(e);
+  // }
   return redirect("/");
 }
