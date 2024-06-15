@@ -25,20 +25,22 @@ const NavBar = async () => {
                 <SignOut />
               </div>
             ) : (
-              <Link
-                className="w-full block items-center py-2 text-lg font-semibold bg-transparent text-black border-2 border-black rounded-md text-center h-[44px]"
-                href="/login"
-              >
-                Log in
-              </Link>
-            )}
+              <>
+                <Link
+                  className="w-full block items-center py-2 text-lg font-semibold bg-transparent text-black border-2 border-black rounded-md text-center h-[44px]"
+                  href="/login"
+                >
+                  Log in
+                </Link>
 
-            <Link
-              className="w-full block items-center py-2 text-lg font-semibold bg-blueHighlight text-white rounded-md text-center h-[44px]"
-              href="/signup"
-            >
-              Sign up
-            </Link>
+                <Link
+                  className="w-full block items-center py-2 text-lg font-semibold bg-blueHighlight text-white rounded-md text-center h-[44px]"
+                  href="/signup"
+                >
+                  Sign up
+                </Link>
+              </>
+            )}
           </div>
         </SheetContent>
       </Sheet>
@@ -48,24 +50,28 @@ const NavBar = async () => {
       </Link>
       <nav className="ml-auto hidden lg:flex gap-6">
         {user && user.email && user.username ? (
-          <div className="flex items-center justify-center">
+          <div className="flex items-center justify-center gap-4">
             <SignOut username={user.username} />
+            <Button>
+              <Link href="/share">Share your setup</Link>
+            </Button>
           </div>
         ) : (
-          <Link
-            className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-white px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-gray-100/50 data-[state=open]:bg-gray-100/50 "
-            href="/login"
-          >
-            Log in
-          </Link>
+          <>
+            <Link
+              className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-white px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-gray-100/50 data-[state=open]:bg-gray-100/50 "
+              href="/login"
+            >
+              Log in
+            </Link>
+            <Link
+              className="group inline-flex h-9 w-max items-center font-medium justify-center rounded-md text-white bg-blueHighlight px-4 py-2 text-sm transition-colors hover:bg-blue-400 hover:text-white focus:bg-gray-100 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-gray-100/50 data-[state=open]:bg-gray-100/50"
+              href="/signup"
+            >
+              Sign up
+            </Link>
+          </>
         )}
-
-        <Link
-          className="group inline-flex h-9 w-max items-center font-medium justify-center rounded-md text-white bg-blueHighlight px-4 py-2 text-sm transition-colors hover:bg-blue-400 hover:text-white focus:bg-gray-100 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-gray-100/50 data-[state=open]:bg-gray-100/50"
-          href="/signup"
-        >
-          Sign up
-        </Link>
       </nav>
     </header>
   );
