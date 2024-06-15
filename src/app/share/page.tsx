@@ -1,32 +1,36 @@
+"use client";
+
+import DynamicChoices from "@/components/add-setup/DynamicChoices";
+import MainInfos from "@/components/add-setup/MainInfos";
 import SelectChoiceSetupAdd from "@/components/add-setup/SelectChoiceSetupAdd";
 import UploadMainPhoto from "@/components/upload/upload-main-photo";
 import { Input, Textarea } from "@nextui-org/react";
 import React from "react";
 
-const Share = () => {
-  return (
-    <div className="max-w-2xl mx-auto mt-16">
-      <UploadMainPhoto />
+type TypeChoice = "titleDescription" | "photo" | "description";
 
-      {/* main infos */}
-      <div className="mt-6">
-        <p className="font-bold text-2xl">
-          Add your main title and description
-        </p>
-        <p className="text-sm">
-          Please add a title and a short description for your setup. Make sure
-          the description is concise and informative.
-        </p>
-        <Input placeholder="Title of the setup" className="mt-6" />
-        <Textarea
-          placeholder="Main description of the setup"
-          className="mt-6"
-        />
+const Share = () => {
+  const [choices, setChoices] = React.useState<string[]>([]);
+
+  const handleAddChoice = (choice: TypeChoice) => {
+    setChoices((prev) => [...prev, choice]);
+  };
+
+  return (
+    <div className="max-w-2xl mx-auto mt-16 pb-12">
+      <UploadMainPhoto />
+      <MainInfos />
+
+      {/* map on dynamic choices */}
+      <div>
+        {choices.map((choice, index) => {
+          return <DynamicChoices choice={choice} key={index} />;
+        })}
       </div>
 
       {/* Add what u want to add */}
       <div className="mt-6">
-        <SelectChoiceSetupAdd />
+        <SelectChoiceSetupAdd handleAddChoice={handleAddChoice} />
       </div>
     </div>
   );

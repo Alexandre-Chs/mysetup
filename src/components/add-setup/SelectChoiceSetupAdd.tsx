@@ -12,11 +12,15 @@ import { IoIosAddCircleOutline } from "react-icons/io";
 
 const CHOICES = [
   { key: "titleDescription", label: "Title and description" },
-  { key: "photo", label: "Photo" },
+  { key: "optionalPhoto", label: "Optional photo" },
   { key: "description", label: "Description" },
 ];
 
-const SelectChoiceSetupAdd = () => {
+const SelectChoiceSetupAdd = ({
+  handleAddChoice,
+}: {
+  handleAddChoice: Function;
+}) => {
   return (
     <div className="w-full flex items-center justify-center">
       <Dropdown>
@@ -28,7 +32,13 @@ const SelectChoiceSetupAdd = () => {
         </DropdownTrigger>
         <DropdownMenu aria-label="Static Actions">
           {CHOICES.map((choice) => (
-            <DropdownItem key={choice.key}>{choice.label}</DropdownItem>
+            <DropdownItem
+              key={choice.key}
+              value={choice.label}
+              onClick={(e) => handleAddChoice(e.currentTarget.dataset.key)}
+            >
+              {choice.label}
+            </DropdownItem>
           ))}
         </DropdownMenu>
       </Dropdown>
