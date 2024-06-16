@@ -3,7 +3,15 @@ import TitleDescription from "./TitleDescription";
 import OptionalPhotoSetup from "./OptionalPhotoSetup";
 import DescriptionSetup from "./DescriptionSetup";
 
-const DynamicChoices = ({ choice }: { choice: string }) => {
+const DynamicChoices = ({
+  choice,
+  handleAddDatas,
+  position,
+}: {
+  choice: string;
+  handleAddDatas: Function;
+  position: number;
+}) => {
   switch (choice) {
     case "titleDescription":
       return (
@@ -23,7 +31,10 @@ const DynamicChoices = ({ choice }: { choice: string }) => {
       return (
         <div className="pt-6">
           <div className="h-[1px] w-full bg-gray-200"></div>
-          <DescriptionSetup />
+          <DescriptionSetup
+            handleAddDatas={handleAddDatas}
+            position={position}
+          />
         </div>
       );
     default:
