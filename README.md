@@ -15,6 +15,10 @@ Base de donnée :
 ```bash
 # lancer drizzle studio
 npm run db:ui
+# DEV
+npm run db:push # Envoi en DB tout les changements entre la db et les schemas
+
+# PROD
 # crée les fichiers de migrations liés aux schéma et les migres sur la base de donnée 
 npm run db:migrate 
 ```
