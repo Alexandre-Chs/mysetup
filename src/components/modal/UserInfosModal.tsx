@@ -51,7 +51,7 @@ export default function UserInfosModal({ infos }: { infos: InfosProps }) {
   // Mutations
   const updateUsername = useMutation({
     mutationFn: async () => {
-      return await updateUserInfosUsername(infos.id, username);
+      return await updateUserInfosUsername(username);
     },
     onSuccess: () => {
       if (email) {
@@ -68,7 +68,7 @@ export default function UserInfosModal({ infos }: { infos: InfosProps }) {
 
   const updateEmail = useMutation({
     mutationFn: async () => {
-      return await updateUserInfosEmail(infos.id, email);
+      return await updateUserInfosEmail(email);
     },
     onSuccess: () => {
       router.refresh();
