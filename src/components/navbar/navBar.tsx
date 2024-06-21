@@ -8,7 +8,7 @@ import SignOut from "../auth/SignOut";
 const NavBar = async () => {
   const { user } = await validateRequest();
   return (
-    <header className="flex h-20 w-full shrink-0 items-center px-4 md:px-6">
+    <header className="flex h-20 w-full shrink-0 items-center px-4 md:px-6 shadow-large">
       <SignOut />
       <Sheet>
         <SheetTrigger asChild>
@@ -99,5 +99,3 @@ function MenuIcon(props: any) {
     </svg>
   );
 }
-
-

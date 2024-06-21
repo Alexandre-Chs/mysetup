@@ -28,8 +28,10 @@ const MainInfos = ({ handleAddDatas }: { handleAddDatas: Function }) => {
   }, [title, description, handleAddDatas]);
 
   return (
-    <div className="mt-6">
-      <p className="font-bold text-2xl">Add your main title and description</p>
+    <div className="mt-6 p-6 rounded-lg bg-white">
+      <h2 className="font-bold text-2xl">
+        Add your main title and description
+      </h2>
       <p className="text-sm">
         Please add a title and a short description for your setup. Make sure the
         description is concise and informative.
@@ -39,6 +41,7 @@ const MainInfos = ({ handleAddDatas }: { handleAddDatas: Function }) => {
         className="mt-6"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
+        startContent={<span className="text-red-500">*</span>}
       />
       <Textarea
         placeholder="Main description of the setup"

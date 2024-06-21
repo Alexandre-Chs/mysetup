@@ -3,54 +3,58 @@
 import DynamicChoices from "@/components/add-setup/DynamicChoices";
 import MainInfos from "@/components/add-setup/MainInfos";
 import SelectChoiceSetupAdd from "@/components/add-setup/SelectChoiceSetupAdd";
-import UploadMainPhoto from "@/components/upload/upload-main-photo";
+import WrapperUploadPhotos from "@/components/add-setup/WrapperUploadPhotos";
+import UploadPhotos from "@/components/upload/UploadPhoto";
 import React from "react";
 
-type TypeChoice = "titleDescription" | "photo" | "description";
+type TypeChoice = "screen" | "photo" | "description";
+
 type TypeDatas = {
-  type: TypeChoice;
+  choice?: TypeChoice;
+  type: string;
   position: number;
   datas: any;
 };
 
+type TypeInfos = {
+  choice: string;
+  type: string;
+};
+
 const Share = () => {
-  const [choices, setChoices] = React.useState<string[]>([]);
+  const [infos, setInfos] = React.useState<TypeInfos[]>([]);
   const [datas, setDatas] = React.useState<TypeDatas[]>([]);
 
-  const handleAddChoice = (choice: TypeChoice) => {
-    setChoices((prev) => [...prev, choice]);
+  const handleInfos = (infos: TypeInfos[]) => {
+    setInfos((prev) => [...prev, ...infos]);
   };
 
-  const handleAddDatas = ({ type, position, datas }: TypeDatas) => {
+  const handleAddDatas = ({ choice, position, datas, type }: TypeDatas) => {
     setDatas((prev) => {
       const updatedDatas = [...prev];
       const index = updatedDatas.findIndex(
         (data) => data.position === position
       );
-
       if (index !== -1) {
-        updatedDatas[index] = { type, position, datas };
+        updatedDatas[index] = { choice, position, datas, type };
       } else {
-        updatedDatas.push({ type, position, datas });
+        updatedDatas.push({ choice, position, datas, type });
       }
       return updatedDatas;
     });
   };
 
-  console.log(datas);
-
   return (
-    <div className="max-w-2xl mx-auto mt-16 pb-12">
-      <UploadMainPhoto />
+    <div className="max-w-4xl mx-auto py-12 flex flex-col gap-y-4">
+      <WrapperUploadPhotos />
       <MainInfos handleAddDatas={handleAddDatas} />
 
-      {/* map on dynamic choices */}
       <div>
-        {choices.map((choice, index) => {
-          console.log(index);
+        {infos.map((item, index) => {
           return (
             <DynamicChoices
-              choice={choice}
+              choice={item.choice}
+              type={item.type}
               handleAddDatas={handleAddDatas}
               key={index}
               position={index + 1}
@@ -59,9 +63,8 @@ const Share = () => {
         })}
       </div>
 
-      {/* Add what u want to add */}
       <div className="mt-6">
-        <SelectChoiceSetupAdd handleAddChoice={handleAddChoice} />
+        <SelectChoiceSetupAdd handleInfos={handleInfos} />
       </div>
 
       {/* TODO: enregister ici */}

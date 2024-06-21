@@ -1,47 +1,56 @@
 "use client";
-
-import {
-  Button,
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownTrigger,
-} from "@nextui-org/react";
 import React from "react";
-import { IoIosAddCircleOutline } from "react-icons/io";
+import { Select, SelectItem } from "@nextui-org/react";
 
+//TODO : export tout les choix ensuite
 const CHOICES = [
-  { key: "titleDescription", label: "Title and description" },
-  { key: "optionalPhoto", label: "Optional photo" },
-  { key: "description", label: "Description" },
+  {
+    key: "screen",
+    label: "Screen",
+    type: "equipment",
+  },
+  {
+    key: "mouse",
+    label: "Mouse",
+    type: "equipment",
+  },
+  {
+    key: "keyboard",
+    label: "Keyboard",
+    type: "equipment",
+  },
+  {
+    key: "desk",
+    label: "Desk",
+    type: "accesories",
+  },
 ];
 
-const SelectChoiceSetupAdd = ({
-  handleAddChoice,
-}: {
-  handleAddChoice: Function;
-}) => {
+const SelectChoiceSetupAdd = ({ handleInfos }: { handleInfos: Function }) => {
+  const handleInfo = (e: any) => {
+    const choice = e.currentTarget.dataset.key;
+    const type = e.currentTarget.dataset.type;
+    handleInfos([{ choice, type }]);
+  };
+
   return (
-    <div className="w-full flex items-center justify-center">
-      <Dropdown>
-        <DropdownTrigger>
-          <Button className="bg-transparent flex flex-col h-16">
-            <IoIosAddCircleOutline size={60} />
-            <span className="text-sm">Add a block</span>
-          </Button>
-        </DropdownTrigger>
-        <DropdownMenu aria-label="Static Actions">
-          {CHOICES.map((choice) => (
-            <DropdownItem
-              key={choice.key}
-              value={choice.label}
-              onClick={(e) => handleAddChoice(e.currentTarget.dataset.key)}
-            >
-              {choice.label}
-            </DropdownItem>
-          ))}
-        </DropdownMenu>
-      </Dropdown>
+    <div className="flex p-6 bg-white rounded-lg">
+      <Select
+        label="Select your setup"
+        placeholder="Select your setup"
+        className="max-w-xs"
+      >
+        {CHOICES.map((choice) => (
+          <SelectItem
+            key={choice.key}
+            value={choice.label}
+            data-type={choice.type}
+            onClick={(e) => handleInfo(e)}
+          >
+            {choice.label}
+          </SelectItem>
+        ))}
+      </Select>
     </div>
   );
 };
