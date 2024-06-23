@@ -1,0 +1,28 @@
+/* scrollbar.css */
+
+.scrollbar-wrapper {
+  overflow: hidden; /* Masquer les débordements */
+  height: 100%;
+}
+
+.scrollbar {
+  overflow-y: scroll;
+}
+
+.scrollbar::-webkit-scrollbar {
+  width: 12px;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  background: transparent; /* Couleur de fond de la barre de défilement */
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  background-color: #504e4e; /* Couleur de la poignée de défilement */
+  border-radius: 10px;
+  border: 3px solid #151515; /* Couleur de fond entourant la poignée */
+}
+
+.scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #555; /* Couleur de la poignée au survol */
+}
