@@ -20,7 +20,9 @@ const SignOut = ({ username }: { username?: string }) => {
         <div className="cursor-pointer font-semibold">{username}</div>
       </DropdownTrigger>
       <DropdownMenu aria-label="Static Actions">
-        <DropdownItem key="profile">Profile</DropdownItem>
+        <DropdownItem key="profile">
+          <a href="/profile">Profile</a>
+        </DropdownItem>
         <DropdownItem
           key="logout"
           className="text-danger"
