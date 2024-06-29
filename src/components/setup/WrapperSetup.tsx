@@ -3,11 +3,14 @@ import Review from "./Review";
 import UserProfile from "./UserProfile";
 import Description from "./Description";
 import Equipment from "./Equipment";
+import PhotosUser from "./Photos";
 
 const WrapperSetup = () => {
   return (
     <div className="h-3/4 w-full max-w-6xl mx-auto grid grid-cols-4 grid-rows-6 gap-6">
-      <div className="bg-red-300 col-span-3 row-span-4">grid</div>
+      <div className="col-span-3 row-span-4">
+        <PhotosUser />
+      </div>
       <div className="col-span-1 row-span-6">
         <Equipment />
       </div>
