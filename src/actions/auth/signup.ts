@@ -62,6 +62,19 @@ export async function signup(formData: FormData) {
   //add user in database if username does not exist
   await addUserToDatabase(userId, parseData.username, passwordHash, email);
 
+  try {
+    await fetch(process.env.DISCORD_WEBHOOK!, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        content: `🎉 NOUVEAU USER ! Username : ${parseData.username} - Email : ${email} via les credentials !`,
+      }),
+    });
+  } catch (e) {
+    console.log(e);
+  }
   //config session
   const session = await lucia.createSession(userId, {});
   const sessionCookie = lucia.createSessionCookie(session.id);

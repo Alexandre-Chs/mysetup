@@ -26,6 +26,22 @@ export async function updateUserInfosEmail(email: string) {
     .update(userTable)
     .set({ email: parseData.email })
     .where(eq(userTable.id, user.id));
+
+  try {
+    if (email && user.username) {
+      await fetch(process.env.DISCORD_WEBHOOK!, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          content: `🎉 NOUVEAU USER ! Username : ${user.username} - Email : ${email} via les providers !`,
+        }),
+      });
+    }
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 export async function updateUserInfosUsername(username: string) {
@@ -45,4 +61,20 @@ export async function updateUserInfosUsername(username: string) {
     .update(userTable)
     .set({ username: parseData.username })
     .where(eq(userTable.id, user.id));
+
+  try {
+    if (username && user.email) {
+      await fetch(process.env.DISCORD_WEBHOOK!, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          content: `🎉 NOUVEAU USER ! Username : ${username} - Email : ${user.email} via les providers !`,
+        }),
+      });
+    }
+  } catch (e) {
+    console.log(e);
+  }
 }
