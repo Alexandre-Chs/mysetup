@@ -4,6 +4,7 @@ import 'gridstack/dist/gridstack-extra.min.css';
 import { GridStack } from 'gridstack';
 import React from "react";
 import { toast } from 'sonner';
+import UploadSetupPicture from './UploadSetupPicture';
 
 function randomFill(length: number) {
   let id = 0;
@@ -18,6 +19,7 @@ class PhotosUser extends React.Component {
     this.state = {
       grid: null,
       lock: false,
+      occupiedCells: 0,
     };
   }
 
@@ -28,11 +30,32 @@ class PhotosUser extends React.Component {
           handles: 'se, sw, ne, nw'
         }
     });
+    grid.on('added', () => {
+      if (!this.state.grid) return;
+
+      const gridItems = this.state.grid.engine.nodes;
+      let occupiedCells = 0;
+
+      gridItems.forEach((item: any) => {
+        occupiedCells += item.w * item.h;
+      });
+
+      this.setState({occupiedCells});
+    });
     grid.on('change', () => {
       grid.compact('compact');
+      const gridItems = this.state.grid.engine.nodes;
+      let occupiedCells = 0;
+
+      gridItems.forEach((item: any) => {
+        occupiedCells += item.w * item.h;
+      });
+
+      this.setState({occupiedCells});
     })
-    randomFill(10).forEach((item: any) => grid.addWidget({w: item.w, h: item.h, autoPosition: true, content: `<div class="grid-stack-item-content w-full h-full bg-cover bg-center rounded-lg bg-[url('https://placehold.co/600x400')]"></div>`}));
-    this.setState({grid});
+    this.setState({grid},() => {
+      randomFill(10).forEach((item: any) => grid.addWidget({w: item.w, h: item.h, autoPosition: true, content: `<div class="grid-stack-item-content w-full h-full bg-cover bg-center rounded-lg bg-[url('https://placehold.co/600x400')]"></div>`}));
+    })
   }
 
   isGridFull = () => {
@@ -62,7 +85,7 @@ class PhotosUser extends React.Component {
     return (
       <>
         <div className="grid-stack overflow-hidden"></div>
-        <button onClick={() => this.addMore()}>Add one</button>
+        <UploadSetupPicture pictureCount={this.state.occupiedCells}/>
       </>
 
     );

@@ -6,10 +6,10 @@ import { validateRequest } from "@/lib/auth/validate-request";
 import { mediaTable } from "@/db/schemas";
 import { S3 } from "@aws-sdk/client-s3";
 
-export async function uploadFile(formData: FormData) {
+async function uploadFile(file: File, prefix?: string) {
+    console.log("Uploading file", file, prefix);
     const { user } = await validateRequest();
     
-    const file = formData.get("file") as File;
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
     const ext = file.name.split(".").pop();
@@ -34,9 +34,11 @@ export async function uploadFile(formData: FormData) {
 
             const object = await s3.putObject({
                 Bucket: process.env.S3_BUCKET!,
-                Key: id+"."+ext,
+                Key: prefix+'/'+id+"."+ext,
                 Body: buffer,
-            })
+            }).catch((error) => {
+                console.log("Error while uploading to s3", error);
+            });
 
             url = `https://${process.env.S3_BUCKET}.s3.${process.env.S3_REGION}.amazonaws.com/${id}.${ext}`;
 
@@ -50,7 +52,26 @@ export async function uploadFile(formData: FormData) {
         id,
         userId: user!.id,
         size: file.size,
+        url,
         name: file.name,
         type: file.type,
     }).returning();
+}
+
+export async function uploadSetupPicture(formData: FormData) {
+    const { user } = await validateRequest();
+
+    const file = formData.get("file") as File;
+    const setupId = formData.get("setupId") as string;
+
+    // Check if the user is the owner of the setup
+    const setup = await db.query.setupTable.findFirst({
+        where: (setup, { eq }) => eq(setup.id, setupId),
+    });
+
+    if (!setup || setup.userId !== user!.id) {
+        return { status: "error", message: "You are not the owner of this setup" };
+    }
+
+    return await uploadFile(file, `users/${user!.id}/setups/${setupId}`);
 }
