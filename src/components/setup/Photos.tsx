@@ -3,6 +3,7 @@ import 'gridstack/dist/gridstack.min.css';
 import 'gridstack/dist/gridstack-extra.min.css';
 import { GridStack } from 'gridstack';
 import React from "react";
+import { toast } from 'sonner';
 
 function randomFill(length: number) {
   let id = 0;
@@ -30,7 +31,7 @@ class PhotosUser extends React.Component {
     grid.on('change', () => {
       grid.compact('compact');
     })
-    randomFill(1).forEach((item: any) => grid.addWidget({w: item.w, h: item.h, autoPosition: true, content: `<div class="grid-stack-item-content w-full h-full bg-cover bg-center rounded-lg bg-[url('https://placehold.co/600x400')]"></div>`}));
+    randomFill(10).forEach((item: any) => grid.addWidget({w: item.w, h: item.h, autoPosition: true, content: `<div class="grid-stack-item-content w-full h-full bg-cover bg-center rounded-lg bg-[url('https://placehold.co/600x400')]"></div>`}));
     this.setState({grid});
   }
 
@@ -49,7 +50,9 @@ class PhotosUser extends React.Component {
 
   addMore = () => {
     if (this.isGridFull()) {
-      alert('Grid is full');
+      toast('Grid is full', {
+        duration: 5000,
+      })
       return
     };
     randomFill(1).forEach((item: any) => this.state.grid.addWidget({w: item.w, h: item.h, content: `<div class="grid-stack-item-content w-full h-full bg-cover bg-center rounded-lg bg-[url('https://placehold.co/600x400')]"></div>`}));
