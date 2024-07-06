@@ -21,7 +21,7 @@ const SignOut = ({ username }: { username?: string }) => {
       </DropdownTrigger>
       <DropdownMenu aria-label="Static Actions">
         <DropdownItem key="profile">
-          <a href="/profile">Profile</a>
+          <a href={`/${username}`}>Profile</a>
         </DropdownItem>
         <DropdownItem
           key="logout"
