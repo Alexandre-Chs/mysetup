@@ -2,6 +2,7 @@
 
 import { login } from "@/actions/auth/login";
 import { validSchemaAuth } from "@/zod/auth/schema-auth";
+import { Button } from "@nextui-org/react";
 import React, { useState } from "react";
 import { toast } from "sonner";
 
@@ -17,6 +18,8 @@ const Login = () => {
       username,
       password,
     });
+
+    console.log(username, password);
 
     if (!parseDataWithZod.success) {
       const errorMessages = parseDataWithZod.error.errors
@@ -36,19 +39,44 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <h1>Log in page</h1>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="username">Username</label>
-        <input name="username" id="username" />
+    <div className="h-auto rounded-t-xl flex flex-col items-center justify-center max-w-lg w-full pt-8 bg-white px-8">
+      <h1 className="text-xl font-bold">Log in</h1>
+      <p className="text-sm text-gray-400 pb-4">
+        Let&apos;s log in and start sharing your setup
+      </p>
+      <form onSubmit={handleSubmit} className="w-full">
+        <div className="flex flex-col w-full">
+          <label htmlFor="username" className="text-gray-400">
+            Username
+          </label>
+          <input
+            name="username"
+            id="username"
+            className="border-1 border-gray-400 rounded-md p-2"
+          />
+        </div>
         <br />
-        <label htmlFor="password">Password</label>
-        <input type="password" name="password" id="password" />
+        <div className="flex flex-col">
+          <label htmlFor="password" className="text-gray-400">
+            Password
+          </label>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            className="border-1 border-gray-400 rounded-md p-2"
+          />
+        </div>
         <br />
         {errorMessage && (
           <p className="text-red-500 font-bold">{errorMessage}</p>
         )}
-        <button>Continue</button>
+        <Button
+          type="submit"
+          className="w-full text-white bg-green-500 font-semibold"
+        >
+          Continue
+        </Button>
       </form>
     </div>
   );

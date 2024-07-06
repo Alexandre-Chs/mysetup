@@ -33,7 +33,7 @@ export const LoginProvider = () => {
   });
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 max-w-lg w-full rounded-b-xl bg-white pb-12 px-8">
       <Button
         onPress={() => googleMutation.mutate()}
         isLoading={googleMutation.isPending}
@@ -47,7 +47,7 @@ export const LoginProvider = () => {
         isLoading={redditMutation.isPending}
         startContent={<FaRedditAlien />}
         variant="flat"
-        className="bg-red-400 text-white"
+        className="bg-red-500 text-white"
       >
         Continue with Reddit
       </Button>
