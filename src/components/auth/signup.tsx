@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { signup } from "@/actions/auth/signup";
 import { toast } from "sonner";
 import { validSchemaAuthWithEmail } from "@/zod/auth/schema-auth";
+import { Button } from "@nextui-org/react";
 
 const SignUp = () => {
   const [errorMessage, setErrorMessage] = useState("");
@@ -39,24 +40,58 @@ const SignUp = () => {
   };
 
   return (
-    <>
-      <h1>Create an account</h1>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="username">Username</label>
-        <input name="username" id="username" />
+    <div className="h-auto rounded-xl flex flex-col items-center justify-center max-w-lg w-full py-8 bg-white px-8">
+      <h1 className="text-xl font-bold">Create an account</h1>
+      <p className="text-sm text-gray-400 pb-4">
+        Let&apos;s create your account and start sharing your setup
+      </p>
+      <form onSubmit={handleSubmit} className="w-full">
+        <div className="flex flex-col w-full">
+          <label htmlFor="username" className="text-gray-400">
+            Username
+          </label>
+          <input
+            name="username"
+            id="username"
+            className="border-1 border-gray-400 rounded-md p-2"
+          />
+        </div>
         <br />
-        <label htmlFor="username">Email</label>
-        <input name="email" id="email" />
+        <div className="flex flex-col">
+          <label htmlFor="password" className="text-gray-400">
+            Password
+          </label>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            className="border-1 border-gray-400 rounded-md p-2"
+          />
+        </div>
         <br />
-        <label htmlFor="password">Password</label>
-        <input type="password" name="password" id="password" />
+        <div className="flex flex-col">
+          <label htmlFor="email" className="text-gray-400">
+            Email
+          </label>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            className="border-1 border-gray-400 rounded-md p-2"
+          />
+        </div>
         <br />
         {errorMessage && (
           <p className="text-red-500 font-bold">{errorMessage}</p>
         )}
-        <button type="submit">Continue</button>
+        <Button
+          type="submit"
+          className="w-full text-white bg-green-500 font-semibold"
+        >
+          Continue
+        </Button>
       </form>
-    </>
+    </div>
   );
 };
 
