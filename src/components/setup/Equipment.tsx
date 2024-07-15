@@ -1,10 +1,13 @@
+"use client";
+
 import React from "react";
 import { IoHardwareChip } from "react-icons/io5";
 import { LuLampDesk } from "react-icons/lu";
 import "./scrollbar.css";
 import { groupByType } from "@/lib/utils/group-by-type";
 import { TypeEquipment } from "@/types/types";
-import ButtonAdd from "../ui/button-add";
+import { CircleX } from "lucide-react";
+import { useCreateSetupStore } from "@/store/CreateSetupStore";
 
 const Equipment = ({
   equipments,
@@ -14,6 +17,13 @@ const Equipment = ({
   action?: "add";
 }) => {
   const groupedItems = groupByType(equipments);
+  const { deleteEquipment } = useCreateSetupStore();
+
+  const handleDeleteItem = (e: any) => {
+    const elementSelected = e.target.parentElement.dataset.name;
+    deleteEquipment(elementSelected);
+  };
+
   return (
     <div className="overflow-hidden h-full rounded-large relative">
       <div className="h-full bg-[#151515] text-white px-4 rounded-large overflow-y-auto scrollbar">
@@ -23,22 +33,33 @@ const Equipment = ({
             {groupedItems[type].map(
               (item: { name: string; type: string }, index: number) => (
                 <div
-                  className="w-full bg-[#464646] rounded-md flex items-center justify-start gap-2 py-2 px-4 mb-4"
+                  className="relative w-full bg-[#464646] rounded-md flex items-center justify-start gap-2 py-2 px-4 mb-4"
                   key={index}
                 >
                   {item.type === "equipment" ? (
-                    <IoHardwareChip className="text-orange-400" size={20} />
+                    <IoHardwareChip
+                      className="text-orange-400 basis-2/8"
+                      size={20}
+                    />
                   ) : (
-                    <LuLampDesk className="text-blue-400" size={20} />
+                    <LuLampDesk className="text-blue-400 basis-2/8" size={20} />
                   )}
-                  <p>{item.name}</p>
+                  <p className="w-full">{item.name}</p>
+                  {action === "add" && (
+                    <button
+                      className="absolute right-2 rounded-lg"
+                      onClick={handleDeleteItem}
+                      data-name={item.name}
+                    >
+                      <CircleX size={20} className="text-red-500" />
+                    </button>
+                  )}
                 </div>
               )
             )}
           </div>
         ))}
       </div>
-
     </div>
   );
 };
