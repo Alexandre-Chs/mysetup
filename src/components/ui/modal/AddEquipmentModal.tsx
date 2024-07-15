@@ -2,6 +2,7 @@
 
 import { useCreateSetupStore } from "@/store/CreateSetupStore";
 import { TypeEquipment } from "@/types/types";
+import { validSchemaEquipment } from "@/zod/equipments/schema-equipment";
 import {
   Button,
   Input,
@@ -26,7 +27,9 @@ const AddEquipmentModal = ({
   const [newEquipment, setNewEquipment] = React.useState<TypeEquipment>({
     name: "",
     type: "",
+    url: "",
   });
+  const [errorMessage, setErrorMessage] = React.useState("");
 
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const { addNewEquipments } = useCreateSetupStore();
@@ -43,13 +46,24 @@ const AddEquipmentModal = ({
     }
   }, [isOpen, setShowModal]);
 
-  const handleSubmit = () => {
-    addNewEquipments(newEquipment);
+  const handleSubmit = (onClose: Function) => {
+    const result = validSchemaEquipment.safeParse(newEquipment);
+
+    if (!result.success) {
+      setErrorMessage(
+        result.error.errors.map((error) => error.message).join(", ")
+      );
+      return;
+    }
+    addNewEquipments(result.data);
     setShowModal(false);
     setNewEquipment({
       name: "",
       type: "",
+      url: "",
     });
+    onClose();
+    setErrorMessage("");
   };
 
   return (
@@ -81,7 +95,7 @@ const AddEquipmentModal = ({
                   });
                 }}
               >
-                <SelectItem value="equipment" key="equipment">
+                <SelectItem value="equipments" key="equipments">
                   Equipment
                 </SelectItem>
                 <SelectItem value="accessories" key="accessories">
@@ -90,17 +104,32 @@ const AddEquipmentModal = ({
                 <SelectItem value="desk" key="desk">
                   Desk
                 </SelectItem>
-                <SelectItem value="other" key="other">
+                <SelectItem value="others" key="others">
                   Other
                 </SelectItem>
               </Select>
+              <div>
+                <label>Where to buy it (optional)</label>
+                <p className="text-xs">Affiliate link is authorized</p>
+                <Input
+                  placeholder="e.g Amazon url"
+                  value={newEquipment.url}
+                  onChange={(e) =>
+                    setNewEquipment({
+                      ...newEquipment,
+                      url: e.currentTarget.value,
+                    })
+                  }
+                />
+              </div>
             </ModalBody>
+            {errorMessage && (
+              <p className="text-red-500 font-bold text-sm px-6">
+                {errorMessage}
+              </p>
+            )}
             <ModalFooter className="justify-end">
-              <Button
-                color="secondary"
-                onPress={onClose}
-                onClick={handleSubmit}
-              >
+              <Button color="secondary" onClick={() => handleSubmit(onClose)}>
                 Submit
               </Button>
             </ModalFooter>

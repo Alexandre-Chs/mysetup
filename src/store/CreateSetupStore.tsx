@@ -3,7 +3,11 @@ import { create } from "zustand";
 
 type TypeCreateSetupStore = {
   newEquipments: TypeEquipment[];
-  addNewEquipments: (datas: { name: String; type: String }) => void;
+  addNewEquipments: (datas: {
+    name: String;
+    type: String;
+    url?: string;
+  }) => void;
   deleteEquipment: (name: string) => void;
 };
 

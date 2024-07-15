@@ -8,6 +8,7 @@ import { groupByType } from "@/lib/utils/group-by-type";
 import { TypeEquipment } from "@/types/types";
 import { CircleX } from "lucide-react";
 import { useCreateSetupStore } from "@/store/CreateSetupStore";
+import { useRouter } from "next/navigation";
 
 const Equipment = ({
   equipments,
@@ -16,12 +17,18 @@ const Equipment = ({
   equipments: TypeEquipment[];
   action?: "add";
 }) => {
+  const router = useRouter();
+
   const groupedItems = groupByType(equipments);
   const { deleteEquipment } = useCreateSetupStore();
 
   const handleDeleteItem = (e: any) => {
     const elementSelected = e.target.parentElement.dataset.name;
     deleteEquipment(elementSelected);
+  };
+
+  const handleRedirectUser = (url: string) => {
+    window.open(url, "_blank");
   };
 
   return (
@@ -31,10 +38,14 @@ const Equipment = ({
           <div key={type}>
             <h4 className="font-bold text-2xl pt-4 pb-2 capitalize">{type}</h4>
             {groupedItems[type].map(
-              (item: { name: string; type: string }, index: number) => (
+              (
+                item: { name: string; type: string; url: string },
+                index: number
+              ) => (
                 <div
-                  className="relative w-full bg-[#464646] rounded-md flex items-center justify-start gap-2 py-2 px-4 mb-4"
+                  className="cursor-pointer relative w-full bg-[#464646] rounded-md flex items-center justify-start gap-2 py-2 px-4 mb-4 hover:bg-[#464646a8]"
                   key={index}
+                  onClick={() => handleRedirectUser(item.url)}
                 >
                   {item.type === "equipment" ? (
                     <IoHardwareChip

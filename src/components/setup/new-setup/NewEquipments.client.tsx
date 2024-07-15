@@ -8,6 +8,7 @@ import { useCreateSetupStore } from "@/store/CreateSetupStore";
 const NewEquipmentsClient = () => {
   const { newEquipments } = useCreateSetupStore();
   const [showModal, setShowModal] = React.useState(false);
+
   return (
     <>
       <Equipment equipments={newEquipments} action="add" />
