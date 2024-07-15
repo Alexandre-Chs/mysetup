@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { S3 } from "@aws-sdk/client-s3";
 
 const UploadPhotos = () => {
   const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {

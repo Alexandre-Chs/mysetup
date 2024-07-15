@@ -1,28 +1,21 @@
 import React from "react";
 import { IoHardwareChip } from "react-icons/io5";
 import { LuLampDesk } from "react-icons/lu";
-import "./scrollbar.css"; // Importez le fichier CSS personnalisé
+import "./scrollbar.css";
+import { groupByType } from "@/lib/utils/group-by-type";
+import { TypeEquipment } from "@/types/types";
+import ButtonAdd from "../ui/button-add";
 
-const FAKES = [
-  { name: "i7 8700k", type: "equipment" },
-  { name: "NVIDIA GeForce RTX 3060", type: "equipment" },
-  { name: "NVIDIA GeForce RTX 9889", type: "equipment" },
-  { name: "Samsung 970 EVO", type: "accesories" },
-  { name: "Dell XPS 15", type: "equipment" },
-  { name: "NVIDIA GeForce RTX 9889", type: "equipment" },
-  { name: "Samsung 970 EVO", type: "accesories" },
-  { name: "Dell XPS 15", type: "equipment" },
-  { name: "NVIDIA GeForce RTX 9889", type: "equipment" },
-  { name: "Samsung 970 EVO", type: "accesories" },
-  { name: "Dell XPS 15", type: "equipment" },
-  { name: "Desk amazon", type: "desk" },
-];
-
-const Equipment = () => {
-  const groupedItems = groupByType(FAKES);
-
+const Equipment = ({
+  equipments,
+  action,
+}: {
+  equipments: TypeEquipment[];
+  action?: "add";
+}) => {
+  const groupedItems = groupByType(equipments);
   return (
-    <div className="overflow-hidden h-full rounded-large">
+    <div className="overflow-hidden h-full rounded-large relative">
       <div className="h-full bg-[#151515] text-white px-4 rounded-large overflow-y-auto scrollbar">
         {Object.keys(groupedItems).map((type) => (
           <div key={type}>
@@ -45,19 +38,9 @@ const Equipment = () => {
           </div>
         ))}
       </div>
+
     </div>
   );
 };
-
-function groupByType(elements: any[]) {
-  return elements.reduce((acc, element) => {
-    const { type } = element;
-    if (!acc[type]) {
-      acc[type] = [];
-    }
-    acc[type].push(element);
-    return acc;
-  }, {});
-}
 
 export default Equipment;

@@ -1,20 +1,18 @@
 import React from "react";
-import Review from "./Review";
-import UserProfile from "./UserProfile";
-import Description from "./Description";
-import Equipment from "./Equipment";
-import PhotosUser from "./Photos";
+import UserProfile from "../UserProfile";
+import Review from "../Review";
+import NewDescription from "./NewDescription";
+import PhotosUser from "../Photos";
+import NewEquipmentsClient from "./NewEquipments.client";
 
-import { FAKES } from "@/lib/utils/fakes-datas-equipments";
-
-const WrapperSetup = () => {
+const WrapperNewSetup = () => {
   return (
     <div className="h-3/4 w-full max-w-6xl mx-auto grid grid-cols-4 grid-rows-6 gap-6">
       <div className="col-span-3 row-span-4">
         <PhotosUser />
       </div>
       <div className="col-span-1 row-span-6">
-        <Equipment equipments={FAKES} />
+        <NewEquipmentsClient />
       </div>
       <div className="col-span-1 row-span-2 flex flex-col gap-2">
         <div className="flex-1">
@@ -25,10 +23,10 @@ const WrapperSetup = () => {
         </div>
       </div>
       <div className="col-span-2 row-span-2 col-start-2 row-start-5">
-        <Description />
+        <NewDescription />
       </div>
     </div>
   );
 };
 
-export default WrapperSetup;
+export default WrapperNewSetup;
