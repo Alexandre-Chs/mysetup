@@ -1,4 +1,5 @@
 import { uploadSetupPicture } from "@/actions/media/upload";
+import { useParams } from "next/navigation";
 import { useRef } from "react";
 import { toast } from "sonner";
 
@@ -7,6 +8,8 @@ type UploadSetupPictureProps = {
 }
 
 const UploadSetupPicture = ({pictureCount}: UploadSetupPictureProps) => {
+    const params = useParams<{id: string}>();
+
     const fileInput = useRef<HTMLInputElement>(null);
     
     function openFilePicker() {
@@ -28,7 +31,7 @@ const UploadSetupPicture = ({pictureCount}: UploadSetupPictureProps) => {
         for (let i = 0; i < files.length; i++) {
             const formData = new FormData();
             formData.append('file', files[i]);
-            formData.append('setupId', '5cyz6iaxp6jphizg');
+            formData.append('setupId', params.id);
             await uploadSetupPicture(formData)
             toast('Picture uploaded', {
                 duration: 3000,

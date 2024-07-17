@@ -8,7 +8,11 @@ export async function getSetup(id: string) {
     return await db.query.setupTable.findFirst({ 
         where: eq(setupTable.id, id),
         with: {
-            setupPhotos: true,
+            setupPhotos: {
+                with: {
+                    media: true
+                }
+            },
         }
     });
 }

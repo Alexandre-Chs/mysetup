@@ -5,6 +5,7 @@ import { GridStack } from 'gridstack';
 import React from "react";
 import { toast } from 'sonner';
 import UploadSetupPicture from './UploadSetupPicture';
+import { updateSetupPhoto } from '@/actions/setup-photo/update';
 
 function randomFill(length: number) {
   let id = 0;
@@ -20,6 +21,7 @@ class PhotosUser extends React.Component {
       grid: null,
       lock: false,
       occupiedCells: 0,
+      photos: props.photos,
     };
   }
 
@@ -30,6 +32,7 @@ class PhotosUser extends React.Component {
           handles: 'se, sw, ne, nw'
         }
     });
+
     grid.on('added', () => {
       if (!this.state.grid) return;
 
@@ -42,9 +45,21 @@ class PhotosUser extends React.Component {
 
       this.setState({occupiedCells});
     });
-    grid.on('change', () => {
+
+    grid.on('change', async () => {
       grid.compact('compact');
       const gridItems = this.state.grid.engine.nodes;
+      
+      const items = gridItems.map((item: any) => {
+        return {
+          id: item.id,
+          x: item.x,
+          y: item.y,
+          w: item.w,
+          h: item.h,
+        }
+      });
+
       let occupiedCells = 0;
 
       gridItems.forEach((item: any) => {
@@ -52,10 +67,20 @@ class PhotosUser extends React.Component {
       });
 
       this.setState({occupiedCells});
+
+      await updateSetupPhoto(items);
     })
+
     this.setState({grid},() => {
-      randomFill(10).forEach((item: any) => grid.addWidget({w: item.w, h: item.h, autoPosition: true, content: `<div class="grid-stack-item-content w-full h-full bg-cover bg-center rounded-lg bg-[url('https://placehold.co/600x400')]"></div>`}));
+      if (grid.getGridItems().length > 0) return;
+      this.state.photos.forEach((item: any) => { grid.addWidget({w: item.width, h: item.height, x: item.x, y: item.y, autoPosition: true, id: item.id, content: `<div class="grid-stack-item-content w-full h-full bg-cover bg-center rounded-lg" style="background-image: url('${item.media.url}');"></div>`}) })
     })
+  }
+
+  componentWillUnmount(): void {
+    if (this.state.grid) {
+      this.state.grid.destroy();
+    }
   }
 
   isGridFull = () => {

@@ -6,6 +6,7 @@ import { validateRequest } from "@/lib/auth/validate-request";
 import { Media, mediaTable } from "@/db/schemas";
 import { S3 } from "@aws-sdk/client-s3";
 import { setupPhotoTable } from "@/db/schemas";
+import { revalidatePath } from "next/cache";
 
 export async function uploadFile(file: File, prefix?: string) {
     console.log("Uploading file", file, prefix);
@@ -37,11 +38,14 @@ export async function uploadFile(file: File, prefix?: string) {
                 Bucket: process.env.S3_BUCKET!,
                 Key: prefix+'/'+id+"."+ext,
                 Body: buffer,
+                ACL: "public-read",
             }).catch((error) => {
                 console.log("Error while uploading to s3", error);
             });
 
-            url = `https://${process.env.S3_BUCKET}.s3.${process.env.S3_REGION}.amazonaws.com/${id}.${ext}`;
+            url = `https://${process.env.S3_BUCKET}.s3.${process.env.S3_REGION}.scw.cloud/`;
+            if (prefix) { url += prefix + "/"; }
+            url += id + "." + ext;
 
             console.log("Upload to cloud :", object)
         }
@@ -88,5 +92,9 @@ export async function uploadSetupPicture(formData: FormData) {
         id: generateIdFromEntropySize(10),
         setupId,
         mediaId: media.id,
+        x: 0,
+        y: 0,
     }).returning();
+
+    revalidatePath(`/setup/${setupId}`);
 }

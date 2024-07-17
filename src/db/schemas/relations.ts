@@ -5,16 +5,12 @@ import { mediaTable } from "./media";
 
 export const setupPhotoTableRelation = relations(setupPhotoTable, ({ one }) => ({
     setup: one(setupTable, {
-        //@ts-ignore
-        fields: [setupTable.id],
-        //@ts-ignore
-        references: [setupPhotoTable.setupId]
+        fields: [setupPhotoTable.setupId],
+        references: [setupTable.id]
     }),
     media: one(mediaTable, {
-        //@ts-ignore
-        fields: [mediaTable.id],
-        //@ts-ignore
-        references: [setupPhotoTable.mediaId]
+        fields: [setupPhotoTable.mediaId],
+        references: [mediaTable.id]
     }),
 }));
 
