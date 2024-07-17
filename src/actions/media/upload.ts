@@ -3,10 +3,11 @@ import fs from "fs";
 import { generateIdFromEntropySize } from "lucia";
 import { db } from "@/db/db";
 import { validateRequest } from "@/lib/auth/validate-request";
-import { mediaTable } from "@/db/schemas";
+import { Media, mediaTable } from "@/db/schemas";
 import { S3 } from "@aws-sdk/client-s3";
+import { setupPhotoTable } from "@/db/schemas";
 
-async function uploadFile(file: File, prefix?: string) {
+export async function uploadFile(file: File, prefix?: string) {
     console.log("Uploading file", file, prefix);
     const { user } = await validateRequest();
     
@@ -48,7 +49,7 @@ async function uploadFile(file: File, prefix?: string) {
         return { status: "error", message: "Error while uploading file" };
     }
 
-    return await db.insert(mediaTable).values({
+    const medias = await db.insert(mediaTable).values({
         id,
         userId: user!.id,
         size: file.size,
@@ -56,9 +57,12 @@ async function uploadFile(file: File, prefix?: string) {
         name: file.name,
         type: file.type,
     }).returning();
+
+    return medias[0];
 }
 
 export async function uploadSetupPicture(formData: FormData) {
+    console.log("Uploading setup picture");
     const { user } = await validateRequest();
 
     const file = formData.get("file") as File;
@@ -70,8 +74,19 @@ export async function uploadSetupPicture(formData: FormData) {
     });
 
     if (!setup || setup.userId !== user!.id) {
+        console.log("User is not the owner of the setup");
         return { status: "error", message: "You are not the owner of this setup" };
     }
 
-    return await uploadFile(file, `users/${user!.id}/setups/${setupId}`);
+    const media = await uploadFile(file, `users/${user!.id}/setups/${setupId}`);
+
+    if (!media) {
+        return { status: "error", message: "Error while uploading file" };
+    }
+
+    await db.insert(setupPhotoTable).values({
+        id: generateIdFromEntropySize(10),
+        setupId,
+        mediaId: media.id,
+    }).returning();
 }

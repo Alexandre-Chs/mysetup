@@ -1,7 +1,7 @@
 "use server";
 
 import { db } from "@/db/db";
-import { setupTable } from "@/db/schemas/setup";
+import { setupTable } from "@/db/schemas";
 import { validateRequest } from "@/lib/auth/validate-request";
 import { eq } from "drizzle-orm";
 

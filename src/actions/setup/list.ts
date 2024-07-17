@@ -1,17 +1,11 @@
 "use server";
 
 import { db } from "@/db/db";
-import { setupTable } from "@/db/schemas/setup";
-import { validateRequest } from "@/lib/auth/validate-request";
+import { userTable } from "@/db/schemas";
+import { setupTable } from "@/db/schemas";
 import { eq } from "drizzle-orm";
 
-export async function listUserSetup() {
-    const {user} = await validateRequest();
-    if (!user) {
-        console.log("here")
-        return;
-    }
-
-    return await db.select().from(setupTable).where(eq(setupTable.userId, user.id));
-
+export async function listUserSetup(username: string) {
+    const users = await db.select().from(userTable).where(eq(userTable.username, username));
+    return await db.select().from(setupTable).where(eq(setupTable.userId, users[0].id));
 }

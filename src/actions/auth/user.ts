@@ -1,7 +1,7 @@
 "use server";
 
 import { db } from "@/db/db";
-import { userTable } from "@/db/schemas/user";
+import { userTable } from "@/db/schemas";
 import { eq, sql } from "drizzle-orm";
 
 export async function ifUsernameExistInDatabase(

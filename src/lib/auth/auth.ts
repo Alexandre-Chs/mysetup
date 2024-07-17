@@ -1,7 +1,7 @@
 // src/auth.ts
 import { db } from "@/db/db";
-import { sessionTable } from "@/db/schemas/session";
-import { userTable } from "@/db/schemas/user";
+import { sessionTable } from "@/db/schemas";
+import { userTable } from "@/db/schemas";
 import { DrizzlePostgreSQLAdapter } from "@lucia-auth/adapter-drizzle";
 import { Lucia } from "lucia";
 

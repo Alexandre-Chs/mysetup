@@ -42,9 +42,9 @@ const Profile = () => {
 
     return (
         <div>
-            {/* <h1>Bonjour</h1>
+            <h1>Bonjour</h1>
             <SetupCreate />
-            <SetupList /> */}
+            <SetupList />
             <form onSubmit={handleSubmit}>
                 <input type="file" name="file" id="" />
                 <button>Envoyer</button>

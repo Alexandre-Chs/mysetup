@@ -28,7 +28,7 @@ const UploadSetupPicture = ({pictureCount}: UploadSetupPictureProps) => {
         for (let i = 0; i < files.length; i++) {
             const formData = new FormData();
             formData.append('file', files[i]);
-            formData.append('prefix', 'leprefix');
+            formData.append('setupId', '5cyz6iaxp6jphizg');
             await uploadSetupPicture(formData)
             toast('Picture uploaded', {
                 duration: 3000,
