@@ -1,15 +1,23 @@
 "use client";
 
 import ButtonAdd from "@/components/ui/button-add";
+import { useCreateSetupStore } from "@/store/CreateSetupStore";
 import React, { useRef, useEffect } from "react";
 
 const NewDescription = () => {
   const [addDescription, setAddDescription] = React.useState(false);
   const [description, setDescription] = React.useState("");
+  const { addNewDescription } = useCreateSetupStore();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleAddDescription = () => {
     setAddDescription((curr) => !curr);
+  };
+
+  const handleChangeTextarea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setDescription(e.target.value);
+    let description = e.target.value;
+    addNewDescription({ description });
   };
 
   useEffect(() => {
@@ -26,7 +34,7 @@ const NewDescription = () => {
           className="w-full h-full rounded-md bg-transparent p-2 text-sm text-white resize-none focus:outline-none focus:border-1 focus:border-white border-1 border-transparent"
           placeholder="Add a description for your setup"
           maxLength={530}
-          onChange={(e) => setDescription(e.target.value)}
+          onChange={(e) => handleChangeTextarea(e)}
           value={description}
         />
       ) : (
