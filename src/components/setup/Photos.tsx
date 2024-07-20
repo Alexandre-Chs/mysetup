@@ -25,6 +25,23 @@ class PhotosUser extends React.Component {
     };
   }
 
+  async componentDidUpdate(prevProps: any) {
+    if (prevProps.photos === this.props.photos) return;
+    const allReadyExistingItems = this.state.grid.engine.nodes.map((item: any) => item.id);
+    const newItems = this.props.photos.filter((item: any) => !allReadyExistingItems.includes(item.id));
+    newItems.forEach((item: any) =>
+      this.state.grid.addWidget({
+        w: item.width,
+        h: item.height,
+        x: item.x,
+        y: item.y,
+        autoPosition: true,
+        id: item.id,
+        content: `<div class="grid-stack-item-content w-full h-full bg-cover bg-center rounded-lg" style="background-image: url('${item.media.url}');"></div>`,
+      })
+    );
+  }
+
   async componentDidMount() {
     const grid = GridStack.init({
       column: 8,

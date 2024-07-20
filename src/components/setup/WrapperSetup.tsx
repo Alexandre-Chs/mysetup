@@ -7,7 +7,6 @@ import PhotosUser from "./Photos";
 
 import { FAKES } from "@/lib/utils/fakes-datas-equipments";
 import { Setup, SetupPhoto } from "@/db/schemas";
-import RefreshWrapperPhotoUser from "./RefreshWrapperPhotoUser";
 
 type CompleteSetup = Setup & { setupPhotos: SetupPhoto[] };
 
@@ -15,7 +14,7 @@ const WrapperSetup = ({ setup }: { setup: CompleteSetup }) => {
   return (
     <div className="h-3/4 w-full max-w-6xl mx-auto grid grid-cols-4 grid-rows-6 gap-6">
       <div className="col-span-3 row-span-4">
-        <RefreshWrapperPhotoUser setup={setup} />
+        <PhotosUser photos={setup.setupPhotos} />
       </div>
       <div className="col-span-1 row-span-6">
         <Equipment equipments={FAKES} />
