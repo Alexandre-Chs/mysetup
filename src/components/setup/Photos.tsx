@@ -125,10 +125,10 @@ class PhotosUser extends React.Component {
 
   render() {
     return (
-      <>
+      <div>
         <div className="grid-stack overflow-hidden"></div>
         <UploadSetupPicture pictureCount={this.state.occupiedCells} />
-      </>
+      </div>
     );
   }
 }
