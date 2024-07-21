@@ -5,7 +5,7 @@ import { IoHardwareChip } from "react-icons/io5";
 import { LuLampDesk } from "react-icons/lu";
 import "./scrollbar.css";
 import { groupByType } from "@/lib/utils/group-by-type";
-import { TypeEquipment } from "@/types/types";
+import { GetEquipment, TypeEquipment } from "@/types/types";
 import { CircleX } from "lucide-react";
 import { useCreateSetupStore } from "@/store/CreateSetupStore";
 import { useRouter } from "next/navigation";
@@ -14,7 +14,7 @@ const Equipment = ({
   equipments,
   action,
 }: {
-  equipments: TypeEquipment[];
+  equipments: GetEquipment[];
   action?: "add";
 }) => {
   const router = useRouter();

@@ -12,4 +12,4 @@ export const equipmentsTable = pgTable("equipments", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
-export type Media = typeof equipmentsTable.$inferSelect;
+export type EquipmentsTable = typeof equipmentsTable.$inferSelect;

@@ -14,7 +14,7 @@ export default async function Page({ params }: { params: { id: string } }) {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center h-[80vh]">
+    <div className="flex flex-col items-center justify-center h-[90vh]">
       <h1>{setup.name}</h1>
       <WrapperSetup setup={setup} />
     </div>
