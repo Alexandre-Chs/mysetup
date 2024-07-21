@@ -27,7 +27,7 @@ export default async function Page({
         {capitalizedUsername}&apos;s setups
       </h1>
       {setups.map((setup) => (
-        <a href={`/setup/${setup.id}`} key={setup.id}>
+        <a href={`${username}/${setup.id}`} key={setup.id}>
           {setup.name}
         </a>
       ))}

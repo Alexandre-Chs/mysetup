@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { SheetTrigger, SheetContent, Sheet } from "@/components/ui/sheet";
 import Link from "next/link";
 import { validateRequest } from "@/lib/auth/validate-request";
-import SignOut from "../auth/SignOut";
+import SignOut from "./DropdownNavBar";
 
 const NavBar = async () => {
   const { user } = await validateRequest();

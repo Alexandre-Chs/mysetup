@@ -30,30 +30,34 @@ export async function createNewSetup(
   description: string
 ) {
   const { user } = await validateRequest();
-
-  const setupId = generateIdFromEntropySize(10);
-  await db
-    .insert(setupTable)
-    .values({
-      id: setupId,
-      userId: user!.id,
-      name,
-      description,
-    })
-    .returning();
-
-  for (let i = 0; i < equipments.length; i++) {
+  let setupId;
+  try {
+    setupId = generateIdFromEntropySize(10);
     await db
-      .insert(equipmentsTable)
+      .insert(setupTable)
       .values({
-        id: generateIdFromEntropySize(10),
-        setupId: setupId,
-        name: equipments[i].name,
-        type: equipments[i].type,
-        url: equipments[i].url,
+        id: setupId,
+        userId: user!.id,
+        name,
+        description,
       })
       .returning();
+
+    for (let i = 0; i < equipments.length; i++) {
+      await db
+        .insert(equipmentsTable)
+        .values({
+          id: generateIdFromEntropySize(10),
+          setupId: setupId,
+          name: equipments[i].name,
+          type: equipments[i].type,
+          url: equipments[i].url,
+        })
+        .returning();
+    }
+  } catch (e) {
+    console.log(e);
   }
 
-  redirect(`/profile/${user!.username}`);
+  redirect(`/${user!.username}/${setupId}`);
 }

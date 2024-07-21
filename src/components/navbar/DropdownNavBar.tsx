@@ -9,7 +9,7 @@ import {
   DropdownItem,
 } from "@nextui-org/react";
 
-const SignOut = ({ username }: { username?: string }) => {
+const DropdownNavBar = ({ username }: { username?: string }) => {
   const handleSignOut = async () => {
     await logout();
   };
@@ -20,10 +20,11 @@ const SignOut = ({ username }: { username?: string }) => {
         <div className="cursor-pointer font-semibold">{username}</div>
       </DropdownTrigger>
       <DropdownMenu aria-label="Static Actions">
-        <DropdownItem key="profile">
-          <a href={`/profile/${username}`}>Profile</a>
+        <DropdownItem key="profile" textValue="Profile">
+          <a href={`/${username}`}>Profile</a>
         </DropdownItem>
         <DropdownItem
+          textValue="Logout"
           key="logout"
           className="text-danger"
           color="danger"
@@ -36,4 +37,4 @@ const SignOut = ({ username }: { username?: string }) => {
   );
 };
 
-export default SignOut;
+export default DropdownNavBar;
