@@ -4,8 +4,6 @@ import UserProfile from "./UserProfile";
 import Description from "./Description";
 import Equipment from "./Equipment";
 import PhotosUser from "./Photos";
-
-import { FAKES } from "@/lib/utils/fakes-datas-equipments";
 import { Setup, SetupPhoto } from "@/db/schemas";
 import { getEquipmentsSetup } from "@/actions/setup/get";
 
