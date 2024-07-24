@@ -8,6 +8,8 @@ import { getEquipmentsSetup } from "@/actions/setup/get";
 import WrapperPhotosUser from "./WrapperPhotosUser";
 import UpdateDescription from "./update-setup/UpdateDescription";
 import WrapperDescriptionSetup from "./WrapperDescriptionSetup";
+import Carousel from "./carousel/Carousel";
+import ModalCarousel from "./carousel/ModalCarousel";
 
 type CompleteSetup = Setup & { setupPhotos: SetupPhoto[] };
 

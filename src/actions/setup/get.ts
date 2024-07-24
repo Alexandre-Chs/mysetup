@@ -11,6 +11,11 @@ export async function getSetup(id: string) {
       setupPhotos: {
         with: {
           media: true,
+          photoEquipments: {
+            with: {
+              equipment: true,
+            },
+          },
         },
       },
     },

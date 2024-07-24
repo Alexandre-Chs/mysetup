@@ -25,12 +25,12 @@ class PhotosUser extends React.Component {
     };
   }
 
-  addClickListener = (element: HTMLElement, url: string) => {
-    element.addEventListener("click", this.handleClick(url));
+  addClickListener = (element: HTMLElement, id: string) => {
+    element.addEventListener("click", this.handleClick(id));
   };
 
-  handleClick = (url: string) => () => {
-    this.props.handleClickImage(url);
+  handleClick = (id: string) => () => {
+    this.props.handleClickImage(id);
   };
 
   async componentDidUpdate(prevProps: any) {
@@ -51,7 +51,7 @@ class PhotosUser extends React.Component {
         id: item.id,
         content: `<div class="grid-stack-item-content w-full h-full bg-cover bg-center rounded-lg" style="background-image: url('${item.media.url}');"></div>`,
       });
-      this.addClickListener(this.state.grid, item.media.url);
+      this.addClickListener(this.state.grid, item.id);
     });
   }
 
@@ -114,7 +114,7 @@ class PhotosUser extends React.Component {
           id: item.id,
           content: `<div class="grid-stack-item-content w-full h-full bg-cover bg-center rounded-lg" style="background-image: url('${item.media.url}');"></div>`,
         });
-        this.addClickListener(widget, item.media.url);
+        this.addClickListener(widget, item.id);
       });
     });
   }

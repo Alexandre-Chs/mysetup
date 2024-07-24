@@ -6,3 +6,4 @@ export * from "./media";
 export * from "./setup_photo";
 export * from "./relations";
 export * from "./equipments";
+export * from "./photo_equipment";

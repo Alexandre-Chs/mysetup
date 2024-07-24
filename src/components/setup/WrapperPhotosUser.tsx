@@ -3,21 +3,20 @@
 import React from "react";
 import PhotosUser from "./Photos";
 import ShowClickedImage from "../modal/ShowClickedImage";
+import ModalCarousel from "./carousel/ModalCarousel";
 
 const WrapperPhotosUser = ({ photos }: { photos: any }) => {
-  const [clickedImageUrl, setClickedImageUrl] = React.useState("");
+  const [clickedImageId, setClickedImageId] = React.useState("");
 
   const handleClickImage = (id: string) => {
-    setClickedImageUrl(id);
+    console.log({ id });
+    setClickedImageId(id);
   };
 
   return (
     <>
       <PhotosUser photos={photos} handleClickImage={handleClickImage} />
-      <ShowClickedImage
-        url={clickedImageUrl}
-        setClickedImageUrl={setClickedImageUrl}
-      />
+      <ModalCarousel photos={photos} selectedId={clickedImageId} />
     </>
   );
 };
