@@ -31,7 +31,7 @@ const NewDescription = () => {
       {addDescription ? (
         <textarea
           ref={textareaRef}
-          className="w-full h-full rounded-md bg-transparent p-2 text-sm text-white resize-none focus:outline-none focus:border-1 focus:border-white border-1 border-transparent"
+          className="w-full h-full rounded-md bg-transparent p-2 text-base text-white resize-none focus:outline-none focus:border-1 focus:border-white border-1 border-transparent"
           placeholder="Add a description for your setup"
           maxLength={530}
           onChange={(e) => handleChangeTextarea(e)}

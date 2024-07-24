@@ -6,10 +6,18 @@ import Equipment from "./Equipment";
 import { Setup, SetupPhoto } from "@/db/schemas";
 import { getEquipmentsSetup } from "@/actions/setup/get";
 import WrapperPhotosUser from "./WrapperPhotosUser";
+import UpdateDescription from "./update-setup/UpdateDescription";
+import WrapperDescriptionSetup from "./WrapperDescriptionSetup";
 
 type CompleteSetup = Setup & { setupPhotos: SetupPhoto[] };
 
-const WrapperSetup = async ({ setup }: { setup: CompleteSetup }) => {
+const WrapperSetup = async ({
+  setup,
+  isOwner,
+}: {
+  setup: CompleteSetup;
+  isOwner: boolean;
+}) => {
   const equipments = await getEquipmentsSetup(setup.id);
 
   return (
@@ -29,7 +37,7 @@ const WrapperSetup = async ({ setup }: { setup: CompleteSetup }) => {
         </div>
       </div>
       <div className="col-span-2 row-span-2 col-start-2 row-start-5">
-        <Description description={setup.description} />
+        <WrapperDescriptionSetup description={setup.description as string} />
       </div>
     </div>
   );
