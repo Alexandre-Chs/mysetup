@@ -27,7 +27,7 @@ export default async function Page({
       <h1 className="font-bold text-3xl my-8">
         {capitalizedUsername}&apos;s setups
       </h1>
-      <div className="flex flex-wrap flex-row gap-8 items-center justify-center pb-8">
+      <div className="flex flex-col w-full pb-8 gap-y-8">
         {setups.map((setup) => (
           <a href={`${username}/${setup.id}`} key={setup.id}>
             <CardSetup setup={setup} />
