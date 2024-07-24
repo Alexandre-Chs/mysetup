@@ -8,10 +8,17 @@ import {
   DropdownMenu,
   DropdownItem,
 } from "@nextui-org/react";
+import { useRouter } from "next/navigation";
 
 const DropdownNavBar = ({ username }: { username?: string }) => {
+  const router = useRouter();
+
   const handleSignOut = async () => {
     await logout();
+  };
+
+  const handleProfile = () => {
+    router.push(`/${username}`);
   };
 
   return (
@@ -20,8 +27,8 @@ const DropdownNavBar = ({ username }: { username?: string }) => {
         <div className="cursor-pointer font-semibold">{username}</div>
       </DropdownTrigger>
       <DropdownMenu aria-label="Static Actions">
-        <DropdownItem key="profile" textValue="Profile">
-          <a href={`/${username}`}>Profile</a>
+        <DropdownItem key="profile" textValue="Profile" onClick={handleProfile}>
+          <p>Profile</p>
         </DropdownItem>
         <DropdownItem
           textValue="Logout"
