@@ -25,11 +25,23 @@ class PhotosUser extends React.Component {
     };
   }
 
+  addClickListener = (element: HTMLElement, url: string) => {
+    element.addEventListener("click", this.handleClick(url));
+  };
+
+  handleClick = (url: string) => () => {
+    this.props.handleClickImage(url);
+  };
+
   async componentDidUpdate(prevProps: any) {
     if (prevProps.photos === this.props.photos) return;
-    const allReadyExistingItems = this.state.grid.engine.nodes.map((item: any) => item.id);
-    const newItems = this.props.photos.filter((item: any) => !allReadyExistingItems.includes(item.id));
-    newItems.forEach((item: any) =>
+    const allReadyExistingItems = this.state.grid.engine.nodes.map(
+      (item: any) => item.id
+    );
+    const newItems = this.props.photos.filter(
+      (item: any) => !allReadyExistingItems.includes(item.id)
+    );
+    newItems.forEach((item: any) => {
       this.state.grid.addWidget({
         w: item.width,
         h: item.height,
@@ -38,8 +50,9 @@ class PhotosUser extends React.Component {
         autoPosition: true,
         id: item.id,
         content: `<div class="grid-stack-item-content w-full h-full bg-cover bg-center rounded-lg" style="background-image: url('${item.media.url}');"></div>`,
-      })
-    );
+      });
+      this.addClickListener(this.state.grid, item.media.url);
+    });
   }
 
   async componentDidMount() {
@@ -92,7 +105,7 @@ class PhotosUser extends React.Component {
       if (grid.getGridItems().length > 0) return;
       if (!this.state.photos) return;
       this.state.photos.forEach((item: any) => {
-        grid.addWidget({
+        const widget = grid.addWidget({
           w: item.width,
           h: item.height,
           x: item.x,
@@ -101,6 +114,7 @@ class PhotosUser extends React.Component {
           id: item.id,
           content: `<div class="grid-stack-item-content w-full h-full bg-cover bg-center rounded-lg" style="background-image: url('${item.media.url}');"></div>`,
         });
+        this.addClickListener(widget, item.media.url);
       });
     });
   }
