@@ -15,7 +15,7 @@ const WrapperPhotosUser = ({ photos }: { photos: any }) => {
     <>
       <PhotosUser photos={photos} handleClickImage={handleClickImage} />
       <ShowClickedImage
-        id={clickedImageUrl}
+        url={clickedImageUrl}
         setClickedImageUrl={setClickedImageUrl}
       />
     </>

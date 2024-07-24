@@ -11,21 +11,22 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function ShowClickedImage({
-  id,
+  url,
   setClickedImageUrl,
 }: {
-  id: string;
+  url: string;
   setClickedImageUrl: Function;
 }) {
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
 
   React.useEffect(() => {
-    if (id) {
+    if (url) {
       onOpen();
     }
-  }, [id, onOpen]);
+  }, [url, onOpen]);
 
   React.useEffect(() => {
     if (!isOpen) setClickedImageUrl("");
@@ -39,7 +40,7 @@ export default function ShowClickedImage({
             <>
               <ModalBody>
                 <Image
-                  src={id}
+                  src={url}
                   alt="clicked image"
                   width={0}
                   height={0}
