@@ -18,14 +18,16 @@ const UpdateName = ({
     updateSetupName(setupId, term);
   }, 1000);
 
-  React.useEffect(() => {
-    handleDebounceText(name);
-  }, [name, handleDebounceText]);
+  const handleChangeTextarea = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setName(e.target.value);
+    handleDebounceText(e.target.value);
+  };
+
   return (
     <>
       <Input
         value={name}
-        onChange={(e) => setName(e.target.value)}
+        onChange={(e) => handleChangeTextarea(e)}
         placeholder="Enter your setup name"
         className="w-3/4 rounded-md p-2 border-2 border-gray-400"
         max={200}
