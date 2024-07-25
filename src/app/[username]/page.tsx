@@ -1,6 +1,5 @@
 import { listUserSetup } from "@/actions/setup/list";
 import CardSetup from "@/components/setup/CardSetup";
-import CreateSetup from "@/components/setup/CreateSetup";
 import { validateRequest } from "@/lib/auth/validate-request";
 import { notFound } from "next/navigation";
 
@@ -34,7 +33,6 @@ export default async function Page({
           </a>
         ))}
       </div>
-      {user && user.username === username && <CreateSetup />}
     </div>
   );
 }

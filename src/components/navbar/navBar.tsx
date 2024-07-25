@@ -4,9 +4,11 @@ import { SheetTrigger, SheetContent, Sheet } from "@/components/ui/sheet";
 import Link from "next/link";
 import { validateRequest } from "@/lib/auth/validate-request";
 import SignOut from "./DropdownNavBar";
+import ShareSetupButton from "./ShareSetupButton";
 
 const NavBar = async () => {
   const { user } = await validateRequest();
+
   return (
     <header className="flex h-20 w-full shrink-0 items-center px-4 md:px-6 shadow-large">
       <SignOut />
@@ -50,12 +52,7 @@ const NavBar = async () => {
       </Link>
       <nav className="ml-auto hidden lg:flex gap-6">
         {user && user.email && user.username ? (
-          <div className="flex items-center justify-center gap-4">
-            <SignOut username={user.username} />
-            <Button>
-              <Link href="/share">Share your setup</Link>
-            </Button>
-          </div>
+          <ShareSetupButton user={user} />
         ) : (
           <>
             <Link

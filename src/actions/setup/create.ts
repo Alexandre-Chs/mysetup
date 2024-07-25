@@ -9,20 +9,19 @@ import { generateIdFromEntropySize } from "lucia";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-export async function createSetup(name: string, description?: string) {
+export async function createSetup() {
   const { user } = await validateRequest();
+  const setupId = generateIdFromEntropySize(10);
 
   await db
     .insert(setupTable)
     .values({
-      id: generateIdFromEntropySize(10),
+      id: setupId,
       userId: user!.id,
-      name,
-      description,
     })
     .returning();
 
-  revalidatePath("/profile/" + user!.username);
+  redirect(`/${user!.username}/${setupId}`);
 }
 
 export async function createNewSetup(
