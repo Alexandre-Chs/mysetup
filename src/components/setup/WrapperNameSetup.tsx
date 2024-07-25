@@ -17,7 +17,7 @@ const WrapperNameSetup = ({
       {isEditing ? (
         <UpdateName currentName={setupName} setupId={setupId} />
       ) : (
-        <h1 className="font-bold text-2xl pb-4">{setupName}</h1>
+        <h1 className="font-bold text-2xl pb-4 uppercase">{setupName}</h1>
       )}
     </div>
   );

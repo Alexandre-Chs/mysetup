@@ -119,6 +119,7 @@ const AddEquipmentModal = ({
                 <p className="text-xs">Affiliate link is authorized</p>
                 <Input
                   placeholder="e.g Amazon url"
+                  className="pt-4"
                   value={newEquipment.url}
                   onChange={(e) =>
                     setNewEquipment({

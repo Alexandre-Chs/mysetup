@@ -6,7 +6,7 @@ const CardSetup = async ({ setup }: { setup: any }) => {
   const photo = await getOneImageSetup(setup.id);
 
   return (
-    <div className="w-full h-[200px] max-w-3xl overflow-hidden rounded-large border-black mx-auto flex bg-[#212121] hover:scale-105 transition-transform duration-300 hover:shadow-xl">
+    <div className="w-full h-[200px]  overflow-hidden rounded-large border-black flex bg-[#212121] hover:scale-105 transition-transform duration-300 hover:shadow-xl">
       <div className="basis-2/4">
         {photo ? (
           <Image

@@ -26,7 +26,7 @@ const UpdateName = ({
   return (
     <>
       <Input
-        value={name}
+        value={name ? name : ""}
         onChange={(e) => handleChangeTextarea(e)}
         placeholder="Enter your setup name"
         className="w-3/4 rounded-md p-2 border-2 border-gray-400"

@@ -18,6 +18,7 @@ export async function createSetup() {
     .values({
       id: setupId,
       userId: user!.id,
+      createdAt: new Date(),
     })
     .returning();
 

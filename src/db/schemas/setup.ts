@@ -1,4 +1,4 @@
-import { pgTable, text } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp } from "drizzle-orm/pg-core";
 import { userTable } from "./user";
 
 export const setupTable = pgTable("setup", {
@@ -8,6 +8,7 @@ export const setupTable = pgTable("setup", {
     .references(() => userTable.id),
   name: text("name"),
   description: text("description"),
+  createdAt: timestamp("created_at").defaultNow(),
 });
 
 export type Setup = typeof setupTable.$inferSelect;
