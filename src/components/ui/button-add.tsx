@@ -6,7 +6,7 @@ const ButtonAdd = ({
   text,
 }: {
   onClickFunction: () => void;
-  text: string;
+  text?: string;
 }) => {
   return (
     <button className="rounded-md p-2 group" onClick={onClickFunction}>

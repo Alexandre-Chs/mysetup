@@ -1,50 +1,31 @@
-"use client";
-
 import React from "react";
 import Review from "./Review";
 import UserProfile from "./UserProfile";
-import Equipment from "./Equipment";
-import { Setup, SetupPhoto } from "@/db/schemas";
-import { getEquipmentsSetup, getSetup } from "@/actions/setup/get";
 import WrapperPhotosUser from "./WrapperPhotosUser";
 import WrapperDescriptionSetup from "./WrapperDescriptionSetup";
-import { useQuery } from "@tanstack/react-query";
 import { User } from "@/types/types";
-import { Spinner } from "../ui/spinner";
+import WrapperEquipmentSetup from "./WrapperEquipmentSetup";
+import { Setup, SetupPhoto } from "@/db/schemas";
+import { getEquipmentsSetup } from "@/actions/setup/get";
 
-const WrapperSetup = ({
+type CompleteSetup = Setup & { setupPhotos: SetupPhoto[] };
+
+const WrapperSetup = async ({
   currentUser,
-  setupId,
+  setup,
 }: {
   currentUser: User | null;
-  setupId: string;
+  setup: CompleteSetup;
 }) => {
-  const { data: currentSetupData } = useQuery({
-    queryKey: ["getSetup"],
-    queryFn: async () => {
-      return await getSetup(setupId);
-    },
-  });
-
-  const { data: equipments } = useQuery({
-    queryKey: ["getEquipmentsSetup"],
-    queryFn: async () => {
-      return await getEquipmentsSetup(setupId);
-    },
-  });
-
-  //todo : faire un skeleton ici
-  if (!currentSetupData) return <Spinner className="h-[60vh]" />;
+  const equipments = await getEquipmentsSetup(setup.id);
 
   return (
     <div className="h-3/4 w-full max-w-6xl mx-auto grid grid-cols-4 grid-rows-6 gap-6">
       <div className="col-span-3 row-span-4">
-        <WrapperPhotosUser
-          photos={currentSetupData ? currentSetupData?.setupPhotos : []}
-        />
+        <WrapperPhotosUser photos={setup.setupPhotos} />
       </div>
       <div className="col-span-1 row-span-6">
-        <Equipment equipments={equipments ? equipments : []} />
+        <WrapperEquipmentSetup setupId={setup?.id} equipments={equipments} />
       </div>
       <div className="col-span-1 row-span-2 flex flex-col gap-2">
         <div className="flex-1">
@@ -56,8 +37,8 @@ const WrapperSetup = ({
       </div>
       <div className="col-span-2 row-span-2 col-start-2 row-start-5">
         <WrapperDescriptionSetup
-          description={currentSetupData?.description as string}
-          setupId={currentSetupData?.id as string}
+          description={setup?.description as string}
+          setupId={setup?.id as string}
         />
       </div>
     </div>

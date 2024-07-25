@@ -5,29 +5,31 @@ import { IoHardwareChip } from "react-icons/io5";
 import { LuLampDesk } from "react-icons/lu";
 import "./scrollbar.css";
 import { groupByType } from "@/lib/utils/group-by-type";
-import { GetEquipment, TypeEquipment } from "@/types/types";
+import { EquipmentType } from "@/types/types";
 import { CircleX } from "lucide-react";
-import { useCreateSetupStore } from "@/store/CreateSetupStore";
-import { useRouter } from "next/navigation";
+import { deleteOneEquipment } from "@/actions/setup/delete";
 
 const Equipment = ({
   equipments,
   action,
+  setupId,
 }: {
-  equipments: GetEquipment[];
+  equipments: EquipmentType[];
   action?: "add";
+  setupId?: string;
 }) => {
-  const router = useRouter();
-
   const groupedItems = groupByType(equipments);
-  const { deleteEquipment } = useCreateSetupStore();
 
   const handleDeleteItem = (e: any) => {
     const elementSelected = e.target.parentElement.dataset.name;
-    deleteEquipment(elementSelected);
+    deleteOneEquipment(elementSelected, setupId as string);
   };
 
   const handleRedirectUser = (url: string) => {
+    if (!url) return;
+    if (!url.startsWith("http://") && !url.startsWith("https://")) {
+      url = `https://${url}`;
+    }
     window.open(url, "_blank");
   };
 
@@ -42,23 +44,27 @@ const Equipment = ({
                 item: { name: string; type: string; url: string },
                 index: number
               ) => (
-                <div
-                  className="cursor-pointer relative w-full bg-[#464646] rounded-md flex items-center justify-start gap-2 py-2 px-4 mb-4 hover:bg-[#464646a8]"
-                  key={index}
-                  onClick={() => handleRedirectUser(item.url)}
-                >
-                  {item.type === "equipment" ? (
-                    <IoHardwareChip
-                      className="text-orange-400 basis-2/8"
-                      size={20}
-                    />
-                  ) : (
-                    <LuLampDesk className="text-blue-400 basis-2/8" size={20} />
-                  )}
-                  <p className="w-full">{item.name}</p>
+                <div className="flex gap-2 relative" key={index}>
+                  <div
+                    className="cursor-pointer w-full bg-[#464646] rounded-md flex items-center justify-start gap-2 py-2 px-4 mb-4 hover:bg-[#464646a8]"
+                    onClick={() => handleRedirectUser(item.url)}
+                  >
+                    {item.type === "equipment" ? (
+                      <IoHardwareChip
+                        className="text-orange-400 basis-2/8"
+                        size={20}
+                      />
+                    ) : (
+                      <LuLampDesk
+                        className="text-blue-400 basis-2/8"
+                        size={20}
+                      />
+                    )}
+                    <p className="w-full">{item.name}</p>
+                  </div>
                   {action === "add" && (
                     <button
-                      className="absolute right-2 rounded-lg"
+                      className="absolute right-2 top-2.5 rounded-l z-50 cursor-pointer"
                       onClick={handleDeleteItem}
                       data-name={item.name}
                     >

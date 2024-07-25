@@ -18,3 +18,12 @@ export type User = {
   username: string;
   email: string;
 };
+
+export type EquipmentType = {
+  id: string;
+  setupId: string;
+  name: string;
+  type: string;
+  url: string | null;
+  createdAt: Date | null;
+};

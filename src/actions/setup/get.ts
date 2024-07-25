@@ -2,7 +2,9 @@
 
 import { db } from "@/db/db";
 import { equipmentsTable, setupPhotoTable, setupTable } from "@/db/schemas";
+import { validateRequest } from "@/lib/auth/validate-request";
 import { eq } from "drizzle-orm";
+import { revalidatePath } from "next/cache";
 
 export async function getSetup(id: string) {
   return await db.query.setupTable.findFirst({
@@ -22,9 +24,9 @@ export async function getSetup(id: string) {
   });
 }
 
-export async function getEquipmentsSetup(id: string) {
+export async function getEquipmentsSetup(setupId: string) {
   return await db.query.equipmentsTable.findMany({
-    where: eq(equipmentsTable.setupId, id),
+    where: eq(equipmentsTable.setupId, setupId),
   });
 }
 

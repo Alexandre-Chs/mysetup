@@ -1,9 +1,10 @@
 "use server";
 
 import { db } from "@/db/db";
-import { setupTable } from "@/db/schemas";
+import { equipmentsTable, setupTable } from "@/db/schemas";
 import { validateRequest } from "@/lib/auth/validate-request";
 import { and, eq } from "drizzle-orm";
+import { revalidatePath } from "next/cache";
 
 export async function updateSetupDescription(
   setupId: string,
@@ -19,4 +20,6 @@ export async function updateSetupDescription(
   } catch (e) {
     console.log(e);
   }
+
+  revalidatePath(`/${user!.username}/${setupId}`);
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import { createNewEquipments } from "@/actions/setup/create";
 import { useCreateSetupStore } from "@/store/CreateSetupStore";
 import { TypeEquipment } from "@/types/types";
 import { validSchemaEquipment } from "@/zod/equipments/schema-equipment";
@@ -20,9 +21,11 @@ import React from "react";
 const AddEquipmentModal = ({
   show,
   setShowModal,
+  setupId,
 }: {
   show: boolean;
   setShowModal: Function;
+  setupId?: string;
 }) => {
   const [newEquipment, setNewEquipment] = React.useState<TypeEquipment>({
     name: "",
@@ -46,7 +49,7 @@ const AddEquipmentModal = ({
     }
   }, [isOpen, setShowModal]);
 
-  const handleSubmit = (onClose: Function) => {
+  const handleSubmit = async (onClose: Function) => {
     const result = validSchemaEquipment.safeParse(newEquipment);
 
     if (!result.success) {
@@ -57,6 +60,7 @@ const AddEquipmentModal = ({
     }
     addNewEquipments(result.data);
     setShowModal(false);
+    await createNewEquipments(setupId as string, result.data);
     setNewEquipment({
       name: "",
       type: "",
@@ -71,7 +75,9 @@ const AddEquipmentModal = ({
       <ModalContent>
         {(onClose) => (
           <>
-            <ModalHeader className="flex flex-col gap-1">Message</ModalHeader>
+            <ModalHeader className="flex flex-col gap-1">
+              Add equipment
+            </ModalHeader>
             <ModalBody>
               <label>Name of the equipment</label>
               <Input
