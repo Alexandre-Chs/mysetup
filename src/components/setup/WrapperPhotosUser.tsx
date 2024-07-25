@@ -2,7 +2,6 @@
 
 import React from "react";
 import PhotosUser from "./Photos";
-import ShowClickedImage from "../modal/ShowClickedImage";
 import ModalCarousel from "./carousel/ModalCarousel";
 
 const WrapperPhotosUser = ({ photos }: { photos: any }) => {

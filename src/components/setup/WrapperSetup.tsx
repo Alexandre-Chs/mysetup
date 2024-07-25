@@ -1,45 +1,64 @@
+"use client";
+
 import React from "react";
 import Review from "./Review";
 import UserProfile from "./UserProfile";
-import Description from "./Description";
 import Equipment from "./Equipment";
 import { Setup, SetupPhoto } from "@/db/schemas";
-import { getEquipmentsSetup } from "@/actions/setup/get";
+import { getEquipmentsSetup, getSetup } from "@/actions/setup/get";
 import WrapperPhotosUser from "./WrapperPhotosUser";
-import UpdateDescription from "./update-setup/UpdateDescription";
 import WrapperDescriptionSetup from "./WrapperDescriptionSetup";
-import Carousel from "./carousel/Carousel";
-import ModalCarousel from "./carousel/ModalCarousel";
+import { useQuery } from "@tanstack/react-query";
+import { User } from "@/types/types";
+import { Spinner } from "../ui/spinner";
 
-type CompleteSetup = Setup & { setupPhotos: SetupPhoto[] };
-
-const WrapperSetup = async ({
-  setup,
-  isOwner,
+const WrapperSetup = ({
+  currentUser,
+  setupId,
 }: {
-  setup: CompleteSetup;
-  isOwner: boolean;
+  currentUser: User | null;
+  setupId: string;
 }) => {
-  const equipments = await getEquipmentsSetup(setup.id);
+  const { data: currentSetupData } = useQuery({
+    queryKey: ["getSetup"],
+    queryFn: async () => {
+      return await getSetup(setupId);
+    },
+  });
+
+  const { data: equipments } = useQuery({
+    queryKey: ["getEquipmentsSetup"],
+    queryFn: async () => {
+      return await getEquipmentsSetup(setupId);
+    },
+  });
+
+  //todo : faire un skeleton ici
+  if (!currentSetupData) return <Spinner className="h-[60vh]" />;
 
   return (
     <div className="h-3/4 w-full max-w-6xl mx-auto grid grid-cols-4 grid-rows-6 gap-6">
       <div className="col-span-3 row-span-4">
-        <WrapperPhotosUser photos={setup.setupPhotos} />
+        <WrapperPhotosUser
+          photos={currentSetupData ? currentSetupData?.setupPhotos : []}
+        />
       </div>
       <div className="col-span-1 row-span-6">
-        <Equipment equipments={equipments} />
+        <Equipment equipments={equipments ? equipments : []} />
       </div>
       <div className="col-span-1 row-span-2 flex flex-col gap-2">
         <div className="flex-1">
-          <UserProfile />
+          <UserProfile currentUser={currentUser} />
         </div>
         <div className="flex-1">
           <Review />
         </div>
       </div>
       <div className="col-span-2 row-span-2 col-start-2 row-start-5">
-        <WrapperDescriptionSetup description={setup.description as string} />
+        <WrapperDescriptionSetup
+          description={currentSetupData?.description as string}
+          setupId={currentSetupData?.id as string}
+        />
       </div>
     </div>
   );

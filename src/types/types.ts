@@ -12,3 +12,9 @@ export type GetEquipment = {
   url: string | null;
   createdAt: Date | null;
 };
+
+export type User = {
+  id: string;
+  username: string;
+  email: string;
+};

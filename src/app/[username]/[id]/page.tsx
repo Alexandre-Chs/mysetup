@@ -22,10 +22,7 @@ export default async function Page({
         <ToolbarUpdateSetup setupId={params.id} />
       )}
       <h1>{setup.name}</h1>
-      <WrapperSetup
-        setup={setup}
-        isOwner={user?.username === params.username}
-      />
+      <WrapperSetup currentUser={user} setupId={setup.id} />
     </div>
   );
 }

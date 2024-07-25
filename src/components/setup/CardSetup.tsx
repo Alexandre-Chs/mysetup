@@ -6,7 +6,7 @@ const CardSetup = async ({ setup }: { setup: any }) => {
   const photo = await getOneImageSetup(setup.id);
 
   return (
-    <div className="w-full h-[350px] max-w-3xl overflow-hidden rounded-large border-black mx-auto flex bg-[#212121] hover:scale-105 transition-transform duration-300 hover:shadow-xl">
+    <div className="w-full h-[200px] max-w-3xl overflow-hidden rounded-large border-black mx-auto flex bg-[#212121] hover:scale-105 transition-transform duration-300 hover:shadow-xl">
       <div className="basis-2/4">
         {photo ? (
           <Image
@@ -23,7 +23,7 @@ const CardSetup = async ({ setup }: { setup: any }) => {
         )}
       </div>
       <div className="basis-2/4 pt-2 pl-4 text-white gap-4 flex flex-col">
-        <h3 className="text-lg font-semibold md:text-2xl overflow-hidden">
+        <h3 className="text-lg font-semibold md:text-2xl overflow-hidden uppercase">
           {setup.name}
         </h3>
         <p className="text-sm text-ellipsis overflow-hidden">

@@ -1,22 +1,30 @@
 "use client";
 
-import { useUpdateSetupStore } from "@/store/UpdateSetupStore";
+import { updateSetupDescription } from "@/actions/setup/update";
+import { useDebounce } from "@/hook/useDebounce";
+import { useQueryClient } from "@tanstack/react-query";
 import React from "react";
 
 const UpdateDescription = ({
   currentDescription,
+  setupId,
 }: {
   currentDescription: string;
+  setupId: string;
 }) => {
   const [description, setDescription] = React.useState(currentDescription);
 
-  const { updateDescription } = useUpdateSetupStore();
+  const reactQuery = useQueryClient();
+
+  const handleDebounceText = useDebounce((term: string) => {
+    updateSetupDescription(setupId, term);
+    reactQuery.invalidateQueries({ queryKey: ["getSetup"] });
+  }, 1000);
 
   const handleChangeTextarea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setDescription(e.target.value);
     let description = e.target.value;
-    updateDescription({ description });
-    console.log(description);
+    handleDebounceText(description);
   };
 
   return (

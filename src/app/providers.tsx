@@ -8,7 +8,7 @@ import React, { PropsWithChildren } from "react";
 const queryClient = new QueryClient();
 
 const Providers = ({ children }: PropsWithChildren) => {
-  const [isEditing, setIsEditing] = React.useState(false);
+  const [isEditing, setIsEditing] = React.useState(true);
 
   return (
     <QueryClientProvider client={queryClient}>

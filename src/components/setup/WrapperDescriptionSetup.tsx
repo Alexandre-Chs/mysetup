@@ -5,13 +5,19 @@ import Description from "./Description";
 import UpdateDescription from "./update-setup/UpdateDescription";
 import { useEdit } from "@/context/EditContext";
 
-const WrapperDescriptionSetup = ({ description }: { description: string }) => {
+const WrapperDescriptionSetup = ({
+  description,
+  setupId,
+}: {
+  description: string;
+  setupId: string;
+}) => {
   const { isEditing } = useEdit();
 
   return (
     <>
       {isEditing ? (
-        <UpdateDescription currentDescription={description} />
+        <UpdateDescription currentDescription={description} setupId={setupId} />
       ) : (
         <Description description={description} />
       )}
