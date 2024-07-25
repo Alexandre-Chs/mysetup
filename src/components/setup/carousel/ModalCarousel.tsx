@@ -16,13 +16,11 @@ export default function ModalCarousel({ photos, selectedId }: { photos: any, sel
 
   return (
     <>
-      <Modal size="full" isOpen={isOpen} onOpenChange={onOpenChange}>
-        <ModalContent className="bg-transparent border-none shadow-none">
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+        <ModalContent className="bg-gray-800 bg-opacity-30 border-none shadow-none w-[90vw] h-[90vh] !max-w-none !m-0">
           {(onClose) => (
             <div className="h-full w-full flex items-center justify-center">
-              <div className="">
-                <Carousel slides={photos} options={OPTIONS} selectedId={selectedId}/>
-              </div>
+              <Carousel slides={photos} options={OPTIONS} selectedId={selectedId}/>
             </div>
           )}
         </ModalContent>
