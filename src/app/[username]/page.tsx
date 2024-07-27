@@ -2,6 +2,7 @@ import { listUserSetup } from "@/actions/setup/list";
 import CardSetup from "@/components/setup/CardSetup";
 import { validateRequest } from "@/lib/auth/validate-request";
 import { notFound } from "next/navigation";
+import { Fragment } from "react";
 
 export default async function Page({
   params,
@@ -28,9 +29,9 @@ export default async function Page({
       </h1>
       <div className="flex flex-col w-full pb-8 gap-y-8">
         {setups.map((setup) => (
-          <a href={`${username}/${setup.id}`} key={setup.id}>
+          <Fragment key={setup.id}>
             <CardSetup setup={setup} />
-          </a>
+          </Fragment>
         ))}
       </div>
     </div>

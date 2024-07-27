@@ -35,3 +35,13 @@ export async function deleteOneEquipment(elementName: string, setupId: string) {
 
   revalidatePath(`/${user!.username}/${setupId}`);
 }
+
+export async function deleteSetup(setupId: string) {
+  const { user } = await validateRequest();
+
+  await db
+    .delete(setupTable)
+    .where(and(eq(setupTable.id, setupId), eq(setupTable.userId, user!.id)));
+
+  revalidatePath(`/${user!.username}`);
+}
