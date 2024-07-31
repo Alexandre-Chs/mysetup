@@ -4,6 +4,8 @@
     "datas",
     "lucide",
     "nextui",
+    "signout",
+    "signup",
     "tanstack",
     "zustand"
   ]
