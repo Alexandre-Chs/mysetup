@@ -47,7 +47,10 @@ const Carousel: React.FC<PropType> = (props) => {
             <div className="embla__viewport" ref={emblaRef}>
               <div className="embla__container">
                 {slides.map((slide) => (
-                  <div className="embla__slide flex items-center" key={slide.id}>
+                  <div
+                    className="embla__slide flex items-center"
+                    key={slide.id}
+                  >
                     <img
                       src={slide.media.url}
                       className="rounded-xl m-auto max-w-full max-h-full"
@@ -63,10 +66,16 @@ const Carousel: React.FC<PropType> = (props) => {
           <div className="embla__controls !m-0">
             <div className="embla__buttons">
               <div className="bg-white rounded-xl p-1">
-                <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} />
+                <PrevButton
+                  onClick={onPrevButtonClick}
+                  disabled={prevBtnDisabled}
+                />
               </div>
               <div className="bg-white rounded-xl p-1">
-                <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />
+                <NextButton
+                  onClick={onNextButtonClick}
+                  disabled={nextBtnDisabled}
+                />
               </div>
             </div>
 
@@ -75,8 +84,8 @@ const Carousel: React.FC<PropType> = (props) => {
                 <DotButton
                   key={index}
                   onClick={() => onDotButtonClick(index)}
-                  className={'embla__dot'.concat(
-                    index === selectedIndex ? ' embla__dot--selected' : ''
+                  className={"embla__dot".concat(
+                    index === selectedIndex ? " embla__dot--selected" : ""
                   )}
                 />
               ))}
@@ -86,7 +95,7 @@ const Carousel: React.FC<PropType> = (props) => {
       </div>
       <div className="w-1/6 h-full">
         <Equipment
-          equipments={slides[selectedIndex].photoEquipments.map(
+          equipments={slides[selectedIndex]?.photoEquipments.map(
             (pE: any) => pE.equipment
           )}
         />
@@ -96,5 +105,3 @@ const Carousel: React.FC<PropType> = (props) => {
 };
 
 export default Carousel;
-
-

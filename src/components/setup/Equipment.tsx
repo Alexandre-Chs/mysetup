@@ -18,6 +18,8 @@ const Equipment = ({
   action?: "add";
   setupId?: string;
 }) => {
+  if (!equipments) return null;
+
   const groupedItems = groupByType(equipments);
 
   const handleDeleteItem = (e: any) => {
