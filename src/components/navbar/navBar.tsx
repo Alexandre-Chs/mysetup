@@ -5,6 +5,8 @@ import Link from "next/link";
 import { validateRequest } from "@/lib/auth/validate-request";
 import SignOut from "./DropdownNavBar";
 import ShareSetupButton from "./ShareSetupButton";
+import SignOutMobileButton from "./SignOutMobileButton";
+import DropdownButton from "./DropdownButton";
 
 const NavBar = async () => {
   const { user } = await validateRequest();
@@ -21,22 +23,23 @@ const NavBar = async () => {
         </SheetTrigger>
         <SheetContent side="left">
           <Link className="mr-6 hidden lg:flex" href="#"></Link>
-          <div className="flex flex-col py-6 gap-y-6">
+          <div className="flex-col py-6 gap-y-6 flex items-center justify-center">
             {user && user.username && user.email ? (
-              <div className="w-full block items-center py-2 text-lg font-semibold bg-transparent text-black border-2 border-black rounded-md text-center h-[44px]">
-                <SignOut />
+              <div className="cursor-pointer mt-12 w-full py-2 text-lg font-semibold bg-transparent text-black flex flex-col items-center justify-center h-[44px] gap-y-6">
+                <ShareSetupButton user={user} />
+                <SignOutMobileButton />
               </div>
             ) : (
               <>
                 <Link
-                  className="w-full block items-center py-2 text-lg font-semibold bg-transparent text-black border-2 border-black rounded-md text-center h-[44px]"
+                  className="cursor-pointer w-full flex items-center justify-center py-2 text-lg font-semibold bg-transparent text-black border-2 border-black rounded-md h-[44px]"
                   href="/login"
                 >
                   Log in
                 </Link>
 
                 <Link
-                  className="w-full block items-center py-2 text-lg font-semibold bg-blueHighlight text-white rounded-md text-center h-[44px]"
+                  className="cursor-pointer w-full flex justify-center items-center py-2 text-lg font-semibold bg-blueHighlight text-white rounded-md h-[44px]"
                   href="/signup"
                 >
                   Sign up
@@ -52,7 +55,10 @@ const NavBar = async () => {
       </Link>
       <nav className="ml-auto hidden lg:flex gap-6">
         {user && user.email && user.username ? (
-          <ShareSetupButton user={user} />
+          <div className="flex items-center justify-center gap-x-6">
+            <DropdownButton user={user} />
+            <ShareSetupButton user={user} />
+          </div>
         ) : (
           <>
             <Link
