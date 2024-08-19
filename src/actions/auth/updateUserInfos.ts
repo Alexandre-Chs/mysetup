@@ -1,5 +1,6 @@
 "use server";
 
+import { SendWelcomeEmail } from "@/app/api/send/route";
 import { db } from "@/db/db";
 import { userTable } from "@/db/schemas";
 import { validateRequest } from "@/lib/auth/validate-request";
@@ -42,6 +43,12 @@ export async function updateUserInfosEmail(email: string) {
   } catch (e) {
     console.log(e);
   }
+
+  try {
+    await SendWelcomeEmail(email, user.username);
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 export async function updateUserInfosUsername(username: string) {
@@ -61,6 +68,12 @@ export async function updateUserInfosUsername(username: string) {
     .update(userTable)
     .set({ username: parseData.username })
     .where(eq(userTable.id, user.id));
+
+  try {
+    await SendWelcomeEmail(user.email, parseData.username);
+  } catch (e) {
+    console.log(e);
+  }
 
   try {
     if (username && user.email) {

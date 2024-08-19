@@ -11,6 +11,7 @@ import { lucia } from "@/lib/auth/auth";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { validSchemaAuthWithEmail } from "@/zod/auth/schema-auth";
+import { SendWelcomeEmail } from "@/app/api/send/route";
 
 //TODO: vérifier si email valide, si pas déjà existante dans la BDD.
 
@@ -83,5 +84,12 @@ export async function signup(formData: FormData) {
     sessionCookie.value,
     sessionCookie.attributes
   );
+
+  try {
+    await SendWelcomeEmail(email, parseData.username);
+  } catch (e) {
+    console.log(e);
+  }
+
   return redirect("/");
 }

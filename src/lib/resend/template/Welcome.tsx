@@ -1,14 +1,12 @@
 import * as React from "react";
 import { Html, Button } from "@react-email/components";
 
-export function Email(props: any) {
-  const { url } = props;
-
+export function WelcomeEmailTemplate({ username }: { username: string }) {
   return (
     <Html lang="en">
-      <Button href={url}>Click me</Button>
+      <h1>Hello {username}</h1>
     </Html>
   );
 }
 
-export default Email;
+export default WelcomeEmailTemplate;

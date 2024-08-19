@@ -7,7 +7,7 @@ import { verify } from "@node-rs/argon2";
 import { lucia } from "@/lib/auth/auth";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { sendEmail } from "@/lib/resend";
+
 export async function login(formData: FormData): Promise<ActionResult> {
   //check if data is valid
   const username = formData.get("username") as string;
@@ -64,12 +64,5 @@ export async function login(formData: FormData): Promise<ActionResult> {
     sessionCookie.attributes
   );
 
-  //TODO : send email
-  //send email
-  // try {
-  //   await sendEmail();
-  // } catch (e) {
-  //   console.log(e);
-  // }
   return redirect("/");
 }
