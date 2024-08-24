@@ -1,11 +1,13 @@
 import { getAllSetupsPhotos } from "@/actions/setup-photo/get";
-import Feed from "@/components/feed/Feed";
+import WrapperHome from "@/components/home/WrapperHome";
+import { validateRequest } from "@/lib/auth/validate-request";
 
 export default async function Home() {
   const allSetupsPhotos = await getAllSetupsPhotos();
+
   return (
     <div>
-      <Feed photos={allSetupsPhotos} />
+      <WrapperHome allSetupsPhotos={allSetupsPhotos} />
     </div>
   );
 }

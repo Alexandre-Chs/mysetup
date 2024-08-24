@@ -7,6 +7,7 @@ import SignOut from "./DropdownNavBar";
 import ShareSetupButton from "./ShareSetupButton";
 import SignOutMobileButton from "./SignOutMobileButton";
 import DropdownButton from "./DropdownButton";
+import VerifyEmailButton from "../auth/VerifyEmailButton";
 
 const NavBar = async () => {
   const { user } = await validateRequest();
@@ -57,7 +58,7 @@ const NavBar = async () => {
         {user && user.email && user.username ? (
           <div className="flex items-center justify-center gap-x-6">
             <DropdownButton user={user} />
-            <ShareSetupButton user={user} />
+            {user.emailVerified && <ShareSetupButton user={user} />}
           </div>
         ) : (
           <>

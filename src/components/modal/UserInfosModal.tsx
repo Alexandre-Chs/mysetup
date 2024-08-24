@@ -24,22 +24,17 @@ import {
   updateUserInfosUsernameZod,
 } from "@/zod/auth/update-user";
 import { useRouter } from "next/navigation";
+import { User } from "lucia";
 
-type InfosProps = {
-  id: string;
-  username: string;
-  email?: string;
-};
-
-export default function UserInfosModal({ infos }: { infos: InfosProps }) {
+export default function UserInfosModal({ user }: { user: User }) {
   const [isOpenModal, setIsOpenModal] = React.useState(true);
   const [isMounted, setIsMounted] = React.useState(false);
   const [username, setUsername] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [errorMessage, setErrorMessage] = React.useState("");
 
-  let usernameNeeded = !infos.username;
-  let emailNeeded = !infos.email;
+  let usernameNeeded = !user.username;
+  let emailNeeded = !user.email;
 
   const router = useRouter();
 
@@ -55,6 +50,7 @@ export default function UserInfosModal({ infos }: { infos: InfosProps }) {
     },
     onSuccess: () => {
       if (email) {
+        router.refresh();
         updateEmail.mutate();
       } else {
         setIsOpenModal(false);
@@ -137,61 +133,63 @@ export default function UserInfosModal({ infos }: { infos: InfosProps }) {
   };
 
   return (
-    <Dialog open={isOpenModal}>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>Update Profile</DialogTitle>
-          <DialogDescription>
-            We need more information to create your account. Please fill in the
-            fields below.
-          </DialogDescription>
-        </DialogHeader>
-        <form className="grid gap-4 py-4" onSubmit={handleSubmit}>
-          <div className="grid items-center grid-cols-4 gap-4">
-            {!infos.username && (
-              <>
-                <Label htmlFor="username" className="text-right">
-                  Username
-                </Label>
-                <Input
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  id="username"
-                  placeholder="Enter your username"
-                  className="col-span-3"
-                />
-              </>
-            )}
-
-            {!infos.email && (
-              <>
-                <Label htmlFor="email" className="text-right">
-                  Email
-                </Label>
-                <Input
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  id="email"
-                  placeholder="Enter your email"
-                  className="col-span-3"
-                />
-              </>
-            )}
-          </div>
-          {errorMessage && (
-            <p className="text-red-500 font-bold">{errorMessage}</p>
-          )}
-          <DialogFooter>
-            <Button type="submit">
-              {updateEmail.isPending || updateUsername.isPending ? (
-                <Spinner show={true} size="medium" className="text-white" />
-              ) : (
-                "Save Changes"
+    <>
+      <Dialog open={isOpenModal}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Update Profile</DialogTitle>
+            <DialogDescription>
+              We need more information to create your account. Please fill in
+              the fields below.
+            </DialogDescription>
+          </DialogHeader>
+          <form className="grid gap-4 py-4" onSubmit={handleSubmit}>
+            <div className="grid items-center grid-cols-4 gap-4">
+              {!user.username && (
+                <>
+                  <Label htmlFor="username" className="text-right">
+                    Username
+                  </Label>
+                  <Input
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    id="username"
+                    placeholder="Enter your username"
+                    className="col-span-3"
+                  />
+                </>
               )}
-            </Button>
-          </DialogFooter>
-        </form>
-      </DialogContent>
-    </Dialog>
+
+              {!user.email && (
+                <>
+                  <Label htmlFor="email" className="text-right">
+                    Email
+                  </Label>
+                  <Input
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    id="email"
+                    placeholder="Enter your email"
+                    className="col-span-3"
+                  />
+                </>
+              )}
+            </div>
+            {errorMessage && (
+              <p className="text-red-500 font-bold">{errorMessage}</p>
+            )}
+            <DialogFooter>
+              <Button type="submit">
+                {updateEmail.isPending || updateUsername.isPending ? (
+                  <Spinner show={true} size="medium" className="text-white" />
+                ) : (
+                  "Save Changes"
+                )}
+              </Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }

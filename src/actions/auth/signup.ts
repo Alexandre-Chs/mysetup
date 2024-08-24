@@ -76,6 +76,13 @@ export async function signup(formData: FormData) {
   } catch (e) {
     console.log(e);
   }
+
+  try {
+    await SendWelcomeEmail(email, parseData.username);
+  } catch (e) {
+    console.log(e);
+  }
+
   //config session
   const session = await lucia.createSession(userId, {});
   const sessionCookie = lucia.createSessionCookie(session.id);
@@ -84,12 +91,6 @@ export async function signup(formData: FormData) {
     sessionCookie.value,
     sessionCookie.attributes
   );
-
-  try {
-    await SendWelcomeEmail(email, parseData.username);
-  } catch (e) {
-    console.log(e);
-  }
 
   return redirect("/");
 }

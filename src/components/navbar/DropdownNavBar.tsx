@@ -9,8 +9,10 @@ import {
   DropdownItem,
 } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
+import { SendVerifyEmail } from "@/actions/auth/verifyEmail";
 
 const DropdownNavBar = ({ username }: { username?: string }) => {
+  const [isVerifying, setIsVerifying] = React.useState(false);
   const router = useRouter();
 
   const handleSignOut = async () => {
@@ -21,6 +23,16 @@ const DropdownNavBar = ({ username }: { username?: string }) => {
     router.push(`/${username}`);
   };
 
+  const handleVerifyEmail = async () => {
+    try {
+      setIsVerifying(true);
+      await SendVerifyEmail();
+    } catch (e) {
+      console.error("Error sending verification email:", e);
+      setIsVerifying(false);
+    }
+  };
+
   return (
     <Dropdown>
       <DropdownTrigger>
@@ -29,6 +41,13 @@ const DropdownNavBar = ({ username }: { username?: string }) => {
       <DropdownMenu aria-label="Static Actions">
         <DropdownItem key="profile" textValue="Profile" onClick={handleProfile}>
           <p>Profile</p>
+        </DropdownItem>
+        <DropdownItem
+          key="verify"
+          textValue="verify my email"
+          onClick={handleVerifyEmail}
+        >
+          <p>{isVerifying ? "Email Sent" : "Verify My Email"}</p>
         </DropdownItem>
         <DropdownItem
           textValue="Logout"

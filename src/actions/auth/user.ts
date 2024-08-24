@@ -52,5 +52,6 @@ export async function addUserToDatabase(
     username,
     password_hash,
     email,
+    email_verified: false,
   });
 }
