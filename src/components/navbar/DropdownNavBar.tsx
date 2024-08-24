@@ -10,8 +10,9 @@ import {
 } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import { SendVerifyEmail } from "@/actions/auth/verifyEmail";
+import { User } from "lucia";
 
-const DropdownNavBar = ({ username }: { username?: string }) => {
+const DropdownNavBar = ({ user }: { user: User }) => {
   const [isVerifying, setIsVerifying] = React.useState(false);
   const router = useRouter();
 
@@ -20,7 +21,7 @@ const DropdownNavBar = ({ username }: { username?: string }) => {
   };
 
   const handleProfile = () => {
-    router.push(`/${username}`);
+    router.push(`/${user?.username}`);
   };
 
   const handleVerifyEmail = async () => {
@@ -36,19 +37,22 @@ const DropdownNavBar = ({ username }: { username?: string }) => {
   return (
     <Dropdown>
       <DropdownTrigger>
-        <div className="cursor-pointer font-semibold">{username}</div>
+        <div className="cursor-pointer font-semibold">{user?.username}</div>
       </DropdownTrigger>
       <DropdownMenu aria-label="Static Actions">
         <DropdownItem key="profile" textValue="Profile" onClick={handleProfile}>
           <p>Profile</p>
         </DropdownItem>
-        <DropdownItem
-          key="verify"
-          textValue="verify my email"
-          onClick={handleVerifyEmail}
-        >
-          <p>{isVerifying ? "Email Sent" : "Verify My Email"}</p>
-        </DropdownItem>
+        {/* Va savoir pourquoi cette fourberie marche */}
+        {(!user?.emailVerified as unknown as Element) && (
+          <DropdownItem
+            key="verify"
+            textValue="verify my email"
+            onClick={handleVerifyEmail}
+          >
+            <p>{isVerifying ? "Email Sent" : "Verify My Email"}</p>
+          </DropdownItem>
+        )}
         <DropdownItem
           textValue="Logout"
           key="logout"

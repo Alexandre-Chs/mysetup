@@ -1,9 +1,9 @@
 import React from "react";
 import DropdownNavBar from "./DropdownNavBar";
-import { User } from "@/types/types";
+import { User } from "lucia";
 
 const DropdownButton = ({ user }: { user: User }) => {
-  return <DropdownNavBar username={user.username as string} />;
+  return <DropdownNavBar user={user} />;
 };
 
 export default DropdownButton;

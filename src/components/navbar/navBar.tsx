@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { SheetTrigger, SheetContent, Sheet } from "@/components/ui/sheet";
 import Link from "next/link";
 import { validateRequest } from "@/lib/auth/validate-request";
-import SignOut from "./DropdownNavBar";
 import ShareSetupButton from "./ShareSetupButton";
 import SignOutMobileButton from "./SignOutMobileButton";
 import DropdownButton from "./DropdownButton";
@@ -14,7 +13,6 @@ const NavBar = async () => {
 
   return (
     <header className="flex h-20 w-full shrink-0 items-center px-4 md:px-6 shadow-large">
-      <SignOut />
       <Sheet>
         <SheetTrigger asChild>
           <Button className="lg:hidden" size="icon" variant="outline">
@@ -27,7 +25,14 @@ const NavBar = async () => {
           <div className="flex-col py-6 gap-y-6 flex items-center justify-center">
             {user && user.username && user.email ? (
               <div className="cursor-pointer mt-12 w-full py-2 text-lg font-semibold bg-transparent text-black flex flex-col items-center justify-center h-[44px] gap-y-6">
-                <ShareSetupButton user={user} />
+                <Link href={`/${user?.username}`}>My profile</Link>
+                {user.emailVerified ? (
+                  <ShareSetupButton user={user} />
+                ) : (
+                  <div>
+                    <VerifyEmailButton />
+                  </div>
+                )}
                 <SignOutMobileButton />
               </div>
             ) : (
