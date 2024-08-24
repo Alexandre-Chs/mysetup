@@ -12,7 +12,7 @@ const NavBar = async () => {
   const { user } = await validateRequest();
 
   return (
-    <header className="flex h-20 w-full shrink-0 items-center px-4 md:px-6 shadow-large">
+    <header className="max-w-[60rem] mx-auto flex h-28 w-full items-center">
       <Sheet>
         <SheetTrigger asChild>
           <Button className="lg:hidden" size="icon" variant="outline">
@@ -38,7 +38,7 @@ const NavBar = async () => {
             ) : (
               <>
                 <Link
-                  className="cursor-pointer w-full flex items-center justify-center py-2 text-lg font-semibold bg-transparent text-black border-2 border-black rounded-md h-[44px]"
+                  className="cursor-pointer text-lg text-textColor font-semibold h-[44px]"
                   href="/login"
                 >
                   Log in
@@ -56,7 +56,9 @@ const NavBar = async () => {
         </SheetContent>
       </Sheet>
       <Link className="mr-6 hidden lg:flex" href="/">
-        <h1 className="text-2xl font-semibold">My setup</h1>
+        <h1 className="text-2xl font-semibold text-textColorLighter">
+          My setup
+        </h1>
         <span className="sr-only">My setup</span>
       </Link>
       <nav className="ml-auto hidden lg:flex gap-6">
@@ -67,18 +69,15 @@ const NavBar = async () => {
           </div>
         ) : (
           <>
-            <Link
-              className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-white px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-gray-100/50 data-[state=open]:bg-gray-100/50 "
-              href="/login"
-            >
-              Log in
-            </Link>
-            <Link
-              className="group inline-flex h-9 w-max items-center font-medium justify-center rounded-md text-white bg-blueHighlight px-4 py-2 text-sm transition-colors hover:bg-blue-400 hover:text-white focus:bg-gray-100 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-gray-100/50 data-[state=open]:bg-gray-100/50"
-              href="/signup"
-            >
-              Sign up
-            </Link>
+            <div className="relative group">
+              <div className="absolute -top-[7px] -left-[4px] bg-white/5 group-hover:bg-white/20 blur-xl transition-colors rounded-xl h-[32px] w-[72px]"></div>
+              <Link
+                className="relative cursor-pointer text-sm text-white font-medium border-transparent bg-transparent px-4 py-2 rounded-xl border-1 group-hover:border-white/10 group-hover:bg-backgroundPrimary/50 transition-colors"
+                href="/login"
+              >
+                Log in
+              </Link>
+            </div>
           </>
         )}
       </nav>

@@ -1,6 +1,7 @@
 "use client";
 
-import { FaGoogle, FaRedditAlien } from "react-icons/fa";
+import { PiRedditLogoFill } from "react-icons/pi";
+import { GrGoogle } from "react-icons/gr";
 import { Button } from "@nextui-org/react";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
@@ -33,24 +34,19 @@ export const LoginProvider = () => {
   });
 
   return (
-    <div className="flex flex-col gap-2 max-w-lg w-full rounded-b-xl bg-white pb-12 px-8">
-      <Button
-        onPress={() => googleMutation.mutate()}
-        isLoading={googleMutation.isPending}
-        startContent={<FaGoogle />}
-        variant="flat"
+    <div className="flex flex-row items-center w-full justify-center gap-2 max-w-lg bg-backgroundPrimary">
+      <button
+        onClick={() => googleMutation.mutate()}
+        className="w-[86px] h-[44px] rounded-md border-1 border-[#1F2022] bg-[#141516] hover:bg-[#202123] flex items-center justify-center"
       >
-        Continue with Google
-      </Button>
-      <Button
-        onPress={() => redditMutation.mutate()}
-        isLoading={redditMutation.isPending}
-        startContent={<FaRedditAlien />}
-        variant="flat"
-        className="bg-red-500 text-white"
+        <GrGoogle color="#A1A1A2" size={20} />
+      </button>
+      <button
+        onClick={() => redditMutation.mutate()}
+        className="w-[86px] h-[44px] rounded-md border-1 border-[#1F2022] bg-[#141516] hover:bg-[#202123] flex items-center justify-center"
       >
-        Continue with Reddit
-      </Button>
+        <PiRedditLogoFill color="#A1A1A2" size={26} />
+      </button>
     </div>
   );
 };

@@ -3,6 +3,7 @@
 import { login } from "@/actions/auth/login";
 import { validSchemaAuth } from "@/zod/auth/schema-auth";
 import { Button } from "@nextui-org/react";
+import { MoveRight } from "lucide-react";
 import React, { useState } from "react";
 import { toast } from "sonner";
 
@@ -18,8 +19,6 @@ const Login = () => {
       username,
       password,
     });
-
-    console.log(username, password);
 
     if (!parseDataWithZod.success) {
       const errorMessages = parseDataWithZod.error.errors
@@ -39,45 +38,45 @@ const Login = () => {
   };
 
   return (
-    <div className="h-auto rounded-t-xl flex flex-col items-center justify-center max-w-lg w-full pt-8 bg-white px-8">
-      <h1 className="text-xl font-bold">Log in</h1>
-      <p className="text-sm text-gray-400 pb-4">
-        Let&apos;s log in and start sharing your setup
-      </p>
-      <form onSubmit={handleSubmit} className="w-full">
+    <div className="h-auto rounded-t-xl flex flex-col items-center justify-center max-w-lg w-full pt-3 px-8">
+      <form onSubmit={handleSubmit} className="w-full gap-y-3 flex flex-col">
         <div className="flex flex-col w-full">
-          <label htmlFor="username" className="text-gray-400">
-            Username
-          </label>
           <input
             name="username"
             id="username"
-            className="border-1 border-gray-400 rounded-md p-2"
+            placeholder="Username"
+            className="placeholder:text-textColor rounded-[8px] bg-[#141516] px-4 py-3 text-sm text-textColor border-1 border-[#393b3e]/25 hover:border-[#4F5051] focus:border-[#6f7073] focus:outline-none transition-colors"
           />
         </div>
-        <br />
         <div className="flex flex-col">
-          <label htmlFor="password" className="text-gray-400">
-            Password
-          </label>
           <input
             type="password"
             name="password"
             id="password"
-            className="border-1 border-gray-400 rounded-md p-2"
+            placeholder="Password"
+            className="placeholder:text-textColor rounded-[8px] bg-[#141516] px-4 py-3 text-sm text-textColor border-1 border-[#393b3e]/25 hover:border-[#4F5051] focus:border-[#6f7073] focus:outline-none transition-colors"
           />
         </div>
-        <br />
         {errorMessage && (
           <p className="text-red-500 font-bold">{errorMessage}</p>
         )}
-        <Button
+        <button
           type="submit"
-          className="w-full text-white bg-green-500 font-semibold"
+          className="w-full text-black bg-[#D0D1D1] relative px-4 py-2 rounded-[8px] flex items-center justify-center group"
         >
-          Continue
-        </Button>
+          <p>Continue</p>
+          <div className="absolute -top-[7px] -left-[27px] w-[350px] h-[55px] group-hover:bg-white/20 blur-xl transition-colors rounded-xl "></div>
+        </button>
       </form>
+
+      <button className="w-full flex items-center mt-4 border-1 border-[#202123] px-6 py-3 rounded-[8px] group">
+        <p className="text-textColor text-sm w-full flex items-center justify-center hover:text-white transition-colors">
+          Don&apos;t have an account? Sign up
+          <span className="group-hover:translate-x-1 transition-transform">
+            <MoveRight size={15} />
+          </span>
+        </p>
+      </button>
     </div>
   );
 };

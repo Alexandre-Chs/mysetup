@@ -22,6 +22,12 @@ const config = {
     extend: {
       colors: {
         //Custom colors
+        backgroundPrimary: "#07080A",
+        backgroundSecondary: "#0C0C0E",
+        backgroundTertiary: "#141516",
+        borderGray: "#191A1C",
+        textColor: "#79797A",
+        textColorLighter: "#E6E6E6",
         primaryColor: "#F5F5F5",
         separator: "#E0E0E0",
         primaryText: "#212121",

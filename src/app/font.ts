@@ -1,4 +1,4 @@
-import { Lato, Montserrat } from "next/font/google";
+import { Inter, Montserrat } from "next/font/google";
 
 export const montserrat = Montserrat({
   weight: ["400", "600", "700"],
@@ -7,10 +7,9 @@ export const montserrat = Montserrat({
   variable: "--font-montserrat",
 });
 
-export const lato = Lato({
-  weight: ["400", "700"],
-  style: ["normal"],
+export const inter = Inter({
+  weight: ["400", "500", "600", "700"],
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-lato",
+  variable: "--font-inter",
 });

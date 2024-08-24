@@ -10,5 +10,5 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <div className="bg-gray-100 h-screen">{children}</div>;
+  return <div className="bg-backgroundPrimary h-screen">{children}</div>;
 }

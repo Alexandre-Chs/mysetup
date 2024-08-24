@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { lato, montserrat } from "./font";
+import { inter, montserrat } from "./font";
 import { Toaster } from "sonner";
 import Providers from "./providers";
 import NavBar from "@/components/navbar/navBar";
@@ -18,7 +18,10 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${montserrat.variable} ${lato.variable}`}>
+    <html
+      lang="en"
+      className={`${montserrat.variable} ${inter.variable} bg-backgroundPrimary`}
+    >
       <body>
         <Providers>
           <NavBar />
