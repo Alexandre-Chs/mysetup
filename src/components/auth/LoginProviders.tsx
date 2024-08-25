@@ -34,16 +34,16 @@ export const LoginProvider = () => {
   });
 
   return (
-    <div className="flex flex-row items-center w-full justify-center gap-2 max-w-lg bg-backgroundPrimary">
+    <div className="flex flex-row items-center w-full justify-center gap-x-2 max-w-lg bg-backgroundPrimary">
       <button
         onClick={() => googleMutation.mutate()}
-        className="w-[86px] h-[44px] rounded-md border-1 border-[#1F2022] bg-[#141516] hover:bg-[#202123] flex items-center justify-center"
+        className="flex-1 h-[44px] rounded-md border-1 border-[#1F2022] bg-[#141516] hover:bg-[#202123] flex items-center justify-center transition-colors"
       >
         <GrGoogle color="#A1A1A2" size={20} />
       </button>
       <button
         onClick={() => redditMutation.mutate()}
-        className="w-[86px] h-[44px] rounded-md border-1 border-[#1F2022] bg-[#141516] hover:bg-[#202123] flex items-center justify-center"
+        className="flex-1 h-[44px] rounded-md border-1 border-[#1F2022] bg-[#141516] hover:bg-[#202123] flex items-center justify-center transition-colors"
       >
         <PiRedditLogoFill color="#A1A1A2" size={26} />
       </button>

@@ -2,8 +2,8 @@
 
 import { login } from "@/actions/auth/login";
 import { validSchemaAuth } from "@/zod/auth/schema-auth";
-import { Button } from "@nextui-org/react";
 import { MoveRight } from "lucide-react";
+import Link from "next/link";
 import React, { useState } from "react";
 import { toast } from "sonner";
 
@@ -38,7 +38,7 @@ const Login = () => {
   };
 
   return (
-    <div className="h-auto rounded-t-xl flex flex-col items-center justify-center max-w-lg w-full pt-3 px-8">
+    <div className="h-auto rounded-t-xl flex flex-col items-center justify-center max-w-lg w-full">
       <form onSubmit={handleSubmit} className="w-full gap-y-3 flex flex-col">
         <div className="flex flex-col w-full">
           <input
@@ -57,9 +57,7 @@ const Login = () => {
             className="placeholder:text-textColor rounded-[8px] bg-[#141516] px-4 py-3 text-sm text-textColor border-1 border-[#393b3e]/25 hover:border-[#4F5051] focus:border-[#6f7073] focus:outline-none transition-colors"
           />
         </div>
-        {errorMessage && (
-          <p className="text-red-500 font-bold">{errorMessage}</p>
-        )}
+        {errorMessage && <p className="text-red-500 text-sm">{errorMessage}</p>}
         <button
           type="submit"
           className="w-full text-black bg-[#D0D1D1] relative px-4 py-2 rounded-[8px] flex items-center justify-center group"
@@ -69,14 +67,17 @@ const Login = () => {
         </button>
       </form>
 
-      <button className="w-full flex items-center mt-4 border-1 border-[#202123] px-6 py-3 rounded-[8px] group">
-        <p className="text-textColor text-sm w-full flex items-center justify-center hover:text-white transition-colors">
+      <Link
+        href="/signup"
+        className="text-textColor text-sm w-full flex items-center justify-center group hover:text-white transition-colors"
+      >
+        <button className="w-full flex items-center mt-4 border-1 border-[#202123] px-6 py-3 rounded-[8px] group">
           Don&apos;t have an account? Sign up
           <span className="group-hover:translate-x-1 transition-transform">
             <MoveRight size={15} />
           </span>
-        </p>
-      </button>
+        </button>
+      </Link>
     </div>
   );
 };

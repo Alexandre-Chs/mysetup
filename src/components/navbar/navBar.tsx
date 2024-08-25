@@ -70,9 +70,9 @@ const NavBar = async () => {
         ) : (
           <>
             <div className="relative group">
-              <div className="absolute -top-[7px] -left-[4px] bg-white/5 group-hover:bg-white/20 blur-xl transition-colors rounded-xl h-[32px] w-[72px]"></div>
+              <div className="absolute -top-[5px] -left-[11px] group-hover:bg-white/25 blur-xl transition-colors rounded-xl h-[32px] w-[72px]"></div>
               <Link
-                className="relative cursor-pointer text-sm text-white font-medium border-transparent bg-transparent px-4 py-2 rounded-xl border-1 group-hover:border-white/10 group-hover:bg-backgroundPrimary/50 transition-colors"
+                className="relative cursor-pointer text-sm text-white font-medium border-transparent bg-transparent px-4 py-2 rounded-xl border-1 group-hover:bg-transparent transition-colors"
                 href="/login"
               >
                 Log in
