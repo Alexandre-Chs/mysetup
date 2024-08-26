@@ -12,7 +12,7 @@ const NavBar = async () => {
   const { user } = await validateRequest();
 
   return (
-    <header className="max-w-[60rem] mx-auto flex h-28 w-full items-center">
+    <header className="max-w-[80rem] mx-auto flex h-28 w-full items-center">
       <Sheet>
         <SheetTrigger asChild>
           <Button className="lg:hidden" size="icon" variant="outline">
@@ -64,8 +64,8 @@ const NavBar = async () => {
       <nav className="ml-auto hidden lg:flex gap-6">
         {user && user.email && user.username ? (
           <div className="flex items-center justify-center gap-x-6">
-            <DropdownButton user={user} />
             {user.emailVerified && <ShareSetupButton user={user} />}
+            <DropdownButton user={user} />
           </div>
         ) : (
           <>

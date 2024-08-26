@@ -20,7 +20,7 @@ export default async function RootLayout({
   return (
     <html
       lang="en"
-      className={`${montserrat.variable} ${inter.variable} bg-backgroundPrimary`}
+      className={`${montserrat.variable} ${inter.variable} bg-backgroundPrimary dark`}
     >
       <body>
         <Providers>

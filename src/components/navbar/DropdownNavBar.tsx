@@ -11,6 +11,7 @@ import {
 import { useRouter } from "next/navigation";
 import { SendVerifyEmail } from "@/actions/auth/verifyEmail";
 import { User } from "lucia";
+import { ChevronDownIcon, User as UserIcon } from "lucide-react";
 
 const DropdownNavBar = ({ user }: { user: User }) => {
   const [isVerifying, setIsVerifying] = React.useState(false);
@@ -35,11 +36,16 @@ const DropdownNavBar = ({ user }: { user: User }) => {
   };
 
   return (
-    <Dropdown>
+    <Dropdown className="border-1 border-separator/15">
       <DropdownTrigger>
-        <div className="cursor-pointer font-semibold">{user?.username}</div>
+        <div className="cursor-pointer font-semibold text-white">
+          <div className="flex items-center justify-center">
+            <ChevronDownIcon size={18} color="#79797A" />
+            <UserIcon color="#79797A" size={22} />
+          </div>
+        </div>
       </DropdownTrigger>
-      <DropdownMenu aria-label="Static Actions">
+      <DropdownMenu aria-label="Static Actions" variant="solid">
         <DropdownItem key="profile" textValue="Profile" onClick={handleProfile}>
           <p>Profile</p>
         </DropdownItem>
@@ -50,7 +56,7 @@ const DropdownNavBar = ({ user }: { user: User }) => {
             textValue="verify my email"
             onClick={handleVerifyEmail}
           >
-            <p>{isVerifying ? "Email Sent" : "Verify My Email"}</p>
+            <p>{isVerifying ? "Email sent" : "Verify my email"}</p>
           </DropdownItem>
         )}
         <DropdownItem
