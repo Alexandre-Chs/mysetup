@@ -12,11 +12,16 @@ const ShareSetupButton = ({ user }: { user: User }) => {
     await createSetup();
     toast.success("Setup created successfully");
   };
+
+  //TODO : mettre un loader pour eviter le spam clique
   return (
     <>
       <div className="flex items-center justify-center gap-4">
-        <Button className="relative w-full text-black bg-[#D0D1D1] px-4 py-2 rounded-[8px] flex items-center justify-center group gap-x-2 hover:bg-[#D0D1D1]">
-          <div onClick={handleShareSetup}>Share your setup</div>
+        <Button
+          onClick={handleShareSetup}
+          className="relative w-full text-black bg-[#D0D1D1] px-4 py-2 rounded-[8px] flex items-center justify-center group gap-x-2 hover:bg-[#D0D1D1]"
+        >
+          <div>Share your setup</div>
           <MoveRight
             size={15}
             className="group-hover:translate-x-1 transition-transform"

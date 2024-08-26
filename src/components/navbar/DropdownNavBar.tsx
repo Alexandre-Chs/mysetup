@@ -47,7 +47,7 @@ const DropdownNavBar = ({ user }: { user: User }) => {
       </DropdownTrigger>
       <DropdownMenu aria-label="Static Actions" variant="solid">
         <DropdownItem key="profile" textValue="Profile" onClick={handleProfile}>
-          <p>Profile</p>
+          <p>My profile</p>
         </DropdownItem>
         {/* Va savoir pourquoi cette fourberie marche */}
         {(!user?.emailVerified as unknown as Element) && (
