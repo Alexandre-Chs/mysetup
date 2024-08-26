@@ -15,12 +15,13 @@ const ShareSetupButton = ({ user }: { user: User }) => {
   return (
     <>
       <div className="flex items-center justify-center gap-4">
-        <Button className="w-full text-black bg-[#D0D1D1] px-4 py-2 rounded-[8px] flex items-center justify-center group gap-x-2 hover:bg-[#D0D1D1]">
+        <Button className="relative w-full text-black bg-[#D0D1D1] px-4 py-2 rounded-[8px] flex items-center justify-center group gap-x-2 hover:bg-[#D0D1D1]">
           <div onClick={handleShareSetup}>Share your setup</div>
           <MoveRight
             size={15}
             className="group-hover:translate-x-1 transition-transform"
           />
+          <div className="absolute w-[170px] h-[60px] -top-[10px] left-0 group-hover:bg-white/15 blur-2xl transition-colors rounded-xl"></div>
         </Button>
       </div>
     </>
