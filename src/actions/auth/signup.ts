@@ -12,6 +12,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { validSchemaAuthWithEmail } from "@/zod/auth/schema-auth";
 import { SendWelcomeEmail } from "@/app/api/send/route";
+import { discordLog } from "../utils";
 
 //TODO: vérifier si email valide, si pas déjà existante dans la BDD.
 
@@ -64,15 +65,7 @@ export async function signup(formData: FormData) {
   await addUserToDatabase(userId, parseData.username, passwordHash, email);
 
   try {
-    await fetch(process.env.DISCORD_WEBHOOK!, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        content: `🎉 NOUVEAU USER ! Username : ${parseData.username} - Email : ${email} via les credentials !`,
-      }),
-    });
+    await discordLog(`🎉 NOUVEAU USER ! Username : ${parseData.username} - Email : ${email} via les credentials !`)
   } catch (e) {
     console.log(e);
   }

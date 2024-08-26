@@ -9,6 +9,7 @@ import {
   updateUserInfosUsernameZod,
 } from "@/zod/auth/update-user";
 import { eq } from "drizzle-orm";
+import { discordLog } from "../utils";
 
 export async function updateUserInfosEmail(email: string) {
   const { user } = await validateRequest();
@@ -30,15 +31,7 @@ export async function updateUserInfosEmail(email: string) {
 
   try {
     if (email && user.username) {
-      await fetch(process.env.DISCORD_WEBHOOK!, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          content: `🎉 NOUVEAU USER ! Username : ${user.username} - Email : ${email} via les providers !`,
-        }),
-      });
+      await discordLog(`🎉 NOUVEAU USER ! Username : ${user.username} - Email : ${email} via les providers !`);
     }
   } catch (e) {
     console.log(e);
@@ -77,15 +70,7 @@ export async function updateUserInfosUsername(username: string) {
 
   try {
     if (username && user.email) {
-      await fetch(process.env.DISCORD_WEBHOOK!, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          content: `🎉 NOUVEAU USER ! Username : ${username} - Email : ${user.email} via les providers !`,
-        }),
-      });
+      await discordLog(`🎉 NOUVEAU USER ! Username : ${username} - Email : ${user.email} via les providers !`)
     }
   } catch (e) {
     console.log(e);
