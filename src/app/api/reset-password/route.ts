@@ -1,7 +1,11 @@
 import { db } from "@/db/db";
+import { userTable } from "@/db/schemas";
 import { passwordResetToken } from "@/db/schemas/password_reset_token";
+import { lucia } from "@/lib/auth/auth";
+import { hash } from "@node-rs/argon2";
 import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
+import { isWithinExpirationDate } from "oslo";
 import { sha256 } from "oslo/crypto";
 import { encodeHex } from "oslo/encoding";
 
@@ -21,44 +25,43 @@ export async function POST(req: Request) {
     .from(passwordResetToken)
     .where(eq(passwordResetToken.tokenHash, tokenHash));
 
-  console.log(currentUserToken);
-
   if (currentUserToken.length > 0) {
     await db
       .delete(passwordResetToken)
       .where(eq(passwordResetToken.tokenHash, tokenHash));
   }
 
-  //   if (!token || !isWithinExpirationDate(token.expires_at)) {
-  //     return new Response(null, {
-  //       status: 400,
-  //     });
-  //   }
+  if (
+    currentUserToken.length === 0 ||
+    !isWithinExpirationDate(currentUserToken[0].expires_at)
+  ) {
+    return NextResponse.json({
+      error: "Invalid token",
+    });
+  }
 
-  //   await lucia.invalidateUserSessions(token.user_id);
-  //   const passwordHash = await hash(password, {
-  //     // recommended minimum parameters
-  //     memoryCost: 19456,
-  //     timeCost: 2,
-  //     outputLen: 32,
-  //     parallelism: 1,
-  //   });
-  //   await db.table("user").where("id", "=", token.user_id).update({
-  //     password_hash: passwordHash,
-  //   });
+  await lucia.invalidateUserSessions(currentUserToken[0].userId);
+  const passwordHash = await hash(password, {
+    memoryCost: 19456,
+    timeCost: 2,
+    outputLen: 32,
+    parallelism: 1,
+  });
 
-  //   const session = await lucia.createSession(token.user_id, {});
-  //   const sessionCookie = lucia.createSessionCookie(session.id);
-  //   return new Response(null, {
-  //     status: 302,
-  //     headers: {
-  //       Location: "/",
-  //       "Set-Cookie": sessionCookie.serialize(),
-  //       "Referrer-Policy": "strict-origin",
-  //     },
-  //   });
+  await db
+    .update(userTable)
+    .set({ password_hash: passwordHash })
+    .where(eq(userTable.id, currentUserToken[0].userId));
 
-  return NextResponse.json({
-    message: "Mot de passe réinitialisé avec succès",
+  const session = await lucia.createSession(currentUserToken[0].userId, {});
+
+  const sessionCookie = lucia.createSessionCookie(session.id);
+  return new Response(null, {
+    status: 302,
+    headers: {
+      Location: "/",
+      "Set-Cookie": sessionCookie.serialize(),
+      "Referrer-Policy": "strict-origin",
+    },
   });
 }

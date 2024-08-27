@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { validPassword } from "@/zod/auth/schema-auth";
 
 export default function ResetPasswordForm({ token }: { token: string }) {
   const [password, setPassword] = useState("");
@@ -10,22 +11,29 @@ export default function ResetPasswordForm({ token }: { token: string }) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(token, password);
     try {
+      const parseDataWithZod = validPassword.safeParse({ password });
+      if (!parseDataWithZod.success) {
+        setError("Password is invalid, must be a least 6 characters long");
+        return;
+      }
       const response = await fetch("/api/reset-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token, password }),
+        body: JSON.stringify({
+          token,
+          password: parseDataWithZod?.data?.password,
+        }),
       });
 
       if (response.ok) {
         router.push("/login?reset=success");
       } else {
         const data = await response.json();
-        setError(data.error || "Une erreur est survenue");
+        setError(data.error || "An error occurred");
       }
     } catch (err) {
-      setError("Une erreur est survenue");
+      setError("An error occurred");
     }
   };
 
