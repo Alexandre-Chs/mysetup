@@ -68,10 +68,16 @@ const Login = () => {
       </form>
 
       <Link
-        href="/signup"
-        className="text-textColor text-sm w-full flex items-center justify-center group hover:text-white transition-colors"
+        href="/forgot-password"
+        className="text-textColor text-sm w-full flex items-center justify-center group hover:text-white transition-colors mt-6"
       >
-        <button className="w-full flex items-center mt-4 border-1 border-[#202123] px-6 py-3 rounded-[8px] group">
+        Forgot password ?
+      </Link>
+      <Link
+        href="/signup"
+        className="text-textColor text-sm w-full flex items-center justify-center group hover:text-white transition-colors mt-2"
+      >
+        <button className="w-full flex items-center border-1 border-[#202123] px-6 py-3 rounded-[8px] group">
           Don&apos;t have an account? Sign up
           <span className="group-hover:translate-x-1 transition-transform">
             <MoveRight size={15} />

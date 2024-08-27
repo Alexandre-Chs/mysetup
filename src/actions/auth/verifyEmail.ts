@@ -10,7 +10,6 @@ import { isWithinExpirationDate } from "oslo";
 import { userTable } from "@/db/schemas";
 import { lucia } from "@/lib/auth/auth";
 import { cookies } from "next/headers";
-import { redirect } from "next/dist/server/api-utils";
 
 export async function SendVerifyEmail() {
   const { user } = await validateRequest();
