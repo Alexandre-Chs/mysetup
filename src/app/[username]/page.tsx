@@ -1,6 +1,6 @@
 import { listUserSetup } from "@/actions/setup/list";
+import WrapperProfile from "@/components/profile/WrapperProfile";
 import CardSetup from "@/components/setup/CardSetup";
-import { validateRequest } from "@/lib/auth/validate-request";
 import { notFound } from "next/navigation";
 import { Fragment } from "react";
 
@@ -9,8 +9,6 @@ export default async function Page({
 }: {
   params: { username: string };
 }) {
-  const { user } = await validateRequest();
-
   const { username } = params;
   let setups;
   try {
@@ -19,21 +17,9 @@ export default async function Page({
     notFound();
   }
 
-  const capitalizedUsername =
-    username.charAt(0).toUpperCase() + username.slice(1);
-
   return (
-    <div className="flex flex-col h-[90vh] max-w-6xl mx-auto">
-      <h1 className="font-bold text-3xl my-8">
-        {capitalizedUsername}&apos;s setups
-      </h1>
-      <div className="flex flex-col w-full pb-8 gap-y-8">
-        {setups.map((setup) => (
-          <Fragment key={setup.id}>
-            <CardSetup setup={setup} />
-          </Fragment>
-        ))}
-      </div>
+    <div className="flex flex-col h-[90vh] max-w-6xl mx-auto w-full">
+      <WrapperProfile />
     </div>
   );
 }
