@@ -3,6 +3,8 @@
 import React from "react";
 import PhotosUser from "./Photos";
 import ModalCarousel from "./carousel/ModalCarousel";
+import Carousel from "./carousel/Carousel";
+import SetupPhotoCarousel from "./carousel/SetupPhotoCarousel";
 
 const WrapperPhotosUser = ({ photos }: { photos: any }) => {
   const [clickedImageId, setClickedImageId] = React.useState("");
@@ -14,7 +16,8 @@ const WrapperPhotosUser = ({ photos }: { photos: any }) => {
 
   return (
     <>
-      <PhotosUser photos={photos} handleClickImage={handleClickImage} />
+      <SetupPhotoCarousel slides={photos} />
+      {/* <PhotosUser photos={photos} handleClickImage={handleClickImage} /> */}
       <ModalCarousel photos={photos} selectedId={clickedImageId} />
     </>
   );

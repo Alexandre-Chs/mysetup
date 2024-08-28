@@ -6,6 +6,7 @@ import React, { Fragment } from "react";
 import { toast } from "sonner";
 import UploadSetupPicture from "./UploadSetupPicture";
 import { updateSetupPhoto } from "@/actions/setup-photo/update";
+import Carousel from "./carousel/Carousel";
 
 function randomFill(length: number) {
   let id = 0;

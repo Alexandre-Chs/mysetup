@@ -16,7 +16,7 @@ type PropType = {
   selectedId?: string;
 };
 
-const Carousel: React.FC<PropType> = (props) => {
+const SetupPhotoCarousel: React.FC<PropType> = (props) => {
   const { slides, options, selectedId } = props;
   const [emblaRef, emblaApi] = useEmblaCarousel(options);
 
@@ -93,15 +93,8 @@ const Carousel: React.FC<PropType> = (props) => {
           </div>
         </div>
       </div>
-      <div className="w-1/6 h-full">
-        <Equipment
-          equipments={slides[selectedIndex]?.photoEquipments.map(
-            (pE: any) => pE.equipment
-          )}
-        />
-      </div>
     </div>
   );
 };
 
-export default Carousel;
+export default SetupPhotoCarousel;
