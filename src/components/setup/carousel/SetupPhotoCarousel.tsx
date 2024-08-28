@@ -9,11 +9,13 @@ import {
 } from "./CarouselArrowButtons";
 import useEmblaCarousel from "embla-carousel-react";
 import Equipment from "../Equipment";
+import { deleteSetupPhoto } from "@/actions/setup-photo/delete";
 
 type PropType = {
   slides: any[];
   options?: EmblaOptionsType;
   selectedId?: string;
+  readonly?: boolean;
 };
 
 const SetupPhotoCarousel: React.FC<PropType> = (props) => {
@@ -39,6 +41,11 @@ const SetupPhotoCarousel: React.FC<PropType> = (props) => {
     onNextButtonClick,
   } = usePrevNextButtons(emblaApi);
 
+  const handleDelete = async (id: string) => {
+    console.log({ id });
+    await deleteSetupPhoto(id);
+  }
+
   return (
     <div className="flex flex-row h-full w-full p-8 gap-4">
       <div className="flex flex-col flex-1 gap-4">
@@ -48,9 +55,10 @@ const SetupPhotoCarousel: React.FC<PropType> = (props) => {
               <div className="embla__container">
                 {slides.map((slide) => (
                   <div
-                    className="embla__slide flex items-center"
+                    className="embla__slide flex items-center relative group"
                     key={slide.id}
                   >
+                    <div onClick={() => handleDelete(slide.id)} className="bg-red-500 size-6 rounded-full text-white absolute right-0 top-0 hidden group-hover:flex items-center justify-center cursor-pointer">X</div>
                     <img
                       src={slide.media.url}
                       className="rounded-xl m-auto max-w-full max-h-full"
@@ -65,18 +73,14 @@ const SetupPhotoCarousel: React.FC<PropType> = (props) => {
         <div className="h-1/6 w-full">
           <div className="embla__controls !m-0">
             <div className="embla__buttons">
-              <div className="bg-white rounded-xl p-1">
-                <PrevButton
-                  onClick={onPrevButtonClick}
-                  disabled={prevBtnDisabled}
-                />
-              </div>
-              <div className="bg-white rounded-xl p-1">
-                <NextButton
-                  onClick={onNextButtonClick}
-                  disabled={nextBtnDisabled}
-                />
-              </div>
+              <PrevButton
+                onClick={onPrevButtonClick}
+                disabled={prevBtnDisabled}
+              />
+              <NextButton
+                onClick={onNextButtonClick}
+                disabled={nextBtnDisabled}
+              />
             </div>
 
             <div className="embla__dots">

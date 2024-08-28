@@ -5,6 +5,7 @@ import PhotosUser from "./Photos";
 import ModalCarousel from "./carousel/ModalCarousel";
 import Carousel from "./carousel/Carousel";
 import SetupPhotoCarousel from "./carousel/SetupPhotoCarousel";
+import UploadSetupPicture from "./UploadSetupPicture";
 
 const WrapperPhotosUser = ({ photos }: { photos: any }) => {
   const [clickedImageId, setClickedImageId] = React.useState("");
@@ -16,7 +17,8 @@ const WrapperPhotosUser = ({ photos }: { photos: any }) => {
 
   return (
     <>
-      <SetupPhotoCarousel slides={photos} />
+      <SetupPhotoCarousel slides={photos} options={{ loop: true }} />
+      <UploadSetupPicture pictureCount={photos.length} />
       {/* <PhotosUser photos={photos} handleClickImage={handleClickImage} /> */}
       <ModalCarousel photos={photos} selectedId={clickedImageId} />
     </>
