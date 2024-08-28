@@ -10,9 +10,14 @@ const SignOutMobileButton = () => {
   };
 
   return (
-    <>
-      <p onClick={handleClick}>Logout</p>
-    </>
+    <div>
+      <p
+        onClick={handleClick}
+        className="text-redText hover:text-redTextLighter cursor-pointer"
+      >
+        Logout
+      </p>
+    </div>
   );
 };
 

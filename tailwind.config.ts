@@ -32,6 +32,8 @@ const config = {
         separator: "#E0E0E0",
         primaryText: "#212121",
         secondaryText: "#424242",
+        redText: "#FF6362",
+        redTextLighter: "#F28C8C",
         blueHighlight: "#1E88E5",
         greenSuccess: "#43A047",
         yellowWarning: "#FFA000",
