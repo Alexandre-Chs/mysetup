@@ -2,14 +2,31 @@
 
 import { resetPassword } from "@/actions/auth/resetPassword";
 import Link from "next/link";
-import React from "react";
+import { redirect, useRouter } from "next/navigation";
+import React, { useState } from "react";
+import { toast } from "sonner";
 
 const ResetPassword = () => {
+  const [isSendingEmail, setIsSendingEmail] = useState(false);
+  const [error, setError] = useState("");
+
+  const router = useRouter();
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
     const email = formData.get("email") as string;
-    await resetPassword(email);
+    try {
+      setIsSendingEmail(true);
+      setError("");
+      await resetPassword(email);
+      toast.success("Password reset email sent");
+      router.push("/login");
+    } catch (e) {
+      setError("An error occurred, please try again later");
+    } finally {
+      setIsSendingEmail(false);
+    }
   };
 
   return (
@@ -25,7 +42,7 @@ const ResetPassword = () => {
           type="submit"
           className="w-full text-black bg-[#D0D1D1] relative px-4 py-2 rounded-[8px] flex items-center justify-center group"
         >
-          <p>Continue</p>
+          <p>{isSendingEmail ? "Loading..." : "Continue"}</p>
           <div className="absolute -top-[7px] -left-[27px] w-[350px] h-[55px] group-hover:bg-white/20 blur-xl transition-colors rounded-xl "></div>
         </button>
       </form>
@@ -35,6 +52,9 @@ const ResetPassword = () => {
       >
         Back to login
       </Link>
+      {error && (
+        <p className="text-red-500 text-center text-xs mt-4">{error}</p>
+      )}
     </div>
   );
 };
