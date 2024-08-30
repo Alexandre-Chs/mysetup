@@ -1,66 +1,33 @@
-"use client";
-
-import { Divider } from "@nextui-org/react";
 import React from "react";
+import { Divider } from "@nextui-org/react";
 import { GlareCard } from "./GlareCard";
 import { PiTwitterLogoFill } from "react-icons/pi";
 import Link from "next/link";
 import { Card, Carousel } from "./CarouselCard";
 
-const carouselItems = [
-  <Card
-    key="card1"
-    card={{
-      src: "",
-      title: "Setup Gaming 1",
-      category: "Gaming",
-      content: <p>Description du setup gaming 1.</p>,
-    }}
-    index={0}
-    layout={true}
-  />,
-  <Card
-    key="card2"
-    card={{
-      src: "",
-      title: "Setup Gaming 2",
-      category: "Gaming",
-      content: <p>Description du setup gaming 2.</p>,
-    }}
-    index={1}
-    layout={true}
-  />,
-  <Card
-    key="card1"
-    card={{
-      src: "",
-      title: "Setup Gaming 3",
-      category: "Gaming",
-      content: <p>Description du setup gaming 1.</p>,
-    }}
-    index={0}
-    layout={true}
-  />,
-  <Card
-    key="card2"
-    card={{
-      src: "",
-      title: "Setup Gaming 4",
-      category: "Gaming",
-      content: <p>Description du setup gaming 2.</p>,
-    }}
-    index={1}
-    layout={true}
-  />,
-];
+const WrapperProfile = ({ setups }: { setups: any }) => {
+  const carouselItems = setups.map((setup: any, index: number) => (
+    <Card
+      key={`card${index}`}
+      card={{
+        src: setup.photo.url,
+        title: setup.name || `Setup ${index + 1}`,
+        category: setup.category || "Gaming",
+        content: (
+          <p>{setup.description || `Description du setup ${index + 1}.`}</p>
+        ),
+        link: `/${setup.user.username}/${setup.id}`,
+      }}
+      index={index}
+      layout={true}
+    />
+  ));
 
-const WrapperProfile = () => {
   return (
-    <div className="h-[90vh] flex flex-col items-center justify-center w-full">
-      <div className="flex w-full h-full items-center justify-center">
-        <div className="group relative basis-1/4">
+    <div className="h-[90vh] flex flex-col items-center justify-center w-full px-6 md:px-8 lg:px-12">
+      <div className="flex w-full h-full items-center justify-start gap-x-24">
+        <div className="group relative flex-shrink-0">
           <div className="absolute -left-[5px] top-0 w-[320px] h-[400px] group-hover:bg-[#2f2f37] blur-xl transition-colors rounded-xl"></div>
-
           <GlareCard className="relative z-50">
             <div
               className="flex flex-col items-center justify-center h-full gap-y-12"
@@ -75,8 +42,8 @@ const WrapperProfile = () => {
                   assez longue
                 </p>
                 <div className="flex flex-col items-center justify-center">
-                  <p>10 setups posted</p>
-                  <p>Total vote on setup : 123</p>
+                  <p>0 setups posted</p>
+                  <p>Total vote on setup : </p>
                 </div>
               </div>
 
@@ -96,10 +63,10 @@ const WrapperProfile = () => {
 
         <Divider
           orientation="vertical"
-          className="h-[60%] bg-gradient-to-t from-transparent via-separator/50 to-transparent mx-32"
+          className="h-[60%] bg-gradient-to-t from-transparent via-separator/50 to-transparent mx-4 md:mx-6 lg:mx-8 flex-shrink-0"
         />
 
-        <div className="basis-3/4">
+        <div className="flex-grow overflow-x-auto">
           <Carousel items={carouselItems} initialScroll={0} />
         </div>
       </div>

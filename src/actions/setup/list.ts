@@ -1,19 +1,42 @@
 "use server";
 
 import { db } from "@/db/db";
-import { userTable } from "@/db/schemas";
-import { setupTable } from "@/db/schemas";
-import { desc, eq } from "drizzle-orm";
+import {
+  setupPhotoTable,
+  userTable,
+  setupTable,
+  mediaTable,
+} from "@/db/schemas";
+import { desc, eq, and } from "drizzle-orm";
 
 export async function listUserSetup(username: string) {
-  const users = await db
-    .select()
-    .from(userTable)
-    .where(eq(userTable.username, username));
+  const user = await db.query.userTable.findFirst({
+    where: eq(userTable.username, username),
+  });
 
-  return await db
-    .select()
-    .from(setupTable)
-    .where(eq(setupTable.userId, users[0].id))
-    .orderBy(desc(setupTable.createdAt));
+  if (!user) {
+    throw new Error("Utilisateur non trouvé");
+  }
+
+  const setups = await db.query.setupTable.findMany({
+    where: eq(setupTable.userId, user.id),
+    orderBy: [desc(setupTable.createdAt)],
+    with: {
+      setupPhotos: {
+        limit: 1,
+        with: {
+          media: true,
+        },
+      },
+    },
+  });
+
+  return setups.map((setup) => ({
+    ...setup,
+    photo: setup.setupPhotos[0]?.media ?? { url: "" },
+    user: {
+      id: user.id,
+      username: user.username,
+    },
+  }));
 }

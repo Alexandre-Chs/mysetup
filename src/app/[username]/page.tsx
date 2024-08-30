@@ -1,3 +1,4 @@
+import { getOneImageSetup } from "@/actions/setup/get";
 import { listUserSetup } from "@/actions/setup/list";
 import WrapperProfile from "@/components/profile/WrapperProfile";
 import CardSetup from "@/components/setup/CardSetup";
@@ -18,8 +19,8 @@ export default async function Page({
   }
 
   return (
-    <div className="flex flex-col h-[90vh] max-w-6xl mx-auto w-full">
-      <WrapperProfile />
+    <div className="flex flex-col h-[90vh] w-full overflow-x-hidden">
+      <WrapperProfile setups={setups} />
     </div>
   );
 }
