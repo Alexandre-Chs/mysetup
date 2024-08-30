@@ -1,6 +1,6 @@
 import React from "react";
 import UserProfile from "../UserProfile";
-import Review from "../Review";
+import UpVotes from "../UpVotes";
 import NewDescription from "./NewDescription";
 import PhotosUser from "../Photos";
 import NewEquipmentsClient from "./NewEquipments.client";
@@ -19,7 +19,7 @@ const WrapperNewSetup = () => {
           <UserProfile />
         </div>
         <div className="flex-1">
-          <Review />
+          <UpVotes />
         </div>
       </div>
       <div className="col-span-2 row-span-2 col-start-2 row-start-5">

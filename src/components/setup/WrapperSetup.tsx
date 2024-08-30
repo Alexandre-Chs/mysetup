@@ -1,5 +1,5 @@
 import React from "react";
-import Review from "./Review";
+import UpVotes from "./UpVotes";
 import UserProfile from "./UserProfile";
 import WrapperPhotosUser from "./WrapperPhotosUser";
 import WrapperDescriptionSetup from "./WrapperDescriptionSetup";
@@ -32,7 +32,7 @@ const WrapperSetup = async ({
           <UserProfile currentUser={currentUser} />
         </div>
         <div className="flex-1">
-          <Review />
+          <UpVotes setupId={setup.id} />
         </div>
       </div>
       <div className="col-span-2 row-span-2 col-start-2 row-start-5">
