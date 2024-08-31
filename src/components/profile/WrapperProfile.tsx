@@ -4,6 +4,7 @@ import { GlareCard } from "./GlareCard";
 import { PiTwitterLogoFill } from "react-icons/pi";
 import Link from "next/link";
 import { Card, Carousel } from "./CarouselCard";
+import UpdateUserProfileCard from "./UpdateUserProfileCard";
 
 const WrapperProfile = ({ setups }: { setups: any }) => {
   const carouselItems = setups.map((setup: any, index: number) => (
@@ -34,24 +35,23 @@ const WrapperProfile = ({ setups }: { setups: any }) => {
               style={{ pointerEvents: "none" }}
             >
               <div className="flex flex-col items-center justify-center gap-y-4">
-                <h1 className="flex items-start justify-center text-2xl text-textColorLighter font-medium">
+                <h1 className="flex items-start justify-center text-2xl text-textColorLighter font-bold">
                   Alexandre
                 </h1>
-                <p className="text-sm text-textColor text-center">
+                <p className="text-sm w-3/4 text-textColorLighter text-center">
                   Je suis passioné de gaming et je suis une grande description
                   assez longue
                 </p>
-                <div className="flex flex-col items-center justify-center">
+                <div className="flex flex-col  text-textColor items-center justify-center">
                   <p>0 setups posted</p>
-                  <p>Total vote on setup : </p>
+                  <p>134 votes on setup</p>
                 </div>
               </div>
-
-              <div className="flex items-center flex-col gap-y-2 justify-center w-full px-12">
+              <div className="flex items-center flex-col justify-center w-full px-12">
                 <Link
                   href="/"
                   style={{ pointerEvents: "auto" }}
-                  className="flex gap-x-2 items-center justify-center p-2 rounded-xl w-full cursor-pointer pointer-events-auto"
+                  className="flex gap-x-2 items-center justify-center p-1 rounded-xl w-full cursor-pointer pointer-events-auto"
                 >
                   <PiTwitterLogoFill />
                   <p>@trouduc</p>
@@ -59,6 +59,7 @@ const WrapperProfile = ({ setups }: { setups: any }) => {
               </div>
             </div>
           </GlareCard>
+          <UpdateUserProfileCard />
         </div>
 
         <Divider
