@@ -45,7 +45,7 @@ const UploadSetupPicture = () => {
         multiple
         onChange={handleFileChange}
       />
-      <Tooltip content="Upload an image">
+      <Tooltip content="Upload an image" closeDelay={100}>
         <button className="embla__button" onClick={() => openFilePicker()}>
           <LuImagePlus size={24} />
         </button>
