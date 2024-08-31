@@ -18,7 +18,6 @@ const WrapperPhotosUser = ({ photos }: { photos: any }) => {
   return (
     <>
       <SetupPhotoCarousel slides={photos} options={{ loop: true }} />
-      <UploadSetupPicture pictureCount={photos.length} />
       {/* <PhotosUser photos={photos} handleClickImage={handleClickImage} /> */}
       <ModalCarousel photos={photos} selectedId={clickedImageId} />
     </>

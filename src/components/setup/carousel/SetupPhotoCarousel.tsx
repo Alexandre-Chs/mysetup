@@ -10,6 +10,7 @@ import {
 import useEmblaCarousel from "embla-carousel-react";
 import Equipment from "../Equipment";
 import { deleteSetupPhoto } from "@/actions/setup-photo/delete";
+import UploadSetupPicture from "../UploadSetupPicture";
 
 type PropType = {
   slides: any[];
@@ -81,6 +82,7 @@ const SetupPhotoCarousel: React.FC<PropType> = (props) => {
                 onClick={onNextButtonClick}
                 disabled={nextBtnDisabled}
               />
+              <UploadSetupPicture />
             </div>
 
             <div className="embla__dots">

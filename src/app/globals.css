@@ -193,8 +193,8 @@ h6 {
 }
 
 .embla__buttons {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
+  flex-direction: row;
   gap: 0.6rem;
   align-items: center;
 }

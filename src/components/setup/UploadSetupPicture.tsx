@@ -1,13 +1,12 @@
 import { uploadSetupPicture } from "@/actions/media/upload";
 import { useParams } from "next/navigation";
 import { useRef } from "react";
+import { LuImagePlus } from "react-icons/lu";
 import { toast } from "sonner";
+import { Tooltip } from "@nextui-org/react";
 
-type UploadSetupPictureProps = {
-  pictureCount: number;
-};
 
-const UploadSetupPicture = ({ pictureCount }: UploadSetupPictureProps) => {
+const UploadSetupPicture = () => {
   const params = useParams<{ id: string }>();
 
   const fileInput = useRef<HTMLInputElement>(null);
@@ -20,13 +19,6 @@ const UploadSetupPicture = ({ pictureCount }: UploadSetupPictureProps) => {
     if (!fileInput.current) return;
     const files = fileInput.current?.files;
     if (!files?.length) return;
-
-    if (files.length + pictureCount > 24) {
-      toast("You can only upload 24 pictures", {
-        duration: 5000,
-      });
-      return;
-    }
 
     for (let i = 0; i < files.length; i++) {
       const formData = new FormData();
@@ -53,7 +45,11 @@ const UploadSetupPicture = ({ pictureCount }: UploadSetupPictureProps) => {
         multiple
         onChange={handleFileChange}
       />
-      <button onClick={() => openFilePicker()}>Add one</button>
+      <Tooltip content="Upload an image">
+        <button className="embla__button" onClick={() => openFilePicker()}>
+          <LuImagePlus size={24} />
+        </button>
+      </Tooltip>
     </>
   );
 };
