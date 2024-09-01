@@ -55,7 +55,7 @@ const WrapperProfile = async ({
                   {currentUsername}
                 </h1>
                 <p className="text-sm w-3/4 text-textColorLighter text-center">
-                  {userInfos
+                  {userInfos && userInfos.profile
                     ? userInfos.profile.profileDescription
                     : "No description yet"}
                 </p>

@@ -52,7 +52,7 @@ const UpdateUserProfileCard = ({ userInfos }: { userInfos: any }) => {
     userInfos.socialLinks ? userInfos.socialLinks : []
   );
   const [profileDescription, setProfileDescription] = useState(
-    userInfos.profile.profileDescription
+    userInfos?.profile?.profileDescription
       ? userInfos.profile.profileDescription
       : ""
   );
