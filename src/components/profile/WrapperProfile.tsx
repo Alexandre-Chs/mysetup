@@ -88,7 +88,7 @@ const WrapperProfile = async ({
 
         <Divider
           orientation="vertical"
-          className="h-[600px] w-[1px] bg-gradient-to-t from-transparent via-separator/20 to-transparent mx-4 md:mx-6 lg:mx-8 flex-shrink-0"
+          className="hidden xl:block h-[600px] w-[1px] bg-gradient-to-t from-transparent via-separator/20 to-transparent mx-4 md:mx-6 lg:mx-8 flex-shrink-0"
         />
 
         <div className="flex-grow overflow-x-auto w-full">
