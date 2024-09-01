@@ -1,9 +1,6 @@
-import { getOneImageSetup } from "@/actions/setup/get";
 import { listUserSetup } from "@/actions/setup/list";
 import WrapperProfile from "@/components/profile/WrapperProfile";
-import CardSetup from "@/components/setup/CardSetup";
 import { notFound } from "next/navigation";
-import { Fragment } from "react";
 
 export default async function Page({
   params,
@@ -19,7 +16,7 @@ export default async function Page({
   }
 
   return (
-    <div className="flex flex-col h-[90vh] w-full overflow-x-hidden">
+    <div className="min-h-[90vh] flex flex-col items-center justify-center w-full overflow-x-hidden pb-8">
       <WrapperProfile setups={setups} currentUsername={username} />
     </div>
   );

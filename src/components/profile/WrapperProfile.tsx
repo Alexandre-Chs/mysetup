@@ -36,8 +36,8 @@ const WrapperProfile = async ({
   ));
 
   return (
-    <div className="h-[90vh] flex flex-col items-center justify-center w-full px-6 md:px-8 lg:px-12">
-      <div className="flex w-full h-full items-center justify-start gap-x-24">
+    <div className="flex flex-col items-center justify-center w-full px-8 md:px-16 lg:px-24">
+      <div className="flex flex-col xl:flex-row w-full h-full items-center justify-start xl:gap-x-32">
         <div className="group relative flex-shrink-0">
           <div className="absolute -left-[5px] top-0 w-[320px] h-[400px] group-hover:bg-[#2f2f37] blur-xl transition-colors rounded-xl"></div>
           <GlareCard className="relative z-50">
@@ -88,10 +88,10 @@ const WrapperProfile = async ({
 
         <Divider
           orientation="vertical"
-          className="h-[60%] bg-gradient-to-t from-transparent via-separator/50 to-transparent mx-4 md:mx-6 lg:mx-8 flex-shrink-0"
+          className="h-[600px] w-[1px] bg-gradient-to-t from-transparent via-separator/20 to-transparent mx-4 md:mx-6 lg:mx-8 flex-shrink-0"
         />
 
-        <div className="flex-grow overflow-x-auto">
+        <div className="flex-grow overflow-x-auto w-full">
           <Carousel items={carouselItems} initialScroll={0} />
         </div>
       </div>
