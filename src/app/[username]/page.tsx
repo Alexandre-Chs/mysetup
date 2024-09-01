@@ -20,7 +20,7 @@ export default async function Page({
 
   return (
     <div className="flex flex-col h-[90vh] w-full overflow-x-hidden">
-      <WrapperProfile setups={setups} />
+      <WrapperProfile setups={setups} currentUserPage={username} />
     </div>
   );
 }

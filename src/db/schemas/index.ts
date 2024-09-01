@@ -8,3 +8,7 @@ export * from "./relations";
 export * from "./equipments";
 export * from "./photo_equipment";
 export * from "./up_votes";
+export * from "./email_verification_token";
+export * from "./password_reset_token";
+export * from "./social_links";
+export * from "./user_profile";

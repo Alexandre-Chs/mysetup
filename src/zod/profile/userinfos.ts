@@ -9,12 +9,9 @@ const socialLinkSchema = z.object({
 });
 
 export const validUserInfosProfile = z.object({
-  profileDescription: z
-    .string()
-    .min(1, { message: "You must enter a profile description" })
-    .max(500, {
-      message: "Profile description must be at most 500 characters long",
-    }),
+  profileDescription: z.string().max(500, {
+    message: "Profile description must be at most 500 characters long",
+  }),
   socialLinks: z
     .array(socialLinkSchema)
     .max(5, { message: "You can have a maximum of 5 social links" })
@@ -22,6 +19,5 @@ export const validUserInfosProfile = z.object({
     .default([]),
 });
 
-// Types dérivés du schéma Zod pour une utilisation dans le composant
 export type SocialLink = z.infer<typeof socialLinkSchema>;
 export type UserProfile = z.infer<typeof validUserInfosProfile>;

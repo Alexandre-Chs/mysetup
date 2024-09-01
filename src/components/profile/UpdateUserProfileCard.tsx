@@ -1,6 +1,6 @@
 "use client";
 
-import { CirclePlus, X } from "lucide-react";
+import { Pencil, X } from "lucide-react";
 import React, { useState } from "react";
 import {
   Dialog,
@@ -23,6 +23,8 @@ import {
 } from "../ui/select";
 import { UserProfile, validUserInfosProfile } from "@/zod/profile/userinfos";
 import { toast } from "sonner";
+import { User } from "lucia";
+import { updateProfile } from "@/actions/user/updateProfile";
 
 type SocialLink = {
   id: number;
@@ -31,19 +33,19 @@ type SocialLink = {
 };
 
 const socialLinksItems = [
-  { name: "twitter", label: "Twitter" },
   { name: "discord", label: "Discord" },
-  { name: "instagram", label: "Instagram" },
-  { name: "youtube", label: "Youtube" },
-  { name: "tiktok", label: "Tiktok" },
   { name: "github", label: "Github" },
+  { name: "instagram", label: "Instagram" },
   { name: "linkedin", label: "Linkedin" },
-  { name: "reddit", label: "Reddit" },
-  { name: "twitch", label: "Twitch" },
-  { name: "steam", label: "Steam" },
   { name: "patreon", label: "Patreon" },
   { name: "paypal", label: "Paypal" },
   { name: "producthunt", label: "Producthunt" },
+  { name: "reddit", label: "Reddit" },
+  { name: "steam", label: "Steam" },
+  { name: "tiktok", label: "Tiktok" },
+  { name: "twitch", label: "Twitch" },
+  { name: "twitter", label: "Twitter" },
+  { name: "youtube", label: "Youtube" },
 ];
 
 const UpdateUserProfileCard = () => {
@@ -83,7 +85,7 @@ const UpdateUserProfileCard = () => {
     const parseResult = validUserInfosProfile.safeParse(dataToSave);
 
     if (parseResult.success) {
-      //TODO : envoyer en BDD ICI
+      updateProfile(parseResult.data);
       setOpen(false);
       toast.success("Profile updated successfully");
       setValidationErrors([]);
@@ -92,17 +94,15 @@ const UpdateUserProfileCard = () => {
     }
   };
 
-  //TODO : afficher le updater QUE si user sur sa page personnelle
-
   return (
     <>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger
           asChild
-          className="absolute -top-10 right-0 text-white hover:rotate-90 transition-transform cursor-pointer"
+          className="text-white cursor-pointer pointer-events-auto"
           onClick={() => setOpen(true)}
         >
-          <CirclePlus />
+          <Pencil size={20} />
         </DialogTrigger>
         <DialogContent className="sm:max-w-[600px] border-[#393b3e]/25 bg-backgroundSecondary rounded-xl">
           <DialogHeader>

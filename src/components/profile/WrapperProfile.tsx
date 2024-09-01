@@ -5,8 +5,16 @@ import { PiTwitterLogoFill } from "react-icons/pi";
 import Link from "next/link";
 import { Card, Carousel } from "./CarouselCard";
 import UpdateUserProfileCard from "./UpdateUserProfileCard";
+import { validateRequest } from "@/lib/auth/validate-request";
 
-const WrapperProfile = ({ setups }: { setups: any }) => {
+const WrapperProfile = async ({
+  setups,
+  currentUserPage,
+}: {
+  setups: any;
+  currentUserPage: string;
+}) => {
+  const { user } = await validateRequest();
   const carouselItems = setups.map((setup: any, index: number) => (
     <Card
       key={`card${index}`}
@@ -30,8 +38,11 @@ const WrapperProfile = ({ setups }: { setups: any }) => {
         <div className="group relative flex-shrink-0">
           <div className="absolute -left-[5px] top-0 w-[320px] h-[400px] group-hover:bg-[#2f2f37] blur-xl transition-colors rounded-xl"></div>
           <GlareCard className="relative z-50">
+            <div className="absolute top-5 right-5">
+              {user?.username === currentUserPage && <UpdateUserProfileCard />}
+            </div>
             <div
-              className="flex flex-col items-center justify-center h-full gap-y-12"
+              className="relative flex flex-col items-center justify-center h-full gap-y-12"
               style={{ pointerEvents: "none" }}
             >
               <div className="flex flex-col items-center justify-center gap-y-4">
@@ -59,7 +70,6 @@ const WrapperProfile = ({ setups }: { setups: any }) => {
               </div>
             </div>
           </GlareCard>
-          <UpdateUserProfileCard />
         </div>
 
         <Divider
