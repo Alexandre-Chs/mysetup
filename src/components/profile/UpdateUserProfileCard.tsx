@@ -23,11 +23,10 @@ import {
 } from "../ui/select";
 import { UserProfile, validUserInfosProfile } from "@/zod/profile/userinfos";
 import { toast } from "sonner";
-import { User } from "lucia";
 import { updateProfile } from "@/actions/user/updateProfile";
 
 type SocialLink = {
-  id: number;
+  id: string;
   socialName: string;
   link: string;
 };
@@ -48,26 +47,30 @@ const socialLinksItems = [
   { name: "youtube", label: "Youtube" },
 ];
 
-const UpdateUserProfileCard = () => {
-  const [socialLinks, setSocialLinks] = useState<SocialLink[]>([]);
-  const [nextId, setNextId] = useState(0);
-  const [profileDescription, setProfileDescription] = useState("");
+const UpdateUserProfileCard = ({ userInfos }: { userInfos: any }) => {
+  const [socialLinks, setSocialLinks] = useState<SocialLink[]>(
+    userInfos.socialLinks ? userInfos.socialLinks : []
+  );
+  const [profileDescription, setProfileDescription] = useState(
+    userInfos.profile.profileDescription
+      ? userInfos.profile.profileDescription
+      : ""
+  );
   const [open, setOpen] = useState(false);
   const [validationErrors, setValidationErrors] = useState<any[]>([]);
-  const handleDeleteSocialLink = (id: number) => {
+  const handleDeleteSocialLink = (id: string) => {
     setSocialLinks((curr) => curr.filter((item) => item.id !== id));
   };
 
   const handleAddSocialLink = () => {
     setSocialLinks((curr) => [
       ...curr,
-      { id: nextId, socialName: "", link: "" },
+      { id: crypto.randomUUID(), socialName: "", link: "" },
     ]);
-    setNextId((prevId) => prevId + 1);
   };
 
   const handleUpdateSocialLink = (
-    id: number,
+    id: string,
     field: keyof SocialLink,
     value: string
   ) => {
@@ -81,7 +84,6 @@ const UpdateUserProfileCard = () => {
       profileDescription,
       socialLinks: socialLinks,
     };
-
     const parseResult = validUserInfosProfile.safeParse(dataToSave);
 
     if (parseResult.success) {
@@ -125,6 +127,7 @@ const UpdateUserProfileCard = () => {
               {socialLinks.map((link) => (
                 <div className="flex gap-2" key={link.id}>
                   <Select
+                    defaultValue={link.socialName ? link.socialName : ""}
                     onValueChange={(value) =>
                       handleUpdateSocialLink(link.id, "socialName", value)
                     }

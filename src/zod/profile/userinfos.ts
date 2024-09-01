@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 const socialLinkSchema = z.object({
-  id: z.number(),
+  id: z.string(),
   socialName: z
     .string()
     .min(1, { message: "You must select a social network" }),
@@ -9,8 +9,8 @@ const socialLinkSchema = z.object({
 });
 
 export const validUserInfosProfile = z.object({
-  profileDescription: z.string().max(500, {
-    message: "Profile description must be at most 500 characters long",
+  profileDescription: z.string().max(250, {
+    message: "Profile description must be at most 250 characters long",
   }),
   socialLinks: z
     .array(socialLinkSchema)
