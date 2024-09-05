@@ -65,18 +65,14 @@ const Carousel: React.FC<PropType> = (props) => {
         <div className="h-1/6 w-full">
           <div className="embla__controls !m-0">
             <div className="embla__buttons">
-              <div className="bg-white rounded-xl p-1">
-                <PrevButton
-                  onClick={onPrevButtonClick}
-                  disabled={prevBtnDisabled}
-                />
-              </div>
-              <div className="bg-white rounded-xl p-1">
-                <NextButton
-                  onClick={onNextButtonClick}
-                  disabled={nextBtnDisabled}
-                />
-              </div>
+              <PrevButton
+                onClick={onPrevButtonClick}
+                disabled={prevBtnDisabled}
+              />
+              <NextButton
+                onClick={onNextButtonClick}
+                disabled={nextBtnDisabled}
+              />
             </div>
 
             <div className="embla__dots">

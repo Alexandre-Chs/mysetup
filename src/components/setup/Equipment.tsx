@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { IoHardwareChip } from "react-icons/io5";
 import { LuLampDesk } from "react-icons/lu";
 import "./scrollbar.css";
@@ -8,6 +8,11 @@ import { groupByType } from "@/lib/utils/group-by-type";
 import { EquipmentType } from "@/types/types";
 import { CircleX } from "lucide-react";
 import { deleteOneEquipment } from "@/actions/setup/delete";
+import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@nextui-org/dropdown";
+import { Button } from "@nextui-org/react";
+import { getEquipmentsSetup } from "@/actions/setup/get";
+import { useParams } from "next/navigation";
+import { createPhotoEquipment } from "@/actions/photo-equipment/create";
 
 const Equipment = ({
   equipments,
@@ -78,9 +83,42 @@ const Equipment = ({
             )}
           </div>
         ))}
+        {action !== 'add' && (
+          <EquipmentPhotoLinker />
+        )}
       </div>
     </div>
   );
+};
+
+const EquipmentPhotoLinker = () => {
+  const { id } = useParams();
+  const [equipments, setEquipments] = useState<EquipmentType[]>([]);
+
+  useEffect(() => {
+    async function fetchEquipments() {
+      const equipments = await getEquipmentsSetup(Array.isArray(id) ? id[0] : id);
+      setEquipments(equipments);
+    }
+    fetchEquipments();
+  }, [id])
+
+  async function handleClick(equipmentId: string) {
+    await createPhotoEquipment('a', equipmentId);
+  }
+
+  return (
+    <Dropdown>
+      <DropdownTrigger>
+        <Button>Link equipment to this photo</Button>
+      </DropdownTrigger>
+      <DropdownMenu>
+        {equipments.map((equipment: EquipmentType) => (
+          <DropdownItem onClick={() => handleClick(equipment.id)} key={equipment.id}>{equipment.name}</DropdownItem>
+        ))}
+      </DropdownMenu>
+    </Dropdown>
+  )
 };
 
 export default Equipment;

@@ -73,7 +73,7 @@ const NavBar = async () => {
       <nav className="ml-auto hidden lg:flex gap-6">
         {user && user.email && user.username ? (
           <div className="flex items-center justify-center gap-x-6">
-            {user.emailVerified && <ShareSetupButton user={user} />}
+            <ShareSetupButton user={user} />
             <DropdownButton user={user} />
           </div>
         ) : (

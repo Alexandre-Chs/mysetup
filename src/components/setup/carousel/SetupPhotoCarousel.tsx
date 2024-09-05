@@ -17,6 +17,7 @@ type PropType = {
   options?: EmblaOptionsType;
   selectedId?: string;
   readonly?: boolean;
+  handleClickImage?: (id: string) => void;
 };
 
 const SetupPhotoCarousel: React.FC<PropType> = (props) => {
@@ -61,6 +62,7 @@ const SetupPhotoCarousel: React.FC<PropType> = (props) => {
                   >
                     <div onClick={() => handleDelete(slide.id)} className="bg-red-500 size-6 rounded-full text-white absolute right-0 top-0 hidden group-hover:flex items-center justify-center cursor-pointer">X</div>
                     <img
+                      onClick={() => props.handleClickImage && props.handleClickImage(slide.id)}
                       src={slide.media.url}
                       className="rounded-xl m-auto max-w-full max-h-full"
                       alt=""

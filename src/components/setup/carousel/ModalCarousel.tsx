@@ -7,7 +7,7 @@ const OPTIONS = { loop: true }
 
 export default function ModalCarousel({ photos, selectedId }: { photos: any, selectedId: string | undefined }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  console.log({ selectedId });
+
   useEffect(() => {
     if (selectedId) {
       onOpen();
@@ -17,7 +17,7 @@ export default function ModalCarousel({ photos, selectedId }: { photos: any, sel
   return (
     <>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
-        <ModalContent className="bg-gray-800 bg-opacity-30 border-none shadow-none w-[90vw] h-[90vh] !max-w-none !m-0">
+        <ModalContent className="bg-stone-700 bg-opacity-90 border-none shadow-none w-[90vw] h-[90vh] !max-w-none !m-0">
           {(onClose) => (
             <div className="h-full w-full flex items-center justify-center">
               <Carousel slides={photos} options={OPTIONS} selectedId={selectedId} />
