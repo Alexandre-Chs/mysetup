@@ -94,7 +94,7 @@ const LeaderboardTable = () => {
                 index === 0 && "font-bold text-redText"
               )}
             >
-              [ {index + 1} ]
+              [ {index + 1}
               {index === 0 && (
                 <div className="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 w-6 h-6 bg-redText/35 rounded-full blur-xl"></div>
               )}
