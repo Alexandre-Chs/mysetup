@@ -27,9 +27,9 @@ const NavBar = async () => {
             <div className="absolute top-2 left-2">
               <Link
                 href="/"
-                className="text-textColor hover:text-textColorLighter text-lg"
+                className="text-textColor hover:text-textColorLighter text-lg font-bold"
               >
-                My setup
+                mysetup
               </Link>
             </div>
             {user && user.username && user.email ? (
@@ -65,9 +65,7 @@ const NavBar = async () => {
         </SheetContent>
       </Sheet>
       <Link className="mr-6 hidden lg:flex" href="/">
-        <h1 className="text-2xl font-semibold text-textColorLighter">
-          My setup
-        </h1>
+        <h1 className="text-2xl font-bold text-textColorLighter">mysetup</h1>
         <span className="sr-only">My setup</span>
       </Link>
       <nav className="ml-auto hidden lg:flex gap-6">
