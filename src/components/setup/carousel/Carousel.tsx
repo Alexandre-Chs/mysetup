@@ -52,7 +52,7 @@ const Carousel: React.FC<PropType> = (props) => {
                     className="embla__slide flex items-center"
                     key={slide.id}
                   >
-                    <ImageTagger src={slide.media.url} />
+                    <ImageTagger photoId={slide.id} src={slide.media.url} />
                   </div>
                 ))}
               </div>

@@ -4,6 +4,7 @@ import { setupPhotoTable } from "./setup_photo";
 import { mediaTable } from "./media";
 import { photoEquipmentTable } from "./photo_equipment";
 import { equipmentsTable } from "./equipments";
+import { userTable } from "./user";
 
 export const setupPhotoTableRelation = relations(setupPhotoTable, ({ one, many }) => ({
     setup: one(setupTable, {
@@ -17,8 +18,12 @@ export const setupPhotoTableRelation = relations(setupPhotoTable, ({ one, many }
     photoEquipments: many(photoEquipmentTable)
 }));
 
-export const setupTableRelation = relations(setupTable, ({ many }) => ({
-    setupPhotos: many(setupPhotoTable)
+export const setupTableRelation = relations(setupTable, ({ many, one }) => ({
+    setupPhotos: many(setupPhotoTable),
+    user: one(userTable, {
+        fields: [setupTable.userId],
+        references: [userTable.id]
+    })
 }))
 
 export const mediaTableRelation = relations(mediaTable, ({ one }) => ({
@@ -36,6 +41,14 @@ export const photoEquipmentTableRelation = relations(photoEquipmentTable, ({ one
     })
 }))
 
-export const equipmentsTableRelation = relations(equipmentsTable, ({ many }) => ({
-    photoEquipments: many(photoEquipmentTable)
+export const equipmentsTableRelation = relations(equipmentsTable, ({ many, one }) => ({
+    photoEquipments: many(photoEquipmentTable),
+    setup: one(setupTable, {
+        fields: [equipmentsTable.setupId],
+        references: [setupTable.id]
+    })
 }))
+
+export const userTableRelation = relations(userTable, ({ many }) => ({
+    setups: many(setupTable)
+}));

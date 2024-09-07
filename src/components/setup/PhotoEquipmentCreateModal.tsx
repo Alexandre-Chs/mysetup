@@ -17,10 +17,14 @@ const PhotoEquipmentCreateModal = () => {
 
   const newTagCoordinates = usePhotoEquipmentStore((state) => state.newTagCoordinates);
   const setNewTagCoordinates = usePhotoEquipmentStore((state) => state.setNewTagCoordinates);
+  const selectedPhotoId = usePhotoEquipmentStore((state) => state.selectedPhotoId);
+  const setSelectedPhotoId = usePhotoEquipmentStore((state) => state.setSelectedPhotoId);
   const [equipments, setEquipments] = useState<any[]>([]);
+  const [selectedEquipmentId, setSelectedEquipmentId] = useState<any | null>(null);
 
   function onOpenChange() {
     setNewTagCoordinates(null);
+    setSelectedPhotoId(null);
   }
 
   useEffect(() => {
@@ -34,7 +38,8 @@ const PhotoEquipmentCreateModal = () => {
   const groupedItems = groupByType(equipments);
 
   const addPhotoEquipment = async (onClose: Function) => {
-    await createPhotoEquipment('a', 'a');
+    const equipmentId = selectedEquipmentId!.currentKey;
+    await createPhotoEquipment(selectedPhotoId!, equipmentId, newTagCoordinates!.x, newTagCoordinates!.y);
     onClose();
   };
 
@@ -51,11 +56,13 @@ const PhotoEquipmentCreateModal = () => {
                   label="Equipment"
                   placeholder="Select an equipment"
                   className="max-w-xs"
+                  selectedKeys={selectedEquipmentId}
+                  onSelectionChange={setSelectedEquipmentId}
                 >
                   {Object.keys(groupedItems).map((type) => (
                     <SelectSection key={type} title={camelCase(type)}>
                       {groupedItems[type].map((item: any) => (
-                        <SelectItem key={item.name}>{item.name}</SelectItem>
+                        <SelectItem key={item.id} value={item.id}>{item.name}</SelectItem>
                       ))}
                     </SelectSection>
                   ))}
@@ -65,7 +72,7 @@ const PhotoEquipmentCreateModal = () => {
                 <Button color="danger" variant="light" onPress={onClose}>
                   Cancel
                 </Button>
-                <Button color="primary" onPress={() => addPhotoEquipment(onClose)}>
+                <Button disabled={!selectedEquipmentId?.currentKey} color="primary" onPress={() => addPhotoEquipment(onClose)}>
                   Add
                 </Button>
               </ModalFooter>

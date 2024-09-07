@@ -1,10 +1,12 @@
 import { createPhotoEquipment } from "@/actions/photo-equipment/create";
+import { getPhotoEquipments } from "@/actions/photo-equipment/get";
 import { usePhotoEquipmentStore } from "@/store/PhotoEquipmentStore";
 import { useSetupStore } from "@/store/SetupStore";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type ImageTaggerProps = {
   src: string;
+  photoId: string;
 }
 
 type TagCoords = {
@@ -12,12 +14,23 @@ type TagCoords = {
   y: number;
 }
 
-const ImageTagger = ({ src }: ImageTaggerProps) => {
+const ImageTagger = ({ src, photoId }: ImageTaggerProps) => {
   const tagging = useSetupStore((state) => state.tagging);
-  const [tags, setTags] = useState<TagCoords[]>([]);
+
   const [newTagCoords, setNewTagCoords] = useState<{ x: number, y: number } | null>(null);
   const imageRef = useRef<HTMLImageElement>(null);
+
   const setNewTagCoordinates = usePhotoEquipmentStore((state) => state.setNewTagCoordinates);
+  const setSelectedPhotoId = usePhotoEquipmentStore((state) => state.setSelectedPhotoId);
+
+  const [tags, setTags] = useState<any>([]);
+  useEffect(() => {
+    async function fetchTags() {
+      const tags = await getPhotoEquipments(photoId);
+      setTags(tags);
+    }
+    fetchTags();
+  }, [photoId])
 
   const handleMouseMove = (e: React.MouseEvent<HTMLImageElement>) => {
     if (imageRef.current) {
@@ -31,6 +44,7 @@ const ImageTagger = ({ src }: ImageTaggerProps) => {
   const handleAddTag = () => {
     if (newTagCoords) {
       setNewTagCoordinates(newTagCoords);
+      setSelectedPhotoId(photoId);
     }
   };
 
@@ -52,9 +66,9 @@ const ImageTagger = ({ src }: ImageTaggerProps) => {
         >
         </div>
       )}
-      {tags.map((tag, index) => (
+      {tags.map((tag: any) => (
         <div
-          key={index}
+          key={tag.id}
           className="absolute w-3 h-3 bg-red-500 rounded-full transform -translate-x-1/2 -translate-y-1/2"
           style={{
             top: `${tag.y}%`,
