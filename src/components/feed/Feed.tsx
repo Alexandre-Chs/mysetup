@@ -1,12 +1,14 @@
 "use client";
+
 import "gridstack/dist/gridstack.min.css";
 import { GridStack } from "gridstack";
 import InfiniteScroll from "react-infinite-scroll-component";
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Skeleton } from "../ui/skeleton";
+import { useRouter } from "next/navigation";
 
 function random() {
-  const numbers = [2, 2, 2, 2, 2, 4, 4, 4];
+  const numbers = [3, 3, 3, 3, 3, 6, 6, 6];
   return numbers[Math.floor(Math.random() * numbers.length)];
 }
 
@@ -69,59 +71,66 @@ const EndOfList = () => {
   );
 };
 
-class Feed extends React.Component {
-  state: any;
-  props: any;
+const Feed = ({ photos }: { photos: any[] }) => {
+  const router = useRouter();
 
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      grid: null,
-      dataLength: 0,
-      photos: props.photos,
-    };
-  }
+  const [grid, setGrid] = useState<any>(null);
+  const [dataLength, setDataLength] = useState(0);
+  const [setupPhotos, setSetupPhotos] = useState<any[]>([]);
 
-  async componentDidMount() {
-    const grid = GridStack.init({
-      float: true,
-      disableDrag: true,
-      disableResize: true,
-    });
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    this.state.photos.forEach((item: any) => {
-      grid.addWidget({
-        w: random(),
-        h: random(),
-        content: `<div class="grid-stack-item-content w-full h-full bg-cover bg-center rounded-lg" style="background-image: url('${item.url}')"></div>`,
-      });
-    });
-    this.setState({ grid, dataLength: 100 });
-  }
-
-  addMore = () => {
-    randomFill(20).forEach((item: any) =>
-      this.state.grid.addWidget({
-        w: item.w,
-        h: item.h,
-        content: `<div class="grid-stack-item-content w-full h-full bg-cover bg-center rounded-lg bg-[url('https://placehold.co/600x400')]"></div>`,
-      })
-    );
-    this.setState({ dataLength: this.state.dataLength + 20 });
+  const handleClick = (e: any) => {
+    const currId = e.target.dataset.route;
+    if (currId) {
+      router.push(currId);
+    }
   };
 
-  render() {
-    return (
-      <InfiniteScroll
-        dataLength={this.state.dataLength}
-        next={this.addMore}
-        hasMore={this.state.dataLength < 200}
-        loader={<Loader />}
-        endMessage={<EndOfList />}
-      >
-        <div className="grid-stack overflow-hidden"></div>
-      </InfiniteScroll>
-    );
-  }
-}
+  useEffect(() => {
+    const initGrid = async () => {
+      const newGrid = GridStack.init({
+        float: true,
+        disableDrag: true,
+        disableResize: true,
+      });
+      photos.forEach((item) => {
+        newGrid.addWidget({
+          w: random(),
+          h: random(),
+          content: `<div class="grid-stack-item-content w-full h-full bg-cover bg-center rounded-lg" style="background-image: url('${item.url}')" data-route="${item.username}/${item.setupId}"></div>`,
+        });
+        setSetupPhotos((prev) => [...prev, item]);
+      });
+      setGrid(newGrid);
+      setDataLength(100);
+    };
+
+    initGrid();
+  }, [photos]);
+
+  const addMore = useCallback(() => {
+    if (grid) {
+      randomFill(20).forEach((item) =>
+        grid.addWidget({
+          w: item.w,
+          h: item.h,
+          content: `<div class="grid-stack-item-content w-full h-full bg-cover bg-center rounded-lg bg-[url('https://placehold.co/600x400')]"></div>`,
+        })
+      );
+      setDataLength((prevLength) => prevLength + 20);
+    }
+  }, [grid]);
+
+  return (
+    <InfiniteScroll
+      dataLength={dataLength}
+      next={addMore}
+      hasMore={dataLength < 200}
+      loader={<Loader />}
+      endMessage={<EndOfList />}
+    >
+      <div className="grid-stack overflow-hidden" onClick={handleClick}></div>
+    </InfiniteScroll>
+  );
+};
+
 export default Feed;
