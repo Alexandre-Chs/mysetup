@@ -10,10 +10,10 @@ import { redirect } from "next/navigation";
 
 export async function login(formData: FormData): Promise<ActionResult> {
   //check if data is valid
-  const username = formData.get("username") as string;
+  const email = formData.get("email") as string;
   const password = formData.get("password") as string;
 
-  const parseResult = validSchemaAuth.safeParse({ username, password });
+  const parseResult = validSchemaAuth.safeParse({ email, password });
 
   if (!parseResult.success) {
     return;
@@ -23,7 +23,7 @@ export async function login(formData: FormData): Promise<ActionResult> {
 
   //check if user exist in database
   const ifUsernameAlreadyExist = await getUserFromDatabaseIfExist(
-    parseData.username
+    parseData.email
   );
 
   //if user does not exist

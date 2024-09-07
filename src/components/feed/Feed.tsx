@@ -65,7 +65,7 @@ const Loader = () => {
 
 const EndOfList = () => {
   return (
-    <h2 className="text-center text-3xl my-8 font-bold">Fin des setups !</h2>
+    <h2 className="text-center text-3xl my-8 font-bold">No more setups !</h2>
   );
 };
 

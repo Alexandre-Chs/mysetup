@@ -24,7 +24,7 @@ export async function ifEmailExistInDatabase(email: string): Promise<boolean> {
   return response.length > 0;
 }
 
-export async function getUserFromDatabaseIfExist(username: string) {
+export async function getUserFromDatabaseIfExist(email: string) {
   const response = await db
     .select({
       id: userTable.id,
@@ -32,7 +32,7 @@ export async function getUserFromDatabaseIfExist(username: string) {
       password_hash: userTable.password_hash,
     })
     .from(userTable)
-    .where(eq(sql`LOWER(${userTable.username})`, username.toLowerCase()));
+    .where(eq(sql`LOWER(${userTable.email})`, email.toLowerCase()));
 
   if (response.length === 0) {
     return false;

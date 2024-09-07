@@ -13,10 +13,10 @@ const Login = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.target as HTMLFormElement);
-    const username = formData.get("username") as string;
+    const email = formData.get("email") as string;
     const password = formData.get("password") as string;
     const parseDataWithZod = validSchemaAuth.safeParse({
-      username,
+      email,
       password,
     });
 
@@ -42,9 +42,9 @@ const Login = () => {
       <form onSubmit={handleSubmit} className="w-full gap-y-3 flex flex-col">
         <div className="flex flex-col w-full">
           <input
-            name="username"
-            id="username"
-            placeholder="Username"
+            name="email"
+            id="email"
+            placeholder="Email"
             className="placeholder:text-textColor rounded-[8px] bg-[#141516] px-4 py-3 text-sm text-textColor border-1 border-[#393b3e]/25 hover:border-[#4F5051] focus:border-[#6f7073] focus:outline-none transition-colors"
           />
         </div>
