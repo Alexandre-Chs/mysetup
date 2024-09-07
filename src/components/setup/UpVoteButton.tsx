@@ -1,20 +1,16 @@
 "use client";
 import { toggleUpVote } from "@/actions/up-vote/up-vote.create-update";
-import { UpVote } from "@/db/schemas";
 import clsx from "clsx";
-import { User } from "lucia";
 import { FaCaretUp } from "react-icons/fa";
 
-const UpVoteButton = ({ upVotes, userUpVoted, user, setupId }: {
-  upVotes: UpVote[];
+const UpVoteButton = ({ upVotesCount, userUpVoted, setupId }: {
+  upVotesCount: number;
   userUpVoted: boolean;
-  user: User | null;
   setupId: string;
 }) => {
 
   const toggleVote = async () => {
-    if (!user) return;
-    await toggleUpVote(setupId, user!.id);
+    await toggleUpVote(setupId);
   }
 
   return (
@@ -27,7 +23,7 @@ const UpVoteButton = ({ upVotes, userUpVoted, user, setupId }: {
         "basis-1/3"
       )} size={50} />
       <div className="basis-2/3">
-        <p className="text-2xl font-bold">{upVotes.length} UpVotes</p>
+        <p className="text-2xl font-bold">{upVotesCount} UpVotes</p>
       </div>
     </div>
   );

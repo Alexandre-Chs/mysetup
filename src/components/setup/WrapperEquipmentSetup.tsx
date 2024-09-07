@@ -5,15 +5,17 @@ import Equipment from "./Equipment";
 import { useEdit } from "@/context/EditContext";
 import { EquipmentsTable } from "@/db/schemas";
 import NewEquipmentsClient from "./new-setup/NewEquipments.client";
+import { useSetupStore } from "@/store/SetupStore";
 
 const WrapperEquipmentSetup = ({
   setupId,
-  equipments,
 }: {
   setupId: string;
-  equipments: EquipmentsTable[];
 }) => {
   const { isEditing } = useEdit();
+
+  const setup = useSetupStore((state) => state.setup);
+  const equipments = setup?.equipments as EquipmentsTable[];
 
   return (
     <>

@@ -1,21 +1,25 @@
-import { toggleUpVote } from "@/actions/up-vote/up-vote.create-update";
-import { getSetupUpVotes, hasUserUpVotedSetup } from "@/actions/up-vote/up-vote.get";
-import { validateRequest } from "@/lib/auth/validate-request";
-import React from "react";
+"use client";
+import { hasUserUpVotedSetup } from "@/actions/up-vote/up-vote.get";
+import React, { useEffect } from "react";
 import UpVoteButton from "./UpVoteButton";
+import { useSetupStore } from "@/store/SetupStore";
 
-const UpVotes = async ({ setupId }: { setupId: string }) => {
-  const { user } = await validateRequest();
+const UpVotes = ({ setupId }: { setupId: string }) => {
+  const setup = useSetupStore(state => state.setup);
+  const setUpVoted = useSetupStore(state => state.setUpVoted)
+  const isUpVoted = useSetupStore(state => state.isUpVoted)
 
-  const upVotes = await getSetupUpVotes(setupId);
-  const userUpVoted = !user ? false : await hasUserUpVotedSetup(setupId, user!.id);
-
-
+  useEffect(() => {
+    async function fetchData() {
+      const userUpVote = await hasUserUpVotedSetup(setupId);
+      setUpVoted(userUpVote);
+    }
+    fetchData();
+  })
 
   return <UpVoteButton
-    upVotes={upVotes}
-    userUpVoted={userUpVoted}
-    user={user}
+    upVotesCount={setup.upVotes.length}
+    userUpVoted={isUpVoted}
     setupId={setupId}
   />
 };

@@ -1,9 +1,9 @@
 "use server";
 
 import { db } from "@/db/db";
-import { equipmentsTable, setupPhotoTable, setupTable } from "@/db/schemas";
+import { equipmentsTable, setupPhotoTable, setupTable, upVoteTable } from "@/db/schemas";
 import { validateRequest } from "@/lib/auth/validate-request";
-import { eq } from "drizzle-orm";
+import { count, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
 export async function getSetup(id: string) {
@@ -20,6 +20,9 @@ export async function getSetup(id: string) {
           },
         },
       },
+      equipments: true,
+      // just get the count of upvotes
+      upVotes: true,
     },
   });
 }

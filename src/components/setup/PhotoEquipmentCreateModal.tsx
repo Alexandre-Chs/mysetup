@@ -1,39 +1,30 @@
 "use client";
-import { getEquipmentsSetup } from "@/actions/setup/get";
 import { groupByType } from "@/lib/utils/group-by-type";
 import { usePhotoEquipmentStore } from "@/store/PhotoEquipmentStore";
 import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from "@nextui-org/react";
-import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Select, SelectItem, SelectSection } from "@nextui-org/react";
 import { createPhotoEquipment } from "@/actions/photo-equipment/create";
+import { useSetupStore } from "@/store/SetupStore";
 
 function camelCase(str: string) {
   return str[0].toUpperCase() + str.slice(1).toLowerCase();
 }
 
 const PhotoEquipmentCreateModal = () => {
-  const { id } = useParams();
-
   const newTagCoordinates = usePhotoEquipmentStore((state) => state.newTagCoordinates);
   const setNewTagCoordinates = usePhotoEquipmentStore((state) => state.setNewTagCoordinates);
   const selectedPhotoId = usePhotoEquipmentStore((state) => state.selectedPhotoId);
   const setSelectedPhotoId = usePhotoEquipmentStore((state) => state.setSelectedPhotoId);
-  const [equipments, setEquipments] = useState<any[]>([]);
+
+  const setup = useSetupStore(state => state.setup);
+  const equipments = setup?.equipments;
   const [selectedEquipmentId, setSelectedEquipmentId] = useState<any | null>(null);
 
   function onOpenChange() {
     setNewTagCoordinates(null);
     setSelectedPhotoId(null);
   }
-
-  useEffect(() => {
-    async function fetchEquipments() {
-      const equipments = await getEquipmentsSetup(Array.isArray(id) ? id[0] : id);
-      setEquipments(equipments);
-    }
-    fetchEquipments();
-  }, [id])
 
   const groupedItems = groupByType(equipments);
 

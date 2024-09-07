@@ -5,6 +5,7 @@ import { mediaTable } from "./media";
 import { photoEquipmentTable } from "./photo_equipment";
 import { equipmentsTable } from "./equipments";
 import { userTable } from "./user";
+import { upVoteTable } from "./up_votes";
 
 export const setupPhotoTableRelation = relations(setupPhotoTable, ({ one, many }) => ({
     setup: one(setupTable, {
@@ -23,6 +24,15 @@ export const setupTableRelation = relations(setupTable, ({ many, one }) => ({
     user: one(userTable, {
         fields: [setupTable.userId],
         references: [userTable.id]
+    }),
+    equipments: many(equipmentsTable),
+    upVotes: many(upVoteTable)
+}))
+
+export const upVoteTableRelation = relations(upVoteTable, ({ one }) => ({
+    setup: one(setupTable, {
+        fields: [upVoteTable.setupId],
+        references: [setupTable.id]
     })
 }))
 

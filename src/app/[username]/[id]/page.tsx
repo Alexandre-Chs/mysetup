@@ -1,8 +1,6 @@
 import { getSetup } from "@/actions/setup/get";
-import PhotoEquipmentCreateModal from "@/components/setup/PhotoEquipmentCreateModal";
-import ToolbarUpdateSetup from "@/components/setup/update-setup/ToolbarUpdateSetup";
-import WrapperNameSetup from "@/components/setup/WrapperNameSetup";
-import WrapperSetup from "@/components/setup/WrapperSetup";
+import Setup from "@/components/setup/Setup";
+
 import { validateRequest } from "@/lib/auth/validate-request";
 import { notFound } from "next/navigation";
 
@@ -19,13 +17,6 @@ export default async function Page({
   }
 
   return (
-    <div className="flex flex-col items-center justify-center h-[90vh]">
-      {user?.username === params.username && (
-        <ToolbarUpdateSetup setupId={params.id} />
-      )}
-      <WrapperNameSetup setupName={setup.name as string} setupId={params.id} />
-      <WrapperSetup currentUser={user} setup={setup} />
-      <PhotoEquipmentCreateModal />
-    </div>
+    <Setup setup={setup} user={user} />
   );
 }
