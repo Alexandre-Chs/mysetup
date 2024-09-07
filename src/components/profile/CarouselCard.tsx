@@ -1,25 +1,14 @@
 "use client";
 
-import React, {
-  useEffect,
-  useRef,
-  useState,
-  createContext,
-  useContext,
-} from "react";
-
+import React, { useEffect, useState, createContext } from "react";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import Image, { ImageProps } from "next/image";
-import {
-  ArrowBigLeft,
-  ArrowBigRight,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-} from "lucide-react";
-import { redirect } from "next/dist/server/api-utils";
+import { ChevronLeftIcon, ChevronRightIcon, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import clsx from "clsx";
+import DeleteSetupModal from "../navbar/DeleteSetupModal";
+import { User } from "lucia";
 
 interface CarouselProps {
   items: JSX.Element[];
@@ -32,6 +21,7 @@ type Card = {
   category: string;
   content: React.ReactNode;
   link: string;
+  setupId: string;
 };
 
 export const CarouselContext = createContext<{
@@ -42,13 +32,16 @@ export const CarouselContext = createContext<{
   currentIndex: 0,
 });
 
-export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
+export const Carousel = ({
+  items,
+  initialScroll = 0,
+  user,
+  currentUsername,
+}: CarouselProps & { user: User | null; currentUsername: string }) => {
   const carouselRef = React.useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = React.useState(false);
   const [canScrollRight, setCanScrollRight] = React.useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
-
-  const router = useRouter();
 
   useEffect(() => {
     if (carouselRef.current) {
@@ -106,14 +99,13 @@ export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
         >
           <div
             className={cn(
-              "absolute right-0  z-[1000] h-auto  w-[5%] overflow-hidden bg-gradient-to-l"
+              "absolute right-0 z-[1000] h-auto w-[5%] overflow-hidden bg-gradient-to-l"
             )}
           ></div>
 
           <div className={cn("flex flex-row justify-start gap-4 pl-4")}>
             {items.map((item, index) => (
               <motion.div
-                onClick={() => router.push(item.props.card.link)}
                 initial={{
                   opacity: 0,
                   y: 20,
@@ -129,9 +121,9 @@ export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
                   },
                 }}
                 key={"card" + index}
-                className="last:pr-[5%] md:last:pr-[33%]  rounded-3xl"
+                className="last:pr-[5%] md:last:pr-[33%] rounded-3xl"
               >
-                {item}
+                {React.cloneElement(item, { user, currentUsername })}
               </motion.div>
             ))}
           </div>
@@ -160,19 +152,38 @@ export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
 export const Card = ({
   card,
   layout = false,
+  user,
+  currentUsername,
 }: {
   card: Card;
   index: number;
   layout?: boolean;
+  user: User | null;
+  currentUsername: string;
 }) => {
+  const [showModal, setShowModal] = useState(false);
+  const router = useRouter();
+
+  const handleCardClick = (e: React.MouseEvent) => {
+    if (!showModal) {
+      router.push(card.link);
+    }
+  };
+
+  const handleDeleteSetup = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setShowModal(true);
+  };
+
   return (
     <>
-      <motion.button
+      <motion.div
         layoutId={layout ? `card-${card.title}` : undefined}
         className={clsx(
-          "rounded-3xl bg-backgroundTertiary h-80 w-56 md:h-[40rem] md:w-96 overflow-hidden flex flex-col items-start justify-start relative z-10",
+          "rounded-3xl bg-backgroundTertiary h-80 w-56 md:h-[40rem] md:w-96 overflow-hidden flex flex-col items-start justify-start relative z-10 cursor-pointer",
           card.src === "" ? "bg-backgroundTertiary" : "dark:bg-neutral-900"
         )}
+        onClick={handleCardClick}
       >
         <div className="absolute h-full top-0 inset-x-0 bg-gradient-to-b from-black/50 via-transparent to-transparent z-30 pointer-events-none" />
         <div className="relative z-40 p-8 bg-backgroundSecondary/30 backdrop-blur-sm w-full">
@@ -188,6 +199,18 @@ export const Card = ({
           >
             {card.title}
           </motion.p>
+          {user?.username === currentUsername && (
+            <div className="absolute top-5 right-5">
+              <div onClick={handleDeleteSetup}>
+                <Trash2 className="text-redText cursor-pointer rounded-full hover:text-redTextLighter" />
+                <DeleteSetupModal
+                  show={showModal}
+                  setShowModal={setShowModal}
+                  setupId={card.setupId}
+                />
+              </div>
+            </div>
+          )}
         </div>
         {card.src !== "" ? (
           <BlurImage
@@ -201,7 +224,7 @@ export const Card = ({
             <p className="text-xs text-textColor">No image for this card yet</p>
           </div>
         )}
-      </motion.button>
+      </motion.div>
     </>
   );
 };
@@ -229,7 +252,7 @@ export const BlurImage = ({
       loading="lazy"
       decoding="async"
       blurDataURL={typeof src === "string" ? src : undefined}
-      alt={alt ? alt : "Background of a beautiful view"}
+      alt={alt ? alt : "Photo of a beautiful setup"}
       {...rest}
     />
   );

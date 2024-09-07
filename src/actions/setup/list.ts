@@ -38,5 +38,6 @@ export async function listUserSetup(username: string) {
       id: user.id,
       username: user.username,
     },
+    setupId: setup.id,
   }));
 }

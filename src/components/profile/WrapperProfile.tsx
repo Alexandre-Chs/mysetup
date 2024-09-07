@@ -24,14 +24,17 @@ const WrapperProfile = async ({
       card={{
         src: setup.photo.url,
         title: setup.name || `Setup ${index + 1}`,
-        category: setup.category || "Gaming",
+        category: setup.category || "",
         content: (
           <p>{setup.description || `Description du setup ${index + 1}.`}</p>
         ),
         link: `/${setup.user.username}/${setup.id}`,
+        setupId: setup.id,
       }}
       index={index}
       layout={true}
+      user={user}
+      currentUsername={currentUsername}
     />
   ));
 
@@ -60,8 +63,8 @@ const WrapperProfile = async ({
                     : "No description yet"}
                 </p>
                 <div className="flex flex-col  text-textColor items-center justify-center">
-                  <p>0 setups posted</p>
-                  <p>134 votes on setup</p>
+                  <p>{setups.length} setups posted</p>
+                  {/* <p>134 votes on setup</p> */}
                 </div>
               </div>
               <div className="flex items-center flex-col justify-center w-full px-12">
@@ -92,7 +95,12 @@ const WrapperProfile = async ({
         />
 
         <div className="flex-grow overflow-x-auto w-full">
-          <Carousel items={carouselItems} initialScroll={0} />
+          <Carousel
+            items={carouselItems}
+            initialScroll={0}
+            user={user}
+            currentUsername={currentUsername}
+          />
         </div>
       </div>
     </div>
