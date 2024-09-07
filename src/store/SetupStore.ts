@@ -1,12 +1,13 @@
-import { EquipmentsTable } from "@/db/schemas";
 import { create } from "zustand";
 
 type SetupStore = {
-  equipments: EquipmentsTable[];
-  setEquipments: (equipments: EquipmentsTable[]) => void;
+  tagging: boolean;
+  setTagging: (tagging: boolean) => void;
+  toggleTagging: () => void;
 }
 
 export const useSetupStore = create<SetupStore>((set) => ({
-  equipments: [],
-  setEquipments: (equipments) => set({ equipments }),
+  tagging: false,
+  setTagging: (tagging) => set({ tagging }),
+  toggleTagging: () => set((state) => ({ tagging: !state.tagging }))
 }));

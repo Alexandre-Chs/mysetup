@@ -8,11 +8,10 @@ import { groupByType } from "@/lib/utils/group-by-type";
 import { EquipmentType } from "@/types/types";
 import { CircleX } from "lucide-react";
 import { deleteOneEquipment } from "@/actions/setup/delete";
-import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@nextui-org/dropdown";
 import { Button } from "@nextui-org/react";
 import { getEquipmentsSetup } from "@/actions/setup/get";
 import { useParams } from "next/navigation";
-import { createPhotoEquipment } from "@/actions/photo-equipment/create";
+import { useSetupStore } from "@/store/SetupStore";
 
 const Equipment = ({
   equipments,
@@ -41,7 +40,7 @@ const Equipment = ({
   };
 
   return (
-    <div className="overflow-hidden h-full rounded-large relative">
+    <div className="overflow-hidden h-full rounded-large relative shrink-0">
       <div className="h-full bg-[#151515] text-white px-4 rounded-large overflow-y-auto scrollbar">
         {Object.keys(groupedItems).map((type) => (
           <div key={type}>
@@ -95,6 +94,8 @@ const EquipmentPhotoLinker = () => {
   const { id } = useParams();
   const [equipments, setEquipments] = useState<EquipmentType[]>([]);
 
+  const toggleTagging = useSetupStore(state => state.toggleTagging);
+
   useEffect(() => {
     async function fetchEquipments() {
       const equipments = await getEquipmentsSetup(Array.isArray(id) ? id[0] : id);
@@ -103,21 +104,8 @@ const EquipmentPhotoLinker = () => {
     fetchEquipments();
   }, [id])
 
-  async function handleClick(equipmentId: string) {
-    await createPhotoEquipment('a', equipmentId);
-  }
-
   return (
-    <Dropdown>
-      <DropdownTrigger>
-        <Button>Link equipment to this photo</Button>
-      </DropdownTrigger>
-      <DropdownMenu>
-        {equipments.map((equipment: EquipmentType) => (
-          <DropdownItem onClick={() => handleClick(equipment.id)} key={equipment.id}>{equipment.name}</DropdownItem>
-        ))}
-      </DropdownMenu>
-    </Dropdown>
+    <Button onClick={() => toggleTagging()}>Link equipment to this photo</Button>
   )
 };
 

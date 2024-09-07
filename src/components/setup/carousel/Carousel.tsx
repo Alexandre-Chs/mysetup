@@ -9,6 +9,7 @@ import {
 } from "./CarouselArrowButtons";
 import useEmblaCarousel from "embla-carousel-react";
 import Equipment from "../Equipment";
+import ImageTagger from "../ImageTagger";
 
 type PropType = {
   slides: any[];
@@ -51,11 +52,7 @@ const Carousel: React.FC<PropType> = (props) => {
                     className="embla__slide flex items-center"
                     key={slide.id}
                   >
-                    <img
-                      src={slide.media.url}
-                      className="rounded-xl m-auto max-w-full max-h-full"
-                      alt=""
-                    />
+                    <ImageTagger src={slide.media.url} />
                   </div>
                 ))}
               </div>

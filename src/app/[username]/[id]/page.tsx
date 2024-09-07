@@ -1,4 +1,5 @@
 import { getSetup } from "@/actions/setup/get";
+import PhotoEquipmentCreateModal from "@/components/setup/PhotoEquipmentCreateModal";
 import ToolbarUpdateSetup from "@/components/setup/update-setup/ToolbarUpdateSetup";
 import WrapperNameSetup from "@/components/setup/WrapperNameSetup";
 import WrapperSetup from "@/components/setup/WrapperSetup";
@@ -24,6 +25,7 @@ export default async function Page({
       )}
       <WrapperNameSetup setupName={setup.name as string} setupId={params.id} />
       <WrapperSetup currentUser={user} setup={setup} />
+      <PhotoEquipmentCreateModal />
     </div>
   );
 }
