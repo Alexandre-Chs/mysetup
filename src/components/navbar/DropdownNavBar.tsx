@@ -40,8 +40,8 @@ const DropdownNavBar = ({ user }: { user: User }) => {
       <DropdownTrigger>
         <div className="cursor-pointer font-semibold text-white">
           <div className="flex items-center justify-center">
-            <ChevronDownIcon size={18} color="#79797A" />
-            <UserIcon color="#79797A" size={22} />
+            <ChevronDownIcon size={18} color="#d7d7d7" />
+            <UserIcon color="#d7d7d7" size={22} />
           </div>
         </div>
       </DropdownTrigger>
