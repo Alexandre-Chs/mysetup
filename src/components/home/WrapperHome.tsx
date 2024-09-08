@@ -20,17 +20,18 @@ const WrapperHome = ({ allSetupsPhotos }: { allSetupsPhotos: any }) => {
             }}
             className="relative flex flex-col gap-4 items-center justify-center px-4"
           >
-            <div className="text-3xl md:text-7xl font-bold text-textColorLighter text-center">
-              Find the best idea for your setup
+            <div className="text-3xl md:text-7xl font-bold text-textColorLighter text-center max-w-2xl mx-auto px-4 md:px-0">
+              Endless Inspiration for your setup
             </div>
-            <div className="font-light text-xl text-textColor py-4 max-w-xl mx-auto text-center">
-              Or share your own setup and get inspired by other people&apos;s
-              ideas
+            <div className="font-light text-sm md:text-xl sm:text-medium text-textColor md:py-4 py-0 max-w-xl mx-auto text-center px-4 md:px-0">
+              Dive into a world of stunning setups. Explore, get inspired, and
+              effortlessly find the perfect pieces to bring your vision to life.
+              Your next favorite setup is just a click away
             </div>
           </motion.div>
         </AuroraBackground>
       </div>
-      <div className="px-64 mx-auto mt-[70vh]">
+      <div className="xl:px-64 md:px-32 px-0 mx-auto mt-[45vh]">
         <Feed photos={allSetupsPhotos} />
       </div>
     </>
