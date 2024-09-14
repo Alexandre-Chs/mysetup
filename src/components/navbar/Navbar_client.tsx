@@ -81,7 +81,7 @@ const NavbarClient = ({ user }: { user: User | null }) => {
             </div>
           </SheetContent>
         </Sheet>
-        <Link className="mr-6 hidden lg:flex" href="/">
+        <Link className="mr-auto hidden lg:flex flex-1" href="/">
           <Image
             src="/logo.png"
             className="h-8 w-auto"
@@ -89,10 +89,9 @@ const NavbarClient = ({ user }: { user: User | null }) => {
             width={100}
             height={100}
           />
-          {/* <h1 className="text-2xl font-bold text-textColorLighter">mysetup</h1> */}
           <span className="sr-only">My setup</span>
         </Link>
-        <div className="flex-grow flex justify-center items-center">
+        <div className="flex-grow flex justify-center items-center flex-1">
           <Link
             href="/leaderboards"
             className="text-textColorLighter hover:text-white cursor-pointer transition-colors"
@@ -100,7 +99,7 @@ const NavbarClient = ({ user }: { user: User | null }) => {
             Leaderboards
           </Link>
         </div>
-        <nav className="ml-auto hidden lg:flex gap-6">
+        <nav className="ml-auto hidden lg:flex items-center justify-end gap-6 flex-1">
           {user && user.email && user.username ? (
             <div className="flex items-center justify-center gap-x-6">
               <ShareSetupButton user={user} />
@@ -108,7 +107,7 @@ const NavbarClient = ({ user }: { user: User | null }) => {
             </div>
           ) : (
             <>
-              <div className="relative group">
+              <div className="relative group ml-auto">
                 <div className="absolute -top-[5px] -left-[11px] group-hover:bg-white/25 blur-xl transition-colors rounded-xl h-[32px] w-[72px]"></div>
                 <Link
                   className="relative cursor-pointer text-sm text-white font-medium border-transparent bg-transparent px-4 py-2 rounded-xl border-1 group-hover:bg-transparent transition-colors"
