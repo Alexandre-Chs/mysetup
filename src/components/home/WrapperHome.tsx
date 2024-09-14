@@ -4,6 +4,7 @@ import React from "react";
 import Feed from "../feed/Feed";
 import { AuroraBackground } from "./AuroraBackground";
 import { motion } from "framer-motion";
+import Footer from "../footer/Footer";
 
 const WrapperHome = ({ allSetupsPhotos }: { allSetupsPhotos: any }) => {
   return (
@@ -34,6 +35,7 @@ const WrapperHome = ({ allSetupsPhotos }: { allSetupsPhotos: any }) => {
       <div className="xl:px-64 md:px-32 px-0 mx-auto mt-[45vh]">
         <Feed photos={allSetupsPhotos} />
       </div>
+      <Footer />
     </>
   );
 };

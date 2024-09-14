@@ -6,7 +6,6 @@ import Providers from "./providers";
 import NavBar from "@/components/navbar/navBar";
 import ModalReceiveInfos from "@/components/auth/ModalReceiveInfos";
 import React from "react";
-import Footer from "@/components/footer/Footer";
 
 export const metadata: Metadata = {
   title: "My setup",
@@ -27,7 +26,6 @@ export default async function RootLayout({
         <Providers>
           <NavBar />
           {children}
-          <Footer />
           <Toaster />
           <ModalReceiveInfos />
         </Providers>

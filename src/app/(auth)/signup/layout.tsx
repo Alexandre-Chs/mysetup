@@ -1,3 +1,4 @@
+import Footer from "@/components/footer/Footer";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -10,5 +11,10 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <div className="bg-backgroundPrimary h-screen">{children}</div>;
+  return (
+    <div className="bg-backgroundPrimary">
+      <div className="h-screen">{children}</div>
+      <Footer />
+    </div>
+  );
 }
