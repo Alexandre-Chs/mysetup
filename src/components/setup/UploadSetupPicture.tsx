@@ -5,7 +5,6 @@ import { LuImagePlus } from "react-icons/lu";
 import { toast } from "sonner";
 import { Tooltip } from "@nextui-org/react";
 
-
 const UploadSetupPicture = () => {
   const params = useParams<{ id: string }>();
 
@@ -46,8 +45,11 @@ const UploadSetupPicture = () => {
         onChange={handleFileChange}
       />
       <Tooltip content="Upload an image" closeDelay={100}>
-        <button className="embla__button" onClick={() => openFilePicker()}>
-          <LuImagePlus size={24} />
+        <button
+          className="embla__button_setup"
+          onClick={() => openFilePicker()}
+        >
+          <LuImagePlus size={18} />
         </button>
       </Tooltip>
     </>

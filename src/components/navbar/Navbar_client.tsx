@@ -27,7 +27,7 @@ const NavbarClient = ({ user }: { user: User | null }) => {
       <header
         className={clsx(
           "xl:px-64 md:px-32 mx-auto flex h-20 w-full items-center justify-between fixed top-0 left-0 right-0 z-50 transition-colors bg-transparent border-b border-transparent",
-          scrollPosition > 100 &&
+          scrollPosition > 10 &&
             "bg-[#07080A] transition-colors backdrop-blur-lg border-separator/25"
         )}
       >

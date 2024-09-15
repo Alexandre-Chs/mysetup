@@ -1,7 +1,6 @@
 "use client";
 
 import { updateSetupName } from "@/actions/setup/update";
-import { Input } from "@/components/ui/input";
 import { useDebounce } from "@/hook/useDebounce";
 import React from "react";
 
@@ -25,12 +24,13 @@ const UpdateName = ({
 
   return (
     <>
-      <Input
+      <input
+        type="text"
         value={name ? name : ""}
         onChange={(e) => handleChangeTextarea(e)}
         placeholder="Enter your setup name"
-        className="w-3/4 rounded-md p-2 border-2 border-gray-400"
-        max={200}
+        className="w-full rounded-md p-2 bg-transparent"
+        max={150}
       />
     </>
   );

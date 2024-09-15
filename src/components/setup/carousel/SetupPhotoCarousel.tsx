@@ -46,12 +46,12 @@ const SetupPhotoCarousel: React.FC<PropType> = (props) => {
   const handleDelete = async (id: string) => {
     console.log({ id });
     await deleteSetupPhoto(id);
-  }
+  };
 
   return (
-    <div className="flex flex-row h-full w-full p-8 gap-4">
-      <div className="flex flex-col flex-1 gap-4">
-        <div className="h-5/6 flex items-center">
+    <div className="flex flex-row h-full w-full">
+      <div className="flex flex-col flex-1 gap-4 justify-between">
+        <div className="h-full flex items-center">
           <section className="embla">
             <div className="embla__viewport" ref={emblaRef}>
               <div className="embla__container">
@@ -60,11 +60,19 @@ const SetupPhotoCarousel: React.FC<PropType> = (props) => {
                     className="embla__slide flex items-center relative group"
                     key={slide.id}
                   >
-                    <div onClick={() => handleDelete(slide.id)} className="bg-red-500 size-6 rounded-full text-white absolute right-0 top-0 hidden group-hover:flex items-center justify-center cursor-pointer">X</div>
+                    <div
+                      onClick={() => handleDelete(slide.id)}
+                      className="bg-red-500 size-6 rounded-full text-white absolute right-0 top-0 hidden group-hover:flex items-center justify-center cursor-pointer"
+                    >
+                      X
+                    </div>
                     <img
-                      onClick={() => props.handleClickImage && props.handleClickImage(slide.id)}
+                      onClick={() =>
+                        props.handleClickImage &&
+                        props.handleClickImage(slide.id)
+                      }
                       src={slide.media.url}
-                      className="rounded-xl m-auto max-w-full max-h-full"
+                      className="rounded-xl m-auto max-w-full max-h-[600px]"
                       alt=""
                     />
                   </div>
@@ -73,7 +81,7 @@ const SetupPhotoCarousel: React.FC<PropType> = (props) => {
             </div>
           </section>
         </div>
-        <div className="h-1/6 w-full">
+        <div className="w-full">
           <div className="embla__controls !m-0">
             <div className="embla__buttons">
               <PrevButton

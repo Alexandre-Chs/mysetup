@@ -1,4 +1,6 @@
 "use client";
+
+import React from "react";
 import { Setup as SetupType } from "@/db/schemas";
 import { useSetupStore } from "@/store/SetupStore";
 import PhotoEquipmentCreateModal from "@/components/setup/PhotoEquipmentCreateModal";
@@ -11,24 +13,29 @@ import { User } from "lucia";
 type SetupProps = {
   setup: SetupType;
   user: User | null;
-}
+};
 
 const Setup = ({ setup, user }: SetupProps) => {
-  const { username, id } = useParams()
+  const { username, id } = useParams();
 
-  const setSetup = useSetupStore(state => state.setSetup);
+  const setSetup = useSetupStore((state) => state.setSetup);
   setSetup(setup);
 
   return (
-    <div className="flex flex-col items-center justify-center h-[90vh]">
-      {user?.username === username && (
-        <ToolbarUpdateSetup setupId={Array.isArray(id) ? id[0] : id} />
-      )}
-      <WrapperNameSetup setupName={setup.name as string} setupId={Array.isArray(id) ? id[0] : id} />
-      <WrapperSetup currentUser={user} />
-      <PhotoEquipmentCreateModal />
+    <div className="mt-[80px] min-h-screen flex flex-col">
+      <div className="flex-grow flex flex-col items-center justify-center w-full max-w-6xl mx-auto px-4 py-8">
+        {user?.username === username && (
+          <ToolbarUpdateSetup setupId={Array.isArray(id) ? id[0] : id} />
+        )}
+        <WrapperNameSetup
+          setupName={setup.name as string}
+          setupId={Array.isArray(id) ? id[0] : id}
+        />
+        <WrapperSetup currentUser={user} />
+        <PhotoEquipmentCreateModal />
+      </div>
     </div>
-  )
-}
+  );
+};
 
 export default Setup;

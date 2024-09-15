@@ -7,11 +7,7 @@ import { EquipmentsTable } from "@/db/schemas";
 import NewEquipmentsClient from "./new-setup/NewEquipments.client";
 import { useSetupStore } from "@/store/SetupStore";
 
-const WrapperEquipmentSetup = ({
-  setupId,
-}: {
-  setupId: string;
-}) => {
+const WrapperEquipmentSetup = ({ setupId }: { setupId: string }) => {
   const { isEditing } = useEdit();
 
   const setup = useSetupStore((state) => state.setup);

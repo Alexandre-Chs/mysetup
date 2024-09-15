@@ -13,11 +13,13 @@ const WrapperNameSetup = ({
 }) => {
   const { isEditing } = useEdit();
   return (
-    <div className="w-full max-w-6xl pl-2">
+    <div className="w-full max-w-6xl pl-2 pb-4">
       {isEditing ? (
         <UpdateName currentName={setupName} setupId={setupId} />
       ) : (
-        <h1 className="font-bold text-2xl pb-4 uppercase">{setupName}</h1>
+        <h1 className="font-bold text-2xl pb-4 uppercase w-full">
+          {setupName}
+        </h1>
       )}
     </div>
   );

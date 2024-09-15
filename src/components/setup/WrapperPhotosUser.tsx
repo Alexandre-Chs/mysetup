@@ -16,11 +16,15 @@ const WrapperPhotosUser = ({ photos }: { photos: any }) => {
   };
 
   return (
-    <>
-      <SetupPhotoCarousel slides={photos} options={{ loop: true }} handleClickImage={handleClickImage} />
+    <div className="min-h-[600px]">
+      <SetupPhotoCarousel
+        slides={photos}
+        options={{ loop: true }}
+        handleClickImage={handleClickImage}
+      />
       {/* <PhotosUser photos={photos} handleClickImage={handleClickImage} /> */}
       <ModalCarousel photos={photos} selectedId={clickedImageId} />
-    </>
+    </div>
   );
 };
 

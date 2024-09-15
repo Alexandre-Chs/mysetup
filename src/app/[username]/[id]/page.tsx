@@ -16,7 +16,5 @@ export default async function Page({
     notFound();
   }
 
-  return (
-    <Setup setup={setup} user={user} />
-  );
+  return <Setup setup={setup} user={user} />;
 }
