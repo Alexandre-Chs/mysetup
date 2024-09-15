@@ -1,4 +1,5 @@
 import { getSetup } from "@/actions/setup/get";
+import Footer from "@/components/footer/Footer";
 import Setup from "@/components/setup/Setup";
 
 import { validateRequest } from "@/lib/auth/validate-request";
@@ -16,5 +17,10 @@ export default async function Page({
     notFound();
   }
 
-  return <Setup setup={setup} user={user} />;
+  return (
+    <div className="min-h-screen">
+      <Setup setup={setup} user={user} />
+      <Footer />
+    </div>
+  );
 }

@@ -18,7 +18,7 @@ const NewEquipmentsClient = ({
 
   return (
     <>
-      <div className="h-full w-full relative">
+      <div className="relative h-full w-full">
         <Equipment
           equipments={equipments ? equipments : []}
           action="add"
@@ -26,7 +26,7 @@ const NewEquipmentsClient = ({
         />
 
         <Tooltip content="Add equipment">
-          <div className="absolute top-0 left-52 w-auto text-white h-16 flex items-center justify-center rounded-xl">
+          <div className="absolute top-2 right-2 w-auto text-white h-auto flex items-center justify-center rounded-xl">
             <ButtonAdd onClickFunction={() => setShowModal(true)} />
           </div>
         </Tooltip>

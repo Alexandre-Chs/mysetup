@@ -16,7 +16,7 @@ const WrapperPhotosUser = ({ photos }: { photos: any }) => {
   };
 
   return (
-    <div className="min-h-[600px]">
+    <div className="min-h-[700px]">
       <SetupPhotoCarousel
         slides={photos}
         options={{ loop: true }}

@@ -12,6 +12,7 @@ export const EditContext = createContext<EditContextType | undefined>(
 
 export const useEdit = () => {
   const context = useContext(EditContext);
+
   if (context === undefined) {
     throw new Error("useEdit must be used within an EditProvider");
   }

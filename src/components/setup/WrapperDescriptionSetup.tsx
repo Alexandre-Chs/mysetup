@@ -3,20 +3,19 @@
 import React from "react";
 import Description from "./Description";
 import UpdateDescription from "./update-setup/UpdateDescription";
-import { useEdit } from "@/context/EditContext";
 
 const WrapperDescriptionSetup = ({
   description,
   setupId,
+  isOwner,
 }: {
   description: string;
   setupId: string;
+  isOwner: boolean;
 }) => {
-  const { isEditing } = useEdit();
-
   return (
     <>
-      {isEditing ? (
+      {isOwner ? (
         <UpdateDescription currentDescription={description} setupId={setupId} />
       ) : (
         <Description description={description} />

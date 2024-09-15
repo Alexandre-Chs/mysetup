@@ -29,7 +29,7 @@ const UpdateName = ({
         value={name ? name : ""}
         onChange={(e) => handleChangeTextarea(e)}
         placeholder="Enter your setup name"
-        className="w-full rounded-md p-2 bg-transparent"
+        className="w-full rounded-md p-2 bg-transparent focus:border-transparent focus:outline-none"
         max={150}
       />
     </>

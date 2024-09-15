@@ -41,7 +41,7 @@ const Equipment = ({
 
   return (
     <div className="overflow-hidden h-full rounded-large relative shrink-0">
-      <div className="h-full bg-[#151515] text-white px-4 rounded-large overflow-y-auto scrollbar">
+      <div className="h-full bg-noise-vertical border-[1px] border-[#1F2022] text-white px-4 rounded-large overflow-y-auto scrollbar">
         {Object.keys(groupedItems).map((type) => (
           <div key={type}>
             <h4 className="font-bold text-2xl pt-4 pb-2 capitalize">{type}</h4>
@@ -82,9 +82,7 @@ const Equipment = ({
             )}
           </div>
         ))}
-        {action !== 'add' && (
-          <EquipmentPhotoLinker />
-        )}
+        {action !== "add" && <EquipmentPhotoLinker />}
       </div>
     </div>
   );
@@ -94,19 +92,23 @@ const EquipmentPhotoLinker = () => {
   const { id } = useParams();
   const [equipments, setEquipments] = useState<EquipmentType[]>([]);
 
-  const toggleTagging = useSetupStore(state => state.toggleTagging);
+  const toggleTagging = useSetupStore((state) => state.toggleTagging);
 
   useEffect(() => {
     async function fetchEquipments() {
-      const equipments = await getEquipmentsSetup(Array.isArray(id) ? id[0] : id);
+      const equipments = await getEquipmentsSetup(
+        Array.isArray(id) ? id[0] : id
+      );
       setEquipments(equipments);
     }
     fetchEquipments();
-  }, [id])
+  }, [id]);
 
   return (
-    <Button onClick={() => toggleTagging()}>Link equipment to this photo</Button>
-  )
+    <Button onClick={() => toggleTagging()}>
+      Link equipment to this photo
+    </Button>
+  );
 };
 
 export default Equipment;

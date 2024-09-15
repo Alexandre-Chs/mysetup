@@ -49,7 +49,7 @@ const SetupPhotoCarousel: React.FC<PropType> = (props) => {
   };
 
   return (
-    <div className="flex flex-row h-full w-full">
+    <div className="flex flex-row min-h-[700px] h-full w-full">
       <div className="flex flex-col flex-1 gap-4 justify-between">
         <div className="h-full flex items-center">
           <section className="embla">

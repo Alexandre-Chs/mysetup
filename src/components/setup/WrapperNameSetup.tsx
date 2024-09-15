@@ -7,14 +7,15 @@ import UpdateName from "./update-setup/UpdateName";
 const WrapperNameSetup = ({
   setupName,
   setupId,
+  isOwner,
 }: {
   setupName: string;
   setupId: string;
+  isOwner: boolean;
 }) => {
-  const { isEditing } = useEdit();
   return (
-    <div className="w-full max-w-6xl pl-2 pb-4">
-      {isEditing ? (
+    <div className="w-full pb-4">
+      {isOwner ? (
         <UpdateName currentName={setupName} setupId={setupId} />
       ) : (
         <h1 className="font-bold text-2xl pb-4 uppercase w-full">

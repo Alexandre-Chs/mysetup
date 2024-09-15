@@ -5,9 +5,9 @@ import UpVoteButton from "./UpVoteButton";
 import { useSetupStore } from "@/store/SetupStore";
 
 const UpVotes = ({ setupId }: { setupId: string }) => {
-  const setup = useSetupStore(state => state.setup);
-  const setUpVoted = useSetupStore(state => state.setUpVoted)
-  const isUpVoted = useSetupStore(state => state.isUpVoted)
+  const setup = useSetupStore((state) => state.setup);
+  const setUpVoted = useSetupStore((state) => state.setUpVoted);
+  const isUpVoted = useSetupStore((state) => state.isUpVoted);
 
   useEffect(() => {
     async function fetchData() {
@@ -15,13 +15,15 @@ const UpVotes = ({ setupId }: { setupId: string }) => {
       setUpVoted(userUpVote);
     }
     fetchData();
-  })
+  });
 
-  return <UpVoteButton
-    upVotesCount={setup.upVotes.length}
-    userUpVoted={isUpVoted}
-    setupId={setupId}
-  />
+  return (
+    <UpVoteButton
+      upVotesCount={setup.upVotes.length}
+      userUpVoted={isUpVoted}
+      setupId={setupId}
+    />
+  );
 };
 
 export default UpVotes;
