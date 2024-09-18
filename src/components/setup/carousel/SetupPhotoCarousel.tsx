@@ -11,6 +11,7 @@ import useEmblaCarousel from "embla-carousel-react";
 import Equipment from "../Equipment";
 import { deleteSetupPhoto } from "@/actions/setup-photo/delete";
 import UploadSetupPicture from "../UploadSetupPicture";
+import ImageTagger from "../ImageTagger";
 
 type PropType = {
   slides: any[];
@@ -59,17 +60,18 @@ const SetupPhotoCarousel: React.FC<PropType> = (props) => {
                     className="embla__slide flex items-center relative group"
                     key={slide.id}
                   >
+                    <ImageTagger photoId={slide.id} src={slide.media.url} />
                     <div
                       onClick={() => handleDelete(slide.id)}
                       className="bg-red-500 size-6 rounded-full text-white absolute right-0 top-0 hidden group-hover:flex items-center justify-center cursor-pointer"
                     >
                       X
                     </div>
-                    <img
+                    {/* <img
                       src={slide.media.url}
                       className="rounded-xl m-auto max-w-full max-h-[600px]"
                       alt=""
-                    />
+                    /> */}
                   </div>
                 ))}
               </div>

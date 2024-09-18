@@ -8,10 +8,7 @@ import { groupByType } from "@/lib/utils/group-by-type";
 import { EquipmentType } from "@/types/types";
 import { CircleX } from "lucide-react";
 import { deleteOneEquipment } from "@/actions/setup/delete";
-import { Button } from "@nextui-org/react";
-import { getEquipmentsSetup } from "@/actions/setup/get";
-import { useParams } from "next/navigation";
-import { useSetupStore } from "@/store/SetupStore";
+
 
 const Equipment = ({
   equipments,
@@ -69,6 +66,7 @@ const Equipment = ({
                     <p className="w-full">{item.name}</p>
                   </div>
                   {action === "add" && (
+
                     <button
                       className="absolute right-2 top-2.5 rounded-l z-50 cursor-pointer"
                       onClick={handleDeleteItem}
@@ -82,32 +80,8 @@ const Equipment = ({
             )}
           </div>
         ))}
-        {action !== "add" && <EquipmentPhotoLinker />}
       </div>
     </div>
-  );
-};
-
-const EquipmentPhotoLinker = () => {
-  const { id } = useParams();
-  const [equipments, setEquipments] = useState<EquipmentType[]>([]);
-
-  const toggleTagging = useSetupStore((state) => state.toggleTagging);
-
-  useEffect(() => {
-    async function fetchEquipments() {
-      const equipments = await getEquipmentsSetup(
-        Array.isArray(id) ? id[0] : id
-      );
-      setEquipments(equipments);
-    }
-    fetchEquipments();
-  }, [id]);
-
-  return (
-    <Button onClick={() => toggleTagging()}>
-      Link equipment to this photo
-    </Button>
   );
 };
 

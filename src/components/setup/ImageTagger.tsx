@@ -45,7 +45,7 @@ const ImageTagger = ({ src, photoId }: ImageTaggerProps) => {
         onMouseMove={handleMouseMove}
         onMouseLeave={() => setNewTagCoords(null)}
         onClick={tagging ? handleAddTag : undefined}
-        className="rounded-xl max-w-full max-h-full"
+        className="rounded-xl max-w-full max-h-[600px]"
         alt=""
       />
       {tagging && newTagCoords && (
