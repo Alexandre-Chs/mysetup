@@ -21,6 +21,10 @@ export const setupPhotoTableRelation = relations(setupPhotoTable, ({ one, many }
 
 export const setupTableRelation = relations(setupTable, ({ many, one }) => ({
     setupPhotos: many(setupPhotoTable),
+    thumbnail: one(setupPhotoTable, {
+        fields: [setupTable.thumbnailId],
+        references: [setupPhotoTable.id]
+    }),
     user: one(userTable, {
         fields: [setupTable.userId],
         references: [userTable.id]

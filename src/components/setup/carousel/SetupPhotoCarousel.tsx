@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { EmblaOptionsType } from "embla-carousel";
 import { DotButton, useDotButton } from "./CarouselDotButton";
 import {
@@ -8,10 +8,12 @@ import {
   usePrevNextButtons,
 } from "./CarouselArrowButtons";
 import useEmblaCarousel from "embla-carousel-react";
-import Equipment from "../Equipment";
 import { deleteSetupPhoto } from "@/actions/setup-photo/delete";
 import UploadSetupPicture from "../UploadSetupPicture";
 import ImageTagger from "../ImageTagger";
+import ToggleThumbnail from "../ToggleThumbnail";
+import { IoClose } from "react-icons/io5";
+import { useSetupStore } from "@/store/SetupStore";
 
 type PropType = {
   slides: any[];
@@ -26,6 +28,23 @@ const SetupPhotoCarousel: React.FC<PropType> = (props) => {
 
   const { selectedIndex, scrollSnaps, onDotButtonClick } =
     useDotButton(emblaApi);
+
+  const setCurrentPhotoId = useSetupStore((state) => state.setCurrentPhotoId);
+
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return;
+    const index = emblaApi.selectedScrollSnap();
+    const id = slides[index].id;
+    setCurrentPhotoId(id);
+  }, [emblaApi]);
+
+  // S'assurer que onSelect est attaché à l'API Embla
+  React.useEffect(() => {
+    if (emblaApi) {
+      emblaApi.on('select', onSelect); // Attacher l'événement 'select'
+      onSelect(); // Met à jour l'index dès l'initialisation
+    }
+  }, [emblaApi, onSelect]);
 
   useEffect(() => {
     if (selectedId) {
@@ -65,13 +84,8 @@ const SetupPhotoCarousel: React.FC<PropType> = (props) => {
                       onClick={() => handleDelete(slide.id)}
                       className="bg-red-500 size-6 rounded-full text-white absolute right-0 top-0 hidden group-hover:flex items-center justify-center cursor-pointer"
                     >
-                      X
+                      <IoClose />
                     </div>
-                    {/* <img
-                      src={slide.media.url}
-                      className="rounded-xl m-auto max-w-full max-h-[600px]"
-                      alt=""
-                    /> */}
                   </div>
                 ))}
               </div>
@@ -90,6 +104,7 @@ const SetupPhotoCarousel: React.FC<PropType> = (props) => {
                 disabled={nextBtnDisabled}
               />
               <UploadSetupPicture />
+              <ToggleThumbnail />
             </div>
 
             <div className="embla__dots">

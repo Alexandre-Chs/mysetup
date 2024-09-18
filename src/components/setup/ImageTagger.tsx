@@ -60,7 +60,7 @@ const ImageTagger = ({ src, photoId }: ImageTaggerProps) => {
           <a
             href={tag.equipment.url}
             target="_blank"
-            className="absolute size-3 bg-white border-2 border-black rounded-full transform -translate-x-1/2 -translate-y-1/2 cursor-pointer transition-all hover:size-4"
+            className="absolute size-3 bg-white border-2 border-black rounded-full transform -translate-x-1/2 -translate-y-1/2 cursor-pointer transition-all hover:size-5"
             style={{
               top: `${tag.y}%`,
               left: `${tag.x}%`,

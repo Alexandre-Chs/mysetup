@@ -9,6 +9,8 @@ type SetupStore = {
   setSetup: (setup: Setup | null) => void;
   isUpVoted: boolean;
   setUpVoted: (isUpVoted: boolean) => void;
+  currentPhotoId: string | null;
+  setCurrentPhotoId: (currentPhotoId: string | null) => void;
 }
 
 export const useSetupStore = create<SetupStore>((set) => ({
@@ -19,4 +21,6 @@ export const useSetupStore = create<SetupStore>((set) => ({
   setSetup: (setup) => set({ setup }),
   isUpVoted: false,
   setUpVoted: (isUpVoted) => set({ isUpVoted }),
+  currentPhotoId: null,
+  setCurrentPhotoId: (currentPhotoId) => set({ currentPhotoId }),
 }));

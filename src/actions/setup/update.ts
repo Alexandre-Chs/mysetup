@@ -38,3 +38,18 @@ export async function updateSetupName(setupId: string, name: string) {
 
   revalidatePath(`/${user!.username}/${setupId}`);
 }
+
+export async function setThumbnail(setupId: string, setupPhotoId: string) {
+  const { user } = await validateRequest();
+
+  try {
+    await db
+      .update(setupTable)
+      .set({ thumbnailId: setupPhotoId })
+      .where(and(eq(setupTable.id, setupId), eq(setupTable.userId, user!.id)));
+  } catch (e) {
+    console.log(e);
+  }
+
+  revalidatePath(`/${user!.username}/${setupId}`);
+}
