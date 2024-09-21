@@ -79,7 +79,7 @@ const ImageTagger = ({ src, photoId, isOwner }: ImageTaggerProps) => {
             <div>
               {tag.equipment.name}
               {isOwner && (
-                <div>
+                <div className="flex items-center justify-center flex-col">
                   <span onClick={() => handleDeleteTag(tag.id, photoId)}>
                     <CircleX size={20} className="text-red-500" />
                   </span>

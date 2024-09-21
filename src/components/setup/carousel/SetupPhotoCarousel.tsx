@@ -64,7 +64,6 @@ const SetupPhotoCarousel: React.FC<PropType> = (props) => {
   } = usePrevNextButtons(emblaApi);
 
   const handleDelete = async (id: string) => {
-    console.log({ id });
     await deleteSetupPhoto(id);
   };
 
@@ -85,12 +84,14 @@ const SetupPhotoCarousel: React.FC<PropType> = (props) => {
                       src={slide.media.url}
                       isOwner={props.isOwner}
                     />
-                    <div
-                      onClick={() => handleDelete(slide.id)}
-                      className="bg-red-500 size-6 rounded-full text-white absolute right-0 top-0 hidden group-hover:flex items-center justify-center cursor-pointer"
-                    >
-                      <IoClose />
-                    </div>
+                    {props.isOwner && (
+                      <div
+                        onClick={() => handleDelete(slide.id)}
+                        className="bg-red-500 size-6 rounded-full text-white absolute right-0 top-0 hidden group-hover:flex items-center justify-center cursor-pointer"
+                      >
+                        <IoClose />
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>

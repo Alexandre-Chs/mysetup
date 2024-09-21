@@ -2,33 +2,47 @@
 
 import { db } from "@/db/db";
 import {
+  mediaTable,
   photoEquipmentTable,
   setupPhotoTable,
   setupTable,
-  userTable,
 } from "@/db/schemas";
 import { validateRequest } from "@/lib/auth/validate-request";
-import { and, eq } from "drizzle-orm";
+import { and, eq, is } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
+import { S3Client, DeleteObjectCommand } from "@aws-sdk/client-s3";
 
 export async function deleteSetupPhoto(id: string) {
   const { user } = await validateRequest();
+  if (!user) return;
 
-  const photoUser = await db.query.setupPhotoTable.findFirst({
-    with: {
-      setup: true,
-    },
-    where: (setupPhotoTable, { eq }) => eq(setupPhotoTable.id, id),
+  const isOwner = await db
+    .select({
+      setupId: setupPhotoTable.setupId,
+      mediaId: setupPhotoTable.mediaId,
+    })
+    .from(setupPhotoTable)
+    .innerJoin(setupTable, eq(setupPhotoTable.setupId, setupTable.id))
+    .where(and(eq(setupPhotoTable.id, id), eq(setupTable.userId, user.id)));
+
+  if (isOwner.length === 0) return;
+
+  const media = await db
+    .select({ type: mediaTable.type, mediaId: mediaTable.id })
+    .from(mediaTable)
+    .where(eq(mediaTable.id, isOwner[0].mediaId));
+  const type = media[0].type.split("/")[1];
+  const fileName = media[0].mediaId + "." + type;
+
+  await db.transaction(async (tx) => {
+    await tx
+      .delete(photoEquipmentTable)
+      .where(eq(photoEquipmentTable.setupPhotoId, id));
+    await tx.delete(setupPhotoTable).where(eq(setupPhotoTable.id, id));
+    await deleteSingleS3Photo(user.id, isOwner[0].setupId, fileName);
   });
 
-  console.log({ photoUser, user });
-  if (photoUser?.setup.userId !== user!.id) {
-    throw new Error("Unauthorized");
-  }
-
-  await db.delete(setupPhotoTable).where(eq(setupPhotoTable.id, id));
-
-  revalidatePath(`/${user!.username}/${photoUser.setup.id}`);
+  revalidatePath(`/${user!.username}/${isOwner[0].setupId}`);
 }
 
 export async function deleteTagOnPhoto(idTag: string, idPhoto: string) {
@@ -51,7 +65,38 @@ export async function deleteTagOnPhoto(idTag: string, idPhoto: string) {
       )
     );
 
-  if (!isOwner) return;
+  if (isOwner.length === 0) return;
   await db.delete(photoEquipmentTable).where(eq(photoEquipmentTable.id, idTag));
   revalidatePath(`/${user.username}/${isOwner[0].setupId}`);
+}
+
+const s3Client = new S3Client({
+  credentials: {
+    accessKeyId: process.env.S3_KEY!,
+    secretAccessKey: process.env.S3_SECRET!,
+  },
+  region: process.env.S3_REGION!,
+  endpoint: process.env.S3_ENDPOINT!,
+  tls: true,
+});
+
+async function deleteSingleS3Photo(
+  userId: string,
+  setupId: string,
+  photoFilename: string
+) {
+  const photoKey = `users/${userId}/setups/${setupId}/${photoFilename}`;
+
+  const deleteParams = {
+    Bucket: process.env.S3_BUCKET!,
+    Key: photoKey,
+  };
+
+  try {
+    await s3Client.send(new DeleteObjectCommand(deleteParams));
+    console.log(`Successfully deleted photo: ${photoKey}`);
+  } catch (error) {
+    console.error("Error deleting S3 photo:", error);
+    throw error;
+  }
 }
