@@ -34,7 +34,7 @@ const SetupPhotoCarousel: React.FC<PropType> = (props) => {
   const onSelect = useCallback(() => {
     if (!emblaApi) return;
     const index = emblaApi.selectedScrollSnap();
-    const id = slides[index].id;
+    const id = slides[index]?.id;
     setCurrentPhotoId(id);
   }, [emblaApi]);
 

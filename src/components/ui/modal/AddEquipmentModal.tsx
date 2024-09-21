@@ -110,15 +110,25 @@ const AddEquipmentModal = ({
                 <SelectItem value="desk" key="desk">
                   Desk
                 </SelectItem>
+                <SelectItem value="wallpaper" key="wallpaper">
+                  Wallpaper
+                </SelectItem>
                 <SelectItem value="others" key="others">
                   Other
                 </SelectItem>
               </Select>
               <div>
-                <label>Where to buy it (optional)</label>
-                <p className="text-xs">Affiliate link is authorized</p>
+                {newEquipment.type === "wallpaper" ? (
+                  <label>Where to download it</label>
+                ) : (
+                  <label>Where to buy it (optional)</label>
+                )}
                 <Input
-                  placeholder="e.g Amazon url"
+                  placeholder={
+                    newEquipment.type === "wallpaper"
+                      ? "e.g URL"
+                      : "e.g Amazon url"
+                  }
                   className="pt-4"
                   value={newEquipment.url}
                   onChange={(e) =>

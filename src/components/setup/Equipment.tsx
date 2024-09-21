@@ -1,8 +1,6 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { IoHardwareChip } from "react-icons/io5";
-import { LuLampDesk } from "react-icons/lu";
 import "./scrollbar.css";
 import { groupByType } from "@/lib/utils/group-by-type";
 import { EquipmentType } from "@/types/types";
@@ -48,20 +46,9 @@ const Equipment = ({
               ) => (
                 <div className="flex gap-2 relative" key={index}>
                   <div
-                    className="cursor-pointer w-full bg-[#464646] rounded-md flex items-center justify-start gap-2 py-2 px-4 mb-4 hover:bg-[#464646a8]"
+                    className="cursor-pointer w-full bg-[#141516] rounded-md flex items-center justify-start gap-2 py-2 px-4 mb-4 hover:bg-[#202123]"
                     onClick={() => handleRedirectUser(item.url)}
                   >
-                    {item.type === "equipment" ? (
-                      <IoHardwareChip
-                        className="text-orange-400 basis-2/8"
-                        size={20}
-                      />
-                    ) : (
-                      <LuLampDesk
-                        className="text-blue-400 basis-2/8"
-                        size={20}
-                      />
-                    )}
                     <p className="w-full">{item.name}</p>
                   </div>
                   {action === "add" && (

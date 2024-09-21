@@ -66,7 +66,7 @@ export async function createNewSetup(
 export async function createNewEquipments(
   setupId: string,
   equipments: {
-    type: "equipments" | "accessories" | "desk" | "others";
+    type: "equipments" | "accessories" | "desk" | "wallpaper" | "others";
     name: string;
     url?: string | undefined;
   }

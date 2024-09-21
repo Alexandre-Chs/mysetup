@@ -17,7 +17,7 @@ const WrapperSetup = ({
   if (!setup) return null;
 
   return (
-    <div className="h-full w-full grid grid-cols-4 grid-rows-8 gap-6">
+    <div className="h-[900px] w-full grid grid-cols-4 grid-rows-8 gap-6">
       <div className="col-span-3 row-span-6">
         <WrapperPhotosUser photos={setup.setupPhotos} />
       </div>

@@ -27,7 +27,7 @@ const EquipmentPhotoLinker = () => {
     <button
       className={clsx(
         "rounded-md p-2",
-        tagging ? "bg-[#4B5563]" : ""
+        tagging ? "bg-[#141516] animate-pulse" : ""
       )}
       onClick={() => toggleTagging()}
     >
