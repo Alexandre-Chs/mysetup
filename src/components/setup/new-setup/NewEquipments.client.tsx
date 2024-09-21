@@ -28,10 +28,14 @@ const NewEquipmentsClient = ({
 
         <div className="absolute top-2 right-2 w-auto text-white h-auto flex items-center justify-center rounded-xl">
           <Tooltip content="Link equipment photo">
-            <EquipmentPhotoLinker />
+            <div>
+              <EquipmentPhotoLinker />
+            </div>
           </Tooltip>
           <Tooltip content="Add equipment">
-            <ButtonAdd onClickFunction={() => setShowModal(true)} />
+            <div>
+              <ButtonAdd onClickFunction={() => setShowModal(true)} />
+            </div>
           </Tooltip>
         </div>
       </div>
