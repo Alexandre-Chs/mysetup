@@ -25,7 +25,7 @@ const WrapperSetup = ({
         <WrapperEquipmentSetup setupId={setup?.id} isOwner={isOwner} />
       </div>
       <div className="col-span-1 row-span-1 row-start-7">
-        <div className="h-full bg-noise-horizontal-mini border-[1px] border-[#1F2022] text-white flex items-center justify-center gap-4 px-4 rounded-large cursor-pointer">
+        <div className="h-full bento-smooth-gradient border-[1px] border-[#1F2022] text-white flex items-center justify-center gap-4 px-4 rounded-large cursor-pointer">
           <p>alexandre</p>
         </div>
       </div>

@@ -18,7 +18,7 @@ export default async function Page({
   }
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen pt-[80px]">
       <Setup setup={setup} user={user} />
       <Footer />
     </div>

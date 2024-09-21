@@ -14,13 +14,11 @@ const WrapperNameSetup = ({
   isOwner: boolean;
 }) => {
   return (
-    <div className="w-full pb-4">
+    <div className="w-full">
       {isOwner ? (
         <UpdateName currentName={setupName} setupId={setupId} />
       ) : (
-        <h1 className="font-bold text-2xl pb-4 uppercase w-full">
-          {setupName}
-        </h1>
+        <h1 className="font-bold text-2xl pb-2 w-full">{setupName}</h1>
       )}
     </div>
   );

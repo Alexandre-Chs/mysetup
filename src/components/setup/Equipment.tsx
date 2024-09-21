@@ -9,7 +9,6 @@ import { EquipmentType } from "@/types/types";
 import { CircleX } from "lucide-react";
 import { deleteOneEquipment } from "@/actions/setup/delete";
 
-
 const Equipment = ({
   equipments,
   action,
@@ -38,7 +37,7 @@ const Equipment = ({
 
   return (
     <div className="overflow-hidden h-full rounded-large relative shrink-0">
-      <div className="h-full bg-noise-vertical border-[1px] border-[#1F2022] text-white px-4 rounded-large overflow-y-auto scrollbar">
+      <div className="h-full bento-smooth-gradient border-[1px] border-[#1F2022] text-white px-4 rounded-large overflow-y-auto scrollbar">
         {Object.keys(groupedItems).map((type) => (
           <div key={type}>
             <h4 className="font-bold text-2xl pt-4 pb-2 capitalize">{type}</h4>
@@ -66,7 +65,6 @@ const Equipment = ({
                     <p className="w-full">{item.name}</p>
                   </div>
                   {action === "add" && (
-
                     <button
                       className="absolute right-2 top-2.5 rounded-l z-50 cursor-pointer"
                       onClick={handleDeleteItem}
