@@ -27,7 +27,7 @@ const UpdateDescription = ({
   return (
     <div className="relative h-full bento-smooth-gradient text-white p-4 flex flex-col items-start justify-start rounded-large text-bold text-lg">
       <textarea
-        className="w-full h-full rounded-md bg-transparent text-lg text-white resize-none focus:outline-none focus:border-2 focus:border-transparent border-2 border-transparent"
+        className="w-full h-full rounded-md bg-transparent scrollbar text-lg text-white resize-none focus:outline-none focus:border-2 focus:border-transparent border-2 border-transparent"
         placeholder="Add a description for your setup"
         maxLength={530}
         onChange={(e) => handleChangeTextarea(e)}

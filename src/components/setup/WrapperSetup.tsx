@@ -19,7 +19,7 @@ const WrapperSetup = ({
   return (
     <div className="h-[900px] w-full grid grid-cols-4 grid-rows-8 gap-6">
       <div className="col-span-3 row-span-6">
-        <WrapperPhotosUser photos={setup.setupPhotos} />
+        <WrapperPhotosUser photos={setup.setupPhotos} isOwner={isOwner} />
       </div>
       <div className="col-span-1 row-span-6">
         <WrapperEquipmentSetup setupId={setup?.id} isOwner={isOwner} />

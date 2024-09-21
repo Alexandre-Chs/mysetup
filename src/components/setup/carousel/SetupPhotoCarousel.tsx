@@ -20,6 +20,7 @@ type PropType = {
   options?: EmblaOptionsType;
   selectedId?: string;
   readonly?: boolean;
+  isOwner: boolean;
 };
 
 const SetupPhotoCarousel: React.FC<PropType> = (props) => {
@@ -74,12 +75,16 @@ const SetupPhotoCarousel: React.FC<PropType> = (props) => {
           <section className="embla">
             <div className="embla__viewport" ref={emblaRef}>
               <div className="embla__container">
-                {slides.map((slide) => (
+                {slides.map((slide: any) => (
                   <div
                     className="embla__slide flex items-center relative group"
                     key={slide.id}
                   >
-                    <ImageTagger photoId={slide.id} src={slide.media.url} />
+                    <ImageTagger
+                      photoId={slide.id}
+                      src={slide.media.url}
+                      isOwner={props.isOwner}
+                    />
                     <div
                       onClick={() => handleDelete(slide.id)}
                       className="bg-red-500 size-6 rounded-full text-white absolute right-0 top-0 hidden group-hover:flex items-center justify-center cursor-pointer"
