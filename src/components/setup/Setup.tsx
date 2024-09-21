@@ -25,7 +25,7 @@ const Setup = ({ setup, user }: SetupProps) => {
   }, [setup, setSetup]);
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col items-center justify-center">
       <div className="flex flex-col items-center justify-center w-full h-full max-w-[1500px] mx-auto px-4 py-8">
         <WrapperNameSetup
           isOwner={user?.username === username}
