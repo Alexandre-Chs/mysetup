@@ -23,5 +23,6 @@ export async function getAllSetupsPhotos() {
     .innerJoin(setupPhotoTable, eq(mediaTable.id, setupPhotoTable.mediaId))
     .innerJoin(setupTable, eq(setupPhotoTable.setupId, setupTable.id))
     .innerJoin(userTable, eq(setupTable.userId, userTable.id))
+    .where(eq(setupTable.thumbnailId, setupPhotoTable.id))
     .orderBy(desc(mediaTable.createdAt));
 }
