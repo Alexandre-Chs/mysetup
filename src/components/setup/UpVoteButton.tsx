@@ -18,18 +18,15 @@ const UpVoteButton = ({
 
   return (
     <div
-      className="h-full text-white flex items-center justify-center gap-4 px-4 rounded-large cursor-pointer bento-smooth-gradient border-[1px] border-[#1F2022]"
+      className="h-full text-white flex items-center justify-center gap-x-2 px-4 rounded-large cursor-pointer bento-smooth-gradient"
       onClick={() => toggleVote()}
     >
       <FaCaretUp
-        className={clsx(
-          userUpVoted ? "text-[#44db30]" : "text-white",
-          "basis-1/3"
-        )}
-        size={50}
+        className={clsx(userUpVoted ? "text-[#44db30]" : "text-white")}
+        size={30}
       />
-      <div className="basis-2/3">
-        <p className="text-2xl font-bold">{upVotesCount} UpVotes</p>
+      <div>
+        <p className="text-xl font-medium">{upVotesCount} Upvotes</p>
       </div>
     </div>
   );

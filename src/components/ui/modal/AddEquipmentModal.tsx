@@ -16,6 +16,7 @@ import {
   SelectItem,
   useDisclosure,
 } from "@nextui-org/react";
+import { MoveRight } from "lucide-react";
 import React from "react";
 
 const AddEquipmentModal = ({
@@ -71,65 +72,87 @@ const AddEquipmentModal = ({
   };
 
   return (
-    <Modal isOpen={isOpen} onOpenChange={onOpenChange} backdrop="blur">
+    <Modal
+      isOpen={isOpen}
+      onOpenChange={onOpenChange}
+      backdrop="blur"
+      className="bg-[#07080A]"
+    >
       <ModalContent>
         {(onClose) => (
           <>
-            <ModalHeader className="flex flex-col gap-1">
+            <ModalHeader className="flex flex-col gap-1 text-textColorLighter">
               Add equipment
             </ModalHeader>
             <ModalBody>
-              <label>Name of the equipment</label>
-              <Input
-                placeholder="e.g RTX 3060"
-                onChange={(e) =>
-                  setNewEquipment({
-                    ...newEquipment,
-                    name: e.currentTarget.value,
-                  })
-                }
-                value={newEquipment.name}
-              />
-              <label>Type of the equipment</label>
-              <Select
-                label="Select a type"
-                className="w-full"
-                onChange={(e: any) => {
-                  setNewEquipment({
-                    ...newEquipment,
-                    type: e.target.value,
-                  });
-                }}
-              >
-                <SelectItem value="equipments" key="equipments">
-                  Equipment
-                </SelectItem>
-                <SelectItem value="accessories" key="accessories">
-                  Accessories
-                </SelectItem>
-                <SelectItem value="desk" key="desk">
-                  Desk
-                </SelectItem>
-                <SelectItem value="wallpaper" key="wallpaper">
-                  Wallpaper
-                </SelectItem>
-                <SelectItem value="others" key="others">
-                  Other
-                </SelectItem>
-              </Select>
-              <div>
+              <div className="flex flex-col">
+                <label className="text-textColorLighter pb-1">
+                  Name of the equipment
+                </label>
+                <input
+                  placeholder="e.g RTX 3060"
+                  className="placeholder:text-textColor rounded-[8px] bg-[#141516] px-4 py-3 text-sm text-textColorLighter border-1 border-[#393b3e]/25 hover:border-[#4F5051] focus:border-[#6f7073] focus:outline-none transition-colors"
+                  onChange={(e) =>
+                    setNewEquipment({
+                      ...newEquipment,
+                      name: e.currentTarget.value,
+                    })
+                  }
+                  value={newEquipment.name}
+                />
+              </div>
+              <div className="flex flex-col pt-2">
+                <label className="text-textColorLighter pb-1">
+                  Type of the equipment
+                </label>
+                <Select
+                  classNames={{
+                    trigger:
+                      "bg-[#141516] text-sm placeholder:text-textColor text-textColorLighter border-1 border-[#393b3e]/25 hover:border-[#4F5051] focus:border-[#6f7073] focus:outline-none transition-colors data-[hover=true]:bg-[#141516]",
+                  }}
+                  label="Select a type"
+                  className="w-full"
+                  onChange={(e: any) => {
+                    setNewEquipment({
+                      ...newEquipment,
+                      type: e.target.value,
+                    });
+                  }}
+                >
+                  <SelectItem value="equipments" key="equipments">
+                    Equipment
+                  </SelectItem>
+                  <SelectItem value="accessories" key="accessories">
+                    Accessories
+                  </SelectItem>
+                  <SelectItem value="desk" key="desk">
+                    Desk
+                  </SelectItem>
+                  <SelectItem value="wallpaper" key="wallpaper">
+                    Wallpaper
+                  </SelectItem>
+                  <SelectItem value="others" key="others">
+                    Other
+                  </SelectItem>
+                </Select>
+              </div>
+              <div className="flex flex-col pt-2">
                 {newEquipment.type === "wallpaper" ? (
-                  <label>Where to download it</label>
+                  <label className="text-textColorLighter pb-1">
+                    Where to download it
+                  </label>
                 ) : (
-                  <label>Where to buy it (optional)</label>
+                  <label className="text-textColorLighter pb-1">
+                    Where to buy it (optional)
+                  </label>
                 )}
-                <Input
+                <input
                   placeholder={
                     newEquipment.type === "wallpaper"
                       ? "e.g URL"
                       : "e.g Amazon url"
                   }
-                  className="pt-4"
+                  className="placeholder:text-textColor rounded-[8px] bg-[#141516] px-4 py-3 text-sm text-textColorLighter border-1 border-[#393b3e]/25 hover:border-[#4F5051] focus:border-[#6f7073] focus:outline-none transition-colors"
                   value={newEquipment.url}
                   onChange={(e) =>
                     setNewEquipment({
@@ -146,9 +169,18 @@ const AddEquipmentModal = ({
               </p>
             )}
             <ModalFooter className="justify-end">
-              <Button color="secondary" onClick={() => handleSubmit(onClose)}>
-                Submit
-              </Button>
+              <div className="text-textColorLighter text-sm w-full flex items-center justify-center group hover:text-white transition-colors mt-2">
+                <button
+                  color="secondary"
+                  onClick={() => handleSubmit(onClose)}
+                  className="w-full flex items-center justify-center gap-x-2 border-1 border-[#4F5051] px-6 py-3 rounded-[8px]"
+                >
+                  Submit
+                  <span className="group-hover:translate-x-1 transition-transform">
+                    <MoveRight size={15} />
+                  </span>
+                </button>
+              </div>
             </ModalFooter>
           </>
         )}
