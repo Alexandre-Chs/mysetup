@@ -88,6 +88,7 @@ const NavbarClient = ({ user }: { user: User | null }) => {
             alt="mysetup logo"
             width={100}
             height={100}
+            priority
           />
           <span className="sr-only">My setup</span>
         </Link>
