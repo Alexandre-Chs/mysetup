@@ -25,6 +25,7 @@ type PropType = {
 
 const SetupPhotoCarousel: React.FC<PropType> = (props) => {
   const { slides, options, selectedId } = props;
+  console.log("slides", slides);
   const [emblaRef, emblaApi] = useEmblaCarousel(options);
 
   const { selectedIndex, scrollSnaps, onDotButtonClick } =
@@ -37,13 +38,13 @@ const SetupPhotoCarousel: React.FC<PropType> = (props) => {
     const index = emblaApi.selectedScrollSnap();
     const id = slides[index]?.id;
     setCurrentPhotoId(id);
-  }, [emblaApi]);
+  }, [emblaApi, slides, setCurrentPhotoId]);
 
   // S'assurer que onSelect est attaché à l'API Embla
   React.useEffect(() => {
     if (emblaApi) {
-      emblaApi.on("select", onSelect); // Attacher l'événement 'select'
-      onSelect(); // Met à jour l'index dès l'initialisation
+      emblaApi.on("select", onSelect);
+      onSelect();
     }
   }, [emblaApi, onSelect]);
 
