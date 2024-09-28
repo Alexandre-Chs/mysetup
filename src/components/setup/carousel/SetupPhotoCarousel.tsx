@@ -116,8 +116,8 @@ const SetupPhotoCarousel: React.FC<PropType> = (props) => {
                 onClick={onNextButtonClick}
                 disabled={nextBtnDisabled}
               />
-              <UploadSetupPicture />
-              <ToggleThumbnail />
+              <UploadSetupPicture isOwner={props.isOwner} />
+              <ToggleThumbnail isOwner={props.isOwner} />
             </div>
 
             <div className="embla__dots">

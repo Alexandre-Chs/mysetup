@@ -5,7 +5,7 @@ import { LuImagePlus } from "react-icons/lu";
 import { toast } from "sonner";
 import { Tooltip } from "@nextui-org/react";
 
-const UploadSetupPicture = () => {
+const UploadSetupPicture = ({ isOwner }: { isOwner: boolean }) => {
   const params = useParams<{ id: string }>();
 
   const fileInput = useRef<HTMLInputElement>(null);
@@ -34,24 +34,28 @@ const UploadSetupPicture = () => {
 
   return (
     <>
-      <input
-        ref={fileInput}
-        type="file"
-        name=""
-        id=""
-        className="hidden"
-        accept="image/*"
-        multiple
-        onChange={handleFileChange}
-      />
-      <Tooltip content="Upload an image" closeDelay={100}>
-        <button
-          className="embla__button_setup"
-          onClick={() => openFilePicker()}
-        >
-          <LuImagePlus size={18} />
-        </button>
-      </Tooltip>
+      {isOwner ? (
+        <>
+          <input
+            ref={fileInput}
+            type="file"
+            name=""
+            id=""
+            className="hidden"
+            accept="image/*"
+            multiple
+            onChange={handleFileChange}
+          />
+          <Tooltip content="Upload an image" closeDelay={100}>
+            <button
+              className="embla__button_setup"
+              onClick={() => openFilePicker()}
+            >
+              <LuImagePlus size={18} />
+            </button>
+          </Tooltip>
+        </>
+      ) : null}
     </>
   );
 };
