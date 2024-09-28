@@ -14,6 +14,8 @@ import ImageTagger from "../ImageTagger";
 import ToggleThumbnail from "../ToggleThumbnail";
 import { IoClose } from "react-icons/io5";
 import { useSetupStore } from "@/store/SetupStore";
+import { ifPhotoAsThumbnail } from "@/actions/setup-photo/get";
+import { toast } from "sonner";
 
 type PropType = {
   slides: any[];
@@ -25,7 +27,6 @@ type PropType = {
 
 const SetupPhotoCarousel: React.FC<PropType> = (props) => {
   const { slides, options, selectedId } = props;
-  console.log("slides", slides);
   const [emblaRef, emblaApi] = useEmblaCarousel(options);
 
   const { selectedIndex, scrollSnaps, onDotButtonClick } =
@@ -65,7 +66,12 @@ const SetupPhotoCarousel: React.FC<PropType> = (props) => {
   } = usePrevNextButtons(emblaApi);
 
   const handleDelete = async (id: string) => {
-    await deleteSetupPhoto(id);
+    const ifThumbnail = await ifPhotoAsThumbnail(id);
+    if (ifThumbnail[0].thumbnailId === id) {
+      toast.error("You can't delete the thumbnail photo");
+    } else {
+      await deleteSetupPhoto(id);
+    }
   };
 
   return (

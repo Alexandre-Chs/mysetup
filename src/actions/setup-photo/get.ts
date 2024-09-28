@@ -26,3 +26,13 @@ export async function getAllSetupsPhotos() {
     .where(eq(setupTable.thumbnailId, setupPhotoTable.id))
     .orderBy(desc(mediaTable.createdAt));
 }
+
+export async function ifPhotoAsThumbnail(photoId: string) {
+  return await db
+    .select({
+      thumbnailId: setupTable.thumbnailId,
+    })
+    .from(setupPhotoTable)
+    .innerJoin(setupTable, eq(setupPhotoTable.setupId, setupTable.id))
+    .where(eq(setupPhotoTable.id, photoId));
+}
