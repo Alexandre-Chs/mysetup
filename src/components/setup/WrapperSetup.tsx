@@ -27,6 +27,8 @@ const WrapperSetup = ({
 
   if (!setup) return;
 
+  console.log(setup.setupPhotos);
+
   return (
     <div className="h-[900px] w-full grid grid-cols-4 grid-rows-8 gap-6">
       <div className="col-span-3 row-span-6">
