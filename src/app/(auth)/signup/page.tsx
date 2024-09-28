@@ -7,7 +7,7 @@ import WrapperSignupCarousel from "@/components/carousel/signup-carousel/Wrapper
 
 const Page = () => {
   return (
-    <div className="xl:flex-row flex-col-reverse flex items-center justify-center h-[90vh] px-4 xl:px-0 mt-12 xl:mt-0">
+    <div className="xl:flex-row flex-col-reverse flex items-center justify-center h-screen px-4 xl:px-0 mt-12 xl:mt-0">
       <div className="flex flex-col items-center justify-center h-[500px] mt-16 xl:mt-0">
         <h2 className="text-xl font-medium text-white pb-6">
           Start sharing your setup

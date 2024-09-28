@@ -16,7 +16,7 @@ export default async function Page({
   }
 
   return (
-    <div className="min-h-[90vh] flex flex-col items-center justify-center w-full overflow-x-hidden pb-8">
+    <div className="min-h-screen flex flex-col items-center justify-center w-full overflow-x-hidden pb-8">
       <WrapperProfile setups={setups} currentUsername={username} />
     </div>
   );

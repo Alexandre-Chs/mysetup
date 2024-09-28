@@ -23,12 +23,20 @@ export async function listUserSetup(username: string) {
     orderBy: [desc(setupTable.createdAt)],
     with: {
       setupPhotos: {
-        limit: 1,
         with: {
           media: true,
         },
       },
     },
+  });
+
+  setups.forEach((setup) => {
+    setup.setupPhotos.sort((a, b) => {
+      console.log(setup.thumbnailId, a.id, b.id);
+      if (a.id === setup.thumbnailId) return -1;
+      if (b.id === setup.thumbnailId) return 1;
+      return 0;
+    });
   });
 
   return setups.map((setup) => ({

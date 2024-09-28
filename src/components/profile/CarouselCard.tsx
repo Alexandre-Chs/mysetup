@@ -93,7 +93,7 @@ export const Carousel = ({
     >
       <div className="relative w-full">
         <div
-          className="flex w-full overflow-x-scroll overscroll-x-auto py-10 md:py-20 scroll-smooth [scrollbar-width:none]"
+          className="flex w-full overflow-x-scroll overscroll-x-auto py-10 md:py-20 scroll-smooth [scrollbar-width:none] text-center"
           ref={carouselRef}
           onScroll={checkScrollability}
         >
@@ -104,46 +104,52 @@ export const Carousel = ({
           ></div>
 
           <div className={cn("flex flex-row justify-start gap-4 pl-4")}>
-            {items.map((item, index) => (
-              <motion.div
-                initial={{
-                  opacity: 0,
-                  y: 20,
-                }}
-                animate={{
-                  opacity: 1,
-                  y: 0,
-                  transition: {
-                    duration: 0.5,
-                    delay: 0.2 * index,
-                    ease: "easeOut",
-                    once: true,
-                  },
-                }}
-                key={"card" + index}
-                className="last:pr-[5%] md:last:pr-[33%] rounded-3xl"
-              >
-                {React.cloneElement(item, { user, currentUsername })}
-              </motion.div>
-            ))}
+            {items.length > 0 ? (
+              items.map((item, index) => (
+                <motion.div
+                  initial={{
+                    opacity: 0,
+                    y: 20,
+                  }}
+                  animate={{
+                    opacity: 1,
+                    y: 0,
+                    transition: {
+                      duration: 0.5,
+                      delay: 0.2 * index,
+                      ease: "easeOut",
+                      once: true,
+                    },
+                  }}
+                  key={"card" + index}
+                  className="last:pr-[5%] md:last:pr-[33%] rounded-3xl"
+                >
+                  {React.cloneElement(item, { user, currentUsername })}
+                </motion.div>
+              ))
+            ) : (
+              <p>No setup already posted</p>
+            )}
           </div>
         </div>
-        <div className="flex xl:justify-end gap-2 mr-10">
-          <button
-            className="relative z-40 h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center disabled:opacity-50"
-            onClick={scrollLeft}
-            disabled={!canScrollLeft}
-          >
-            <ChevronLeftIcon className="h-6 w-6 text-gray-500" />
-          </button>
-          <button
-            className="relative z-40 h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center disabled:opacity-50"
-            onClick={scrollRight}
-            disabled={!canScrollRight}
-          >
-            <ChevronRightIcon className="h-6 w-6 text-gray-500" />
-          </button>
-        </div>
+        {items.length > 0 && (
+          <div className="flex xl:justify-end gap-2 mr-10">
+            <button
+              className="relative z-40 h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center disabled:opacity-50"
+              onClick={scrollLeft}
+              disabled={!canScrollLeft}
+            >
+              <ChevronLeftIcon className="h-6 w-6 text-gray-500" />
+            </button>
+            <button
+              className="relative z-40 h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center disabled:opacity-50"
+              onClick={scrollRight}
+              disabled={!canScrollRight}
+            >
+              <ChevronRightIcon className="h-6 w-6 text-gray-500" />
+            </button>
+          </div>
+        )}
       </div>
     </CarouselContext.Provider>
   );

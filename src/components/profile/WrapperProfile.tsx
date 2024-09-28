@@ -18,25 +18,27 @@ const WrapperProfile = async ({
   const { user } = await validateRequest();
   const userInfos = await getUserInfos(currentUsername);
 
-  const carouselItems = setups.map((setup: any, index: number) => (
-    <Card
-      key={`card${index}`}
-      card={{
-        src: setup.photo.url,
-        title: setup.name || `Setup ${index + 1}`,
-        category: setup.category || "",
-        content: (
-          <p>{setup.description || `Description du setup ${index + 1}.`}</p>
-        ),
-        link: `/${setup.user.username}/${setup.id}`,
-        setupId: setup.id,
-      }}
-      index={index}
-      layout={true}
-      user={user}
-      currentUsername={currentUsername}
-    />
-  ));
+  const carouselItems = setups.map((setup: any, index: number) => {
+    return (
+      <Card
+        key={`card${index}`}
+        card={{
+          src: setup.photo.url,
+          title: setup.name || `Setup ${index + 1}`,
+          category: setup.category || "",
+          content: (
+            <p>{setup.description || `Description du setup ${index + 1}.`}</p>
+          ),
+          link: `/${setup.user.username}/${setup.id}`,
+          setupId: setup.id,
+        }}
+        index={index}
+        layout={true}
+        user={user}
+        currentUsername={currentUsername}
+      />
+    );
+  });
 
   return (
     <div className="flex flex-col items-center justify-center w-full px-8 md:px-16 lg:px-24">
@@ -63,7 +65,7 @@ const WrapperProfile = async ({
                     : "No description yet"}
                 </p>
                 <div className="flex flex-col  text-textColor items-center justify-center">
-                  <p>{setups.length} setups posted</p>
+                  <p>{setups.length} setup posted</p>
                   {/* <p>134 votes on setup</p> */}
                 </div>
               </div>
