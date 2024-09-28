@@ -3,10 +3,11 @@ import fs from "fs";
 import { generateIdFromEntropySize } from "lucia";
 import { db } from "@/db/db";
 import { validateRequest } from "@/lib/auth/validate-request";
-import { Media, mediaTable } from "@/db/schemas";
+import { Media, mediaTable, setupTable } from "@/db/schemas";
 import { S3 } from "@aws-sdk/client-s3";
 import { setupPhotoTable } from "@/db/schemas";
 import { revalidatePath } from "next/cache";
+import { eq } from "drizzle-orm";
 
 export async function uploadFile(file: File, prefix?: string) {
   console.log("Uploading file", file, prefix);
@@ -79,7 +80,6 @@ export async function uploadSetupPicture(formData: FormData) {
   const file = formData.get("file") as File;
   const setupId = formData.get("setupId") as string;
 
-  // Check if the user is the owner of the setup
   const setup = await db.query.setupTable.findFirst({
     where: (setup, { eq }) => eq(setup.id, setupId),
   });
@@ -95,16 +95,28 @@ export async function uploadSetupPicture(formData: FormData) {
     return { status: "error", message: "Error while uploading file" };
   }
 
-  await db
-    .insert(setupPhotoTable)
-    .values({
-      id: generateIdFromEntropySize(10),
+  const newPhotoId = generateIdFromEntropySize(10);
+
+  await db.transaction(async (trx) => {
+    await trx.insert(setupPhotoTable).values({
+      id: newPhotoId,
       setupId,
-      mediaId: media.id,
+      mediaId: (media as Media).id,
       x: 0,
       y: 0,
-    })
-    .returning();
+    });
+
+    const updatedSetup = await trx.query.setupTable.findFirst({
+      where: (setup, { eq }) => eq(setup.id, setupId),
+    });
+
+    if (!updatedSetup?.thumbnailId) {
+      await trx
+        .update(setupTable)
+        .set({ thumbnailId: newPhotoId })
+        .where(eq(setupTable.id, setupId));
+    }
+  });
 
   revalidatePath(`/setup/${setupId}`);
 }
