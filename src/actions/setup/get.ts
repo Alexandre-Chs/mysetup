@@ -12,7 +12,7 @@ import { count, eq } from "drizzle-orm";
 import { ThumbsDown } from "lucide-react";
 import { revalidatePath } from "next/cache";
 
-export async function getSetup(id: string) {
+export async function getSetup(id: string, username: string) {
   const setup = await db.query.setupTable.findFirst({
     where: eq(setupTable.id, id),
     with: {
@@ -28,8 +28,11 @@ export async function getSetup(id: string) {
       },
       equipments: true,
       upVotes: true,
+      user: true,
     },
   });
+
+  if (setup?.user.username !== username) return undefined;
 
   const thumbnailId = setup?.thumbnailId;
 

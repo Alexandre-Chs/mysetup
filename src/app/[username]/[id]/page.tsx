@@ -12,7 +12,7 @@ export default async function Page({
 }) {
   const { user } = await validateRequest();
 
-  const setup = await getSetup(params.id);
+  const setup = await getSetup(params.id, params.username);
   if (!setup) {
     notFound();
   }
