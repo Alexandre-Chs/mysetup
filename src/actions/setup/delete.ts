@@ -56,6 +56,11 @@ export async function deleteSetup(setupId: string) {
       .where(eq(setupPhotoTable.setupId, setupId));
 
     await tx
+      .update(setupTable)
+      .set({ thumbnailId: null })
+      .where(and(eq(setupTable.id, setupId), eq(setupTable.userId, user!.id)));
+
+    await tx
       .delete(equipmentsTable)
       .where(eq(equipmentsTable.setupId, setupId));
 
@@ -76,8 +81,6 @@ export async function deleteSetup(setupId: string) {
 
   revalidatePath(`/${user!.username}`);
 }
-
-//S3 delete folder (claude.ai prompt, si ca fonctionne plus c'est de sa faute)
 
 const s3Client = new S3Client({
   credentials: {
