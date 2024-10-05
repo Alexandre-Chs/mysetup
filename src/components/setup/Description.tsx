@@ -8,7 +8,7 @@ const Description = ({ description }: { description: string | null }) => {
           <p>{description}</p>
         </>
       ) : (
-        <p>No description</p>
+        <p className="text-sm">No description</p>
       )}
     </div>
   );

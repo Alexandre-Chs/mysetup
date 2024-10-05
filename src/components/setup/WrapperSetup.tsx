@@ -31,16 +31,17 @@ const WrapperSetup = ({
   if (!setup) return;
 
   return (
-    <div className="h-[900px] w-full grid grid-cols-4 grid-rows-8 gap-6">
-      <div className="col-span-3 row-span-6">
+    <div className="h-[900px] w-full grid xl:grid-cols-4 xl:grid-rows-8 gap-6">
+      <div className="xl:col-span-3 xl:row-span-6">
         <WrapperPhotosUser photos={setup.setupPhotos} isOwner={isOwner} />
       </div>
-      <div className="col-span-1 row-span-6">
+      <div className="xl:col-span-1 xl:row-span-6 order-3 max-h-[400px] min-h-[100px] xl:h-full xl:min-h-full xl:max-h-full">
         <WrapperEquipmentSetup setupId={setup?.id} isOwner={isOwner} />
       </div>
-      <div className="col-span-1 row-span-1 row-start-7">
-        <div className="h-full flex-col bento-smooth-gradient border-[1px] border-[#1F2022] text-white flex items-center justify-center gap-4 px-4 rounded-large">
-          <a href={`/${username}`} className="font-medium">
+
+      <div className="w-full h-full flex gap-x-2 xl:gap-y-2 row-span-2 col-span-1 xl:col-span-1 xl:row-span-2 xl:row-start-7 order-1 xl:grid grid-rows-2">
+        <div className="flex-1 row-span-1 h-full min-h-[100px] xl:min-h-auto flex-col bento-smooth-gradient border-[1px] border-[#1F2022] text-white flex items-center justify-center gap-2 rounded-large">
+          <a href={`/${username}`} className="font-medium text-xl xl:text-base">
             {username}
           </a>
           <div className="flex gap-x-4">
@@ -53,11 +54,12 @@ const WrapperSetup = ({
               : null}
           </div>
         </div>
+        <div className="flex-1 w-full row-span-1 flex items-center justify-center">
+          <UpVotes setupId={setup.id} />
+        </div>
       </div>
-      <div className="col-span-1 row-span-1 row-start-8">
-        <UpVotes setupId={setup.id} />
-      </div>
-      <div className="col-span-3 row-span-2 col-start-2 row-start-7">
+
+      <div className="xl:col-span-3 xl:row-span-2 xl:col-start-2 xl:row-start-7 order-2">
         <WrapperDescriptionSetup
           description={setup?.description as string}
           setupId={setup?.id as string}

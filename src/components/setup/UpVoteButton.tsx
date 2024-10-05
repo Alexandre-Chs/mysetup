@@ -18,7 +18,7 @@ const UpVoteButton = ({
 
   return (
     <div
-      className="h-full text-white flex items-center justify-center gap-x-2 px-4 rounded-large cursor-pointer bento-smooth-gradient"
+      className="h-full w-full text-white flex items-center justify-center gap-x-2 px-4 rounded-large cursor-pointer bento-smooth-gradient"
       onClick={() => toggleVote()}
     >
       <FaCaretUp
@@ -26,7 +26,9 @@ const UpVoteButton = ({
         size={30}
       />
       <div>
-        <p className="text-xl font-medium">{upVotesCount} Upvotes</p>
+        <p className="xl:text-base text-sm font-medium text-center">
+          {upVotesCount} Upvotes
+        </p>
       </div>
     </div>
   );
