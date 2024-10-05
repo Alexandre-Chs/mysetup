@@ -12,15 +12,21 @@ import { Divider } from "@nextui-org/react";
 import { User } from "lucia";
 import clsx from "clsx";
 import Image from "next/image";
+import { set } from "zod";
 
 const NavbarClient = ({ user }: { user: User | null }) => {
   const [scrollPosition, setScrollPosition] = useState(0);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setScrollPosition(window.scrollY);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const handleLinkClick = () => {
+    setIsMenuOpen(false);
+  };
 
   return (
     <>
@@ -31,7 +37,7 @@ const NavbarClient = ({ user }: { user: User | null }) => {
             "bg-[#07080A] transition-colors backdrop-blur-lg border-separator/25"
         )}
       >
-        <Sheet>
+        <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
           <SheetTrigger asChild>
             <Button className="lg:hidden ml-8" size="icon" variant="outline">
               <MenuIcon className="h-6 w-6" />
@@ -42,23 +48,39 @@ const NavbarClient = ({ user }: { user: User | null }) => {
             <Link className="mr-6 hidden lg:flex" href="#"></Link>
             <div className="relative flex-col pb-6 pt-24 gap-y-6 flex items-center justify-center">
               <div className="absolute top-2 left-2">
-                <Link
-                  href="/"
-                  className="text-textColor hover:text-textColorLighter text-lg font-bold"
-                >
-                  mysetup
+                <Link href="/" onClick={handleLinkClick}>
+                  <Image
+                    src="/logo.png"
+                    className="h-8 w-auto"
+                    alt="mysetup logo"
+                    width={100}
+                    height={100}
+                    priority
+                  />
+                  <span className="sr-only">My setup</span>
                 </Link>
               </div>
               {user && user.username && user.email ? (
                 <div className="cursor-pointer pt-24 w-full py-2 text-lg font-semibold bg-transparent text-black flex flex-col items-center justify-center h-[44px] gap-y-6">
                   <Link
                     href={`/${user?.username}`}
-                    className="hover:text-textColorLighter text-textColor"
+                    className="hover:text-textColorLighter text-textColorLighter"
+                    onClick={handleLinkClick}
                   >
                     My profile
                   </Link>
+                  <Link
+                    href="/leaderboards"
+                    className="hover:text-textColorLighter text-textColorLighter"
+                    onClick={handleLinkClick}
+                  >
+                    Leaderboards
+                  </Link>
                   {user.emailVerified ? (
-                    <ShareSetupButton user={user} />
+                    <ShareSetupButton
+                      user={user}
+                      setIsMenuOpen={setIsMenuOpen}
+                    />
                   ) : (
                     <div>
                       <VerifyEmailButton />
@@ -71,17 +93,31 @@ const NavbarClient = ({ user }: { user: User | null }) => {
                   <SignOutMobileButton />
                 </div>
               ) : (
-                <Link
-                  className="relative cursor-pointer text-sm text-white font-medium border-transparent bg-transparent px-4 py-2 rounded-xl border-1 group-hover:bg-transparent transition-colors"
-                  href="/login"
-                >
-                  Log in
-                </Link>
+                <>
+                  <Link
+                    href="/leaderboards"
+                    className="relative cursor-pointer text-sm text-white font-medium border-transparent bg-transparent px-4 py-2 rounded-xl border-1 group-hover:bg-transparent transition-colors"
+                    onClick={handleLinkClick}
+                  >
+                    Leaderboards
+                  </Link>
+                  <Link
+                    className="relative cursor-pointer text-sm text-white font-medium border-transparent bg-transparent px-4 py-2 rounded-xl border-1 group-hover:bg-transparent transition-colors"
+                    href="/login"
+                    onClick={handleLinkClick}
+                  >
+                    Log in
+                  </Link>
+                </>
               )}
             </div>
           </SheetContent>
         </Sheet>
-        <Link className="mr-auto hidden lg:flex flex-1" href="/">
+        <Link
+          className="mr-auto hidden lg:flex flex-1"
+          href="/"
+          onClick={handleLinkClick}
+        >
           <Image
             src="/logo.png"
             className="h-8 w-auto"
@@ -95,7 +131,8 @@ const NavbarClient = ({ user }: { user: User | null }) => {
         <div className="flex-grow flex justify-center items-center flex-1">
           <Link
             href="/leaderboards"
-            className="text-textColorLighter hover:text-white cursor-pointer transition-colors"
+            className="text-textColorLighter hover:text-white cursor-pointer transition-colors hidden lg:flex"
+            onClick={handleLinkClick}
           >
             Leaderboards
           </Link>
@@ -103,7 +140,7 @@ const NavbarClient = ({ user }: { user: User | null }) => {
         <nav className="ml-auto hidden lg:flex items-center justify-end gap-6 flex-1">
           {user && user.email && user.username ? (
             <div className="flex items-center justify-center gap-x-6">
-              <ShareSetupButton user={user} />
+              <ShareSetupButton user={user} setIsMenuOpen={setIsMenuOpen} />
               <DropdownButton user={user} />
             </div>
           ) : (
@@ -113,6 +150,7 @@ const NavbarClient = ({ user }: { user: User | null }) => {
                 <Link
                   className="relative cursor-pointer text-sm text-white font-medium border-transparent bg-transparent px-4 py-2 rounded-xl border-1 group-hover:bg-transparent transition-colors"
                   href="/login"
+                  onClick={handleLinkClick}
                 >
                   Log in
                 </Link>

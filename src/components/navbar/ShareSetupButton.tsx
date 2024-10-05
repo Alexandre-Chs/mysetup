@@ -7,7 +7,13 @@ import { Button } from "@/components/ui/button";
 import { User } from "@/types/types";
 import { MoveRight, Loader2 } from "lucide-react";
 
-const ShareSetupButton = ({ user }: { user: User }) => {
+const ShareSetupButton = ({
+  user,
+  setIsMenuOpen,
+}: {
+  user: User;
+  setIsMenuOpen: (value: boolean) => void;
+}) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleShareSetup = async () => {
@@ -17,6 +23,7 @@ const ShareSetupButton = ({ user }: { user: User }) => {
     try {
       await createSetup();
       toast.success("Setup created successfully");
+      setIsMenuOpen(false);
     } catch (error) {
       toast.error("Failed to create setup");
     } finally {
