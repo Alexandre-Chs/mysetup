@@ -35,6 +35,8 @@ const ImageTagger = ({ src, photoId, isOwner }: ImageTaggerProps) => {
   );
   const tags = setupPhoto?.photoEquipments;
 
+  console.log(tags);
+
   const handleMouseMove = (e: React.MouseEvent<HTMLImageElement>) => {
     if (imageRef.current) {
       const rect = imageRef.current.getBoundingClientRect();
@@ -89,7 +91,11 @@ const ImageTagger = ({ src, photoId, isOwner }: ImageTaggerProps) => {
           }
         >
           <a
-            href={tag.equipment.url}
+            href={
+              tag.equipment.affiliateUrl
+                ? tag.equipment.affiliateUrl
+                : tag.equipment.url
+            }
             target="_blank"
             className="absolute size-3 bg-white/85 border-2 border-black/65 rounded-full transform -translate-x-1/2 -translate-y-1/2 cursor-pointer transition-all hover:size-5"
             style={{

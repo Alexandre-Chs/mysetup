@@ -97,10 +97,7 @@ export async function createNewEquipments(
   revalidatePath(`/${user!.username}/${setupId}`);
 }
 
-async function transformUrlToAffiliate(
-  url: string,
-  country: string = "FR"
-): Promise<string> {
+async function transformUrlToAffiliate(url: string, country: string = "FR") {
   const apiKey = process.env.OPTIMHUB_API_KEY;
   try {
     const params = new URLSearchParams({ url, country });
@@ -120,9 +117,9 @@ async function transformUrlToAffiliate(
 
     const data = await response.json();
 
-    return data.url || "";
+    return data.url || undefined;
   } catch (e) {
     console.error("Error while transform url:", e);
-    return "";
+    return undefined;
   }
 }

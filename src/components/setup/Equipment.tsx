@@ -19,6 +19,7 @@ const Equipment = ({
   if (!equipments) return null;
 
   const groupedItems = groupByType(equipments);
+  console.log(groupedItems);
 
   const handleDeleteItem = (e: any) => {
     const elementSelected = e.target.parentElement.dataset.name;
@@ -49,13 +50,22 @@ const Equipment = ({
               ) : (
                 groupedItems[type].map(
                   (
-                    item: { name: string; type: string; url: string },
+                    item: {
+                      name: string;
+                      type: string;
+                      url: string;
+                      affiliateUrl: string;
+                    },
                     index: number
                   ) => (
                     <div className="flex gap-2 relative" key={index}>
                       <div
                         className="cursor-pointer w-full bg-[#141516] rounded-md flex items-center justify-start gap-2 py-2 px-4 mb-4 hover:bg-[#202123]"
-                        onClick={() => handleRedirectUser(item.url)}
+                        onClick={() =>
+                          handleRedirectUser(
+                            item.affiliateUrl ? item.affiliateUrl : item.url
+                          )
+                        }
                       >
                         <p className="w-full">{item.name}</p>
                       </div>
