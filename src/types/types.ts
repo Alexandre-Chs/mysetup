@@ -25,6 +25,5 @@ export type EquipmentType = {
   name: string;
   type: string;
   url: string | null;
-  affiliateUrl: string | null;
   createdAt: Date | null;
 };

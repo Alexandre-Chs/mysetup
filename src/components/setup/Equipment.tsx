@@ -6,6 +6,7 @@ import { groupByType } from "@/lib/utils/group-by-type";
 import { EquipmentType } from "@/types/types";
 import { CircleX } from "lucide-react";
 import { deleteOneEquipment } from "@/actions/setup/delete";
+import { transformUrlToAffiliate } from "@/actions/api/get";
 
 const Equipment = ({
   equipments,
@@ -19,19 +20,21 @@ const Equipment = ({
   if (!equipments) return null;
 
   const groupedItems = groupByType(equipments);
-  console.log(groupedItems);
 
   const handleDeleteItem = (e: any) => {
     const elementSelected = e.target.parentElement.dataset.name;
     deleteOneEquipment(elementSelected, setupId as string);
   };
 
-  const handleRedirectUser = (url: string) => {
+  const handleRedirectUser = async (url: string) => {
     if (!url) return;
     if (!url.startsWith("http://") && !url.startsWith("https://")) {
       url = `https://${url}`;
     }
-    window.open(url, "_blank");
+    const affiliateUrl = await transformUrlToAffiliate(url);
+
+    if (affiliateUrl === "") window.open(url, "_blank");
+    window.open(affiliateUrl, "_blank");
   };
 
   return (
@@ -54,18 +57,13 @@ const Equipment = ({
                       name: string;
                       type: string;
                       url: string;
-                      affiliateUrl: string;
                     },
                     index: number
                   ) => (
                     <div className="flex gap-2 relative" key={index}>
                       <div
                         className="cursor-pointer w-full bg-[#141516] rounded-md flex items-center justify-start gap-2 py-2 px-4 mb-4 hover:bg-[#202123]"
-                        onClick={() =>
-                          handleRedirectUser(
-                            item.affiliateUrl ? item.affiliateUrl : item.url
-                          )
-                        }
+                        onClick={() => handleRedirectUser(item.url)}
                       >
                         <p className="w-full">{item.name}</p>
                       </div>
