@@ -9,6 +9,7 @@ export const equipmentsTable = pgTable("equipments", {
   name: text("name").notNull(),
   type: text("type").notNull(),
   url: text("url"),
+  affiliateUrl: text("affiliate_url"),
   createdAt: timestamp("created_at").defaultNow(),
 });
 

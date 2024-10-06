@@ -83,13 +83,46 @@ export async function createNewEquipments(
     return { status: "error", message: "You are not the owner of this setup" };
   }
 
+  const affiliateUrl = await transformUrlToAffiliate(equipments.url as string);
+
   await db.insert(equipmentsTable).values({
     id: generateIdFromEntropySize(10),
     setupId: setupId,
     name: equipments.name,
     type: equipments.type,
     url: equipments.url,
+    affiliateUrl,
   });
 
   revalidatePath(`/${user!.username}/${setupId}`);
+}
+
+async function transformUrlToAffiliate(
+  url: string,
+  country: string = "FR"
+): Promise<string> {
+  const apiKey = process.env.OPTIMHUB_API_KEY;
+  try {
+    const params = new URLSearchParams({ url, country });
+    const response = await fetch(
+      `https://api.optimhub.com/api/link-builder?${params}`,
+      {
+        method: "GET",
+        headers: {
+          "x-api-key": apiKey as string,
+        },
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    return data.url || "";
+  } catch (e) {
+    console.error("Error while transform url:", e);
+    return "";
+  }
 }
