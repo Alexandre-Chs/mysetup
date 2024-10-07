@@ -6,7 +6,9 @@ import { groupByType } from "@/lib/utils/group-by-type";
 import { EquipmentType } from "@/types/types";
 import { CircleX } from "lucide-react";
 import { deleteOneEquipment } from "@/actions/setup/delete";
-import { transformUrlToAffiliate } from "@/actions/api/get";
+import { getCountry, transformUrlToAffiliate } from "@/actions/api/get";
+import { redirect } from "next/navigation";
+import Link from "next/link";
 
 const Equipment = ({
   equipments,
@@ -31,10 +33,9 @@ const Equipment = ({
     if (!url.startsWith("http://") && !url.startsWith("https://")) {
       url = `https://${url}`;
     }
-    const affiliateUrl = await transformUrlToAffiliate(url);
 
-    if (affiliateUrl === "") window.open(url, "_blank");
-    window.open(affiliateUrl, "_blank");
+    const affiliateUrl = await transformUrlToAffiliate(url);
+    return affiliateUrl ? affiliateUrl : url;
   };
 
   return (
@@ -61,12 +62,12 @@ const Equipment = ({
                     index: number
                   ) => (
                     <div className="flex gap-2 relative" key={index}>
-                      <div
+                      <AsyncLink
                         className="cursor-pointer w-full bg-[#141516] rounded-md flex items-center justify-start gap-2 py-2 px-4 mb-4 hover:bg-[#202123]"
-                        onClick={() => handleRedirectUser(item.url)}
+                        getHref={() => handleRedirectUser(item.url)}
                       >
                         <p className="w-full">{item.name}</p>
-                      </div>
+                      </AsyncLink>
                       {action === "add" && (
                         <button
                           className="absolute right-2 top-2.5 rounded-l z-50 cursor-pointer"
@@ -89,3 +90,31 @@ const Equipment = ({
 };
 
 export default Equipment;
+
+const AsyncLink = ({ children, getHref, className }: any) => {
+  const [href, setHref] = useState("#");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleClick = async (e: any) => {
+    e.preventDefault();
+    if (isLoading) return;
+
+    setIsLoading(true);
+    try {
+      const url = await getHref();
+      setIsLoading(false);
+      if (url) {
+        window.open(url, "newWindow");
+      }
+    } catch (error) {
+      console.error("Error getting URL:", error);
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <Link href={href} onClick={handleClick} className={className}>
+      {isLoading ? "Redirecting..." : children}
+    </Link>
+  );
+};

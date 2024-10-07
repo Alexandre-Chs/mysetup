@@ -1,11 +1,10 @@
 "use server";
 
-export async function transformUrlToAffiliate(
-  url: string,
-  country: string = "FR"
-) {
+export async function transformUrlToAffiliate(url: string) {
   const apiKey = process.env.OPTIMHUB_API_KEY;
-  const params = new URLSearchParams({ url, country });
+
+  const country = await getCountry();
+  const params = new URLSearchParams({ url, country: country || "FR" });
   try {
     const response = await fetch(
       `https://api.optimhub.com/api/link-builder?${params}`,
@@ -21,7 +20,6 @@ export async function transformUrlToAffiliate(
     }
 
     const data = await response.json();
-
     return data.url;
   } catch (e) {
     console.error("Error while transform url:", e);
