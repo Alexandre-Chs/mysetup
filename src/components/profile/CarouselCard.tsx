@@ -28,7 +28,7 @@ export const CarouselContext = createContext<{
   onCardClose: (index: number) => void;
   currentIndex: number;
 }>({
-  onCardClose: () => {},
+  onCardClose: () => { },
   currentIndex: 0,
 });
 
@@ -186,7 +186,7 @@ export const Card = ({
       <motion.div
         layoutId={layout ? `card-${card.title}` : undefined}
         className={clsx(
-          "rounded-3xl bg-backgroundTertiary h-80 w-56 md:h-[40rem] md:w-96 overflow-hidden flex flex-col items-start justify-start relative z-10 cursor-pointer",
+          "rounded-3xl bg-backgroundTertiary h-80 w-56 md:h-[40rem] md:w-96 overflow-hidden flex flex-col items-start justify-start relative z-10 cursor-pointer group",
           card.src === "" ? "bg-backgroundTertiary" : "dark:bg-neutral-900"
         )}
         onClick={handleCardClick}
@@ -206,7 +206,7 @@ export const Card = ({
             {card.title}
           </motion.p>
           {user?.username === currentUsername && (
-            <div className="absolute top-5 right-5">
+            <div className="hidden group-hover:flex absolute top-5 right-5">
               <div onClick={handleDeleteSetup}>
                 <Trash2 className="text-redText cursor-pointer rounded-full hover:text-redTextLighter" />
                 <DeleteSetupModal

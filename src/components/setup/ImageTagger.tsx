@@ -35,8 +35,6 @@ const ImageTagger = ({ src, photoId, isOwner }: ImageTaggerProps) => {
   );
   const tags = setupPhoto?.photoEquipments;
 
-  console.log(tags);
-
   const handleMouseMove = (e: React.MouseEvent<HTMLImageElement>) => {
     if (imageRef.current) {
       const rect = imageRef.current.getBoundingClientRect();
@@ -78,14 +76,10 @@ const ImageTagger = ({ src, photoId, isOwner }: ImageTaggerProps) => {
         <Tooltip
           key={tag.id}
           content={
-            <div>
+            <div className="flex flex-row items-center gap-1">
               {tag.equipment.name}
               {isOwner && (
-                <div className="flex items-center justify-center flex-col">
-                  <span onClick={() => handleDeleteTag(tag.id, photoId)}>
-                    <CircleX size={20} className="text-red-500" />
-                  </span>
-                </div>
+                <CircleX onClick={() => handleDeleteTag(tag.id, photoId)} size={20} className="text-red-500 cursor-pointer transition-all hover:scale-110 hover:rotate-90" />
               )}
             </div>
           }
