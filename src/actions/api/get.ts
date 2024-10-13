@@ -3,8 +3,8 @@
 export async function transformUrlToAffiliate(url: string) {
   const apiKey = process.env.OPTIMHUB_API_KEY;
 
-  const country = await getCountry();
-  const params = new URLSearchParams({ url, country: country || "FR" });
+  // const country = await getCountry();
+  const params = new URLSearchParams({ url, country: "FR" });
   try {
     const response = await fetch(
       `https://api.optimhub.com/api/link-builder?${params}`,

@@ -6,6 +6,7 @@ import { useRef, useState } from "react";
 import { Tooltip } from "@nextui-org/react";
 import { CircleX } from "lucide-react";
 import { deleteTagOnPhoto } from "@/actions/setup-photo/delete";
+import { transformUrlToAffiliate } from "@/actions/api/get";
 
 type ImageTaggerProps = {
   src: string;
@@ -55,6 +56,17 @@ const ImageTagger = ({ src, photoId, isOwner }: ImageTaggerProps) => {
     deleteTagOnPhoto(id, photoId);
   };
 
+  const handleRedirectUser = async (url: string, e: any) => {
+    e.preventDefault();
+    if (!url) return;
+    const affiliateUrl = await transformUrlToAffiliate(url);
+    if (affiliateUrl) {
+      window.open(affiliateUrl, "newWindow");
+    } else {
+      window.open(url, "newWindow");
+    }
+  };
+
   return (
     <div className="relative m-auto max-w-full max-h-full">
       <img
@@ -84,15 +96,14 @@ const ImageTagger = ({ src, photoId, isOwner }: ImageTaggerProps) => {
             </div>
           }
         >
-          <a
-            href={tag.equipment.url}
-            target="_blank"
+          <div
+            onClick={(e: any) => handleRedirectUser(tag.equipment.url, e)}
             className="absolute size-3 bg-white/85 border-2 border-black/65 rounded-full transform -translate-x-1/2 -translate-y-1/2 cursor-pointer transition-all hover:size-5"
             style={{
               top: `${tag.y}%`,
               left: `${tag.x}%`,
             }}
-          ></a>
+          ></div>
         </Tooltip>
       ))}
     </div>
