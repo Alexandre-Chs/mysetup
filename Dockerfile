@@ -23,4 +23,4 @@ ENV NODE_ENV=production
 EXPOSE 3000
 
 # Commande pour lancer l'application en production
-CMD HOSTNAME="0.0.0.0" node server.js
+CMD npm run dev
