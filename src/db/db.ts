@@ -7,11 +7,11 @@ declare global {
 }
 
 export const pool = new Pool({
-  host: "127.0.0.1",
-  port: 5432,
-  user: "postgres",
-  password: "root",
-  database: "mysetup",
+  host: process.env.DB_HOST || "127.0.0.1",
+  port: +(process.env.DB_PORT || 5432),
+  user: process.env.DB_USER || "postgres",
+  password: process.env.DB_PASS || "root",
+  database: process.env.DB_NAME || "mysetup",
 });
 
 export const db = global.drizzle || drizzle(pool, { schema });
