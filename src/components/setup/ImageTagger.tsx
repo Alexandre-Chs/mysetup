@@ -11,7 +11,7 @@ import { transformUrlToAffiliate } from "@/actions/api/get";
 type ImageTaggerProps = {
   src: string;
   photoId: string;
-  isOwner: boolean;
+  isOwner?: boolean;
 };
 
 const ImageTagger = ({ src, photoId, isOwner }: ImageTaggerProps) => {
@@ -91,7 +91,11 @@ const ImageTagger = ({ src, photoId, isOwner }: ImageTaggerProps) => {
             <div className="flex flex-row items-center gap-1">
               {tag.equipment.name}
               {isOwner && (
-                <CircleX onClick={() => handleDeleteTag(tag.id, photoId)} size={20} className="text-red-500 cursor-pointer transition-all hover:scale-110 hover:rotate-90" />
+                <CircleX
+                  onClick={() => handleDeleteTag(tag.id, photoId)}
+                  size={20}
+                  className="text-red-500 cursor-pointer transition-all hover:scale-110 hover:rotate-90"
+                />
               )}
             </div>
           }

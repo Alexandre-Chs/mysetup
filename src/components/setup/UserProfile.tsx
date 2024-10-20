@@ -4,7 +4,7 @@ import { FaDiscord } from "react-icons/fa";
 import { GrInstagram } from "react-icons/gr";
 import { User } from "@/types/types";
 
-const UserProfile = ({ currentUser }: { currentUser: User | null }) => {
+const UserProfile = ({ currentUser }: { currentUser?: User | null }) => {
   // TODO: get user socials links from database
   return (
     <div className="h-full bg-gray-100 rounded-large text-black px-6 flex flex-col items-start justify-center">

@@ -11,7 +11,6 @@ import { lucia } from "@/lib/auth/auth";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { validSchemaAuthWithEmail } from "@/zod/auth/schema-auth";
-import { SendWelcomeEmail } from "@/app/api/send/route";
 import { discordLog } from "../utils";
 
 //TODO: vérifier si email valide, si pas déjà existante dans la BDD.
@@ -65,13 +64,22 @@ export async function signup(formData: FormData) {
   await addUserToDatabase(userId, parseData.username, passwordHash, email);
 
   try {
-    await discordLog(`🎉 NOUVEAU USER ! Username : ${parseData.username} - Email : ${email} via les credentials !`)
+    await discordLog(
+      `🎉 NOUVEAU USER ! Username : ${parseData.username} - Email : ${email} via les credentials !`
+    );
   } catch (e) {
     console.log(e);
   }
 
   try {
-    await SendWelcomeEmail(email, parseData.username);
+    await fetch("/api/send-welcome", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email,
+        username: parseData.username,
+      }),
+    });
   } catch (e) {
     console.log(e);
   }

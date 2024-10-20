@@ -12,8 +12,8 @@ const NewEquipmentsClient = ({
   setupId,
   equipments,
 }: {
-  setupId: string;
-  equipments: EquipmentType[] | undefined;
+  setupId?: string;
+  equipments?: EquipmentType[] | undefined;
 }) => {
   const [showModal, setShowModal] = React.useState(false);
 

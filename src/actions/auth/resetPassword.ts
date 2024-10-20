@@ -9,7 +9,6 @@ import { passwordResetToken } from "@/db/schemas/password_reset_token";
 import { validateRequest } from "@/lib/auth/validate-request";
 import { eq } from "drizzle-orm";
 import { userTable } from "@/db/schemas";
-import { SendResetPasswordEmail } from "@/app/api/send/route";
 
 export async function createPasswordResetToken(
   userId: string
@@ -48,8 +47,15 @@ export async function resetPassword(email: string) {
   const verificationLink =
     "http://localhost:3000/reset-password/" + verificationToken;
 
-  await SendResetPasswordEmail(email, verificationLink);
-  // await sendPasswordResetToken(email, verificationLink);
+  await fetch("/api/send-welcome", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      email,
+      verificationLink,
+    }),
+  });
+
   return {
     status: 200,
     message: "Password reset email sent",

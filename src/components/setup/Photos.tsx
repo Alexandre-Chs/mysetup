@@ -1,8 +1,9 @@
 "use client";
+
 import "gridstack/dist/gridstack.min.css";
 import "gridstack/dist/gridstack-extra.min.css";
 import { GridStack } from "gridstack";
-import React, { Fragment } from "react";
+import React from "react";
 import { toast } from "sonner";
 import UploadSetupPicture from "./UploadSetupPicture";
 import { updateSetupPhoto } from "@/actions/setup-photo/update";
@@ -12,11 +13,12 @@ function randomFill(length: number) {
   return Array.from({ length }, () => ({ id: id++, w: 1, h: 1 }));
 }
 
-class PhotosUser extends React.Component {
+class PhotosUser extends React.Component<any> {
   state: any;
 
   constructor(props: any) {
     super(props);
+
     this.state = {
       grid: null,
       lock: false,
@@ -24,14 +26,6 @@ class PhotosUser extends React.Component {
       photos: props.photos,
     };
   }
-
-  addClickListener = (element: HTMLElement, id: string) => {
-    element.addEventListener("click", this.handleClick(id));
-  };
-
-  handleClick = (id: string) => () => {
-    this.props.handleClickImage(id);
-  };
 
   async componentDidUpdate(prevProps: any) {
     if (prevProps.photos === this.props.photos) return;
@@ -51,7 +45,6 @@ class PhotosUser extends React.Component {
         id: item.id,
         content: `<div class="grid-stack-item-content w-full h-full bg-cover bg-center rounded-lg" style="background-image: url('${item.media.url}');"></div>`,
       });
-      this.addClickListener(this.state.grid, item.id);
     });
   }
 
@@ -114,7 +107,6 @@ class PhotosUser extends React.Component {
           id: item.id,
           content: `<div class="grid-stack-item-content w-full h-full bg-cover bg-center rounded-lg" style="background-image: url('${item.media.url}');"></div>`,
         });
-        this.addClickListener(widget, item.id);
       });
     });
   }
@@ -158,7 +150,7 @@ class PhotosUser extends React.Component {
     return (
       <div>
         <div className="grid-stack overflow-hidden"></div>
-        <UploadSetupPicture pictureCount={this.state.occupiedCells} />
+        <UploadSetupPicture />
       </div>
     );
   }

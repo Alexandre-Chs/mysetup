@@ -1,6 +1,5 @@
 "use server";
 
-import { SendVerificationEmail } from "@/app/api/send/route";
 import { createEmailVerificationToken } from "./verificationToken";
 import { validateRequest } from "@/lib/auth/validate-request";
 import { db } from "@/db/db";
@@ -25,7 +24,14 @@ export async function SendVerifyEmail() {
     "http://localhost:3000/email-verification/" + verificationToken;
 
   try {
-    await SendVerificationEmail(user.email, verificationLink);
+    await fetch("/api/send-welcome", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: user.email,
+        verificationLink,
+      }),
+    });
   } catch (e) {
     console.log(e);
   }

@@ -5,7 +5,7 @@ import { LuImagePlus } from "react-icons/lu";
 import { toast } from "sonner";
 import { Tooltip } from "@nextui-org/react";
 
-const UploadSetupPicture = ({ isOwner }: { isOwner: boolean }) => {
+const UploadSetupPicture = ({ isOwner }: { isOwner?: boolean }) => {
   const params = useParams<{ id: string }>();
 
   const fileInput = useRef<HTMLInputElement>(null);

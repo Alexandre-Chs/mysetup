@@ -1,6 +1,5 @@
 "use server";
 
-import { SendWelcomeEmail } from "@/app/api/send/route";
 import { db } from "@/db/db";
 import { userTable } from "@/db/schemas";
 import { validateRequest } from "@/lib/auth/validate-request";
@@ -31,14 +30,23 @@ export async function updateUserInfosEmail(email: string) {
 
   try {
     if (email && user.username) {
-      await discordLog(`🎉 NOUVEAU USER ! Username : ${user.username} - Email : ${email} via les providers !`);
+      await discordLog(
+        `🎉 NOUVEAU USER ! Username : ${user.username} - Email : ${email} via les providers !`
+      );
     }
   } catch (e) {
     console.log(e);
   }
 
   try {
-    await SendWelcomeEmail(email, user.username);
+    await fetch("/api/send-welcome", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email,
+        username: user.username,
+      }),
+    });
   } catch (e) {
     console.log(e);
   }
@@ -63,14 +71,23 @@ export async function updateUserInfosUsername(username: string) {
     .where(eq(userTable.id, user.id));
 
   try {
-    await SendWelcomeEmail(user.email, parseData.username);
+    await fetch("/api/send-welcome", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: user.email,
+        username: parseData.username,
+      }),
+    });
   } catch (e) {
     console.log(e);
   }
 
   try {
     if (username && user.email) {
-      await discordLog(`🎉 NOUVEAU USER ! Username : ${username} - Email : ${user.email} via les providers !`)
+      await discordLog(
+        `🎉 NOUVEAU USER ! Username : ${username} - Email : ${user.email} via les providers !`
+      );
     }
   } catch (e) {
     console.log(e);

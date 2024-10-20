@@ -10,8 +10,8 @@ const WrapperEquipmentSetup = ({
   setupId,
   isOwner,
 }: {
-  setupId: string;
-  isOwner: boolean;
+  setupId?: string;
+  isOwner?: boolean;
 }) => {
   const setup = useSetupStore((state) => state.setup);
   const equipments = setup?.equipments as EquipmentsTable[];
@@ -19,7 +19,10 @@ const WrapperEquipmentSetup = ({
   return (
     <>
       {isOwner ? (
-        <NewEquipmentsClient setupId={setupId} equipments={equipments} />
+        <NewEquipmentsClient
+          setupId={setupId as string}
+          equipments={equipments}
+        />
       ) : (
         <Equipment equipments={equipments ? equipments : []} />
       )}
