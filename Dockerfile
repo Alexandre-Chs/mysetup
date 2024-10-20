@@ -14,10 +14,10 @@ RUN npm ci
 COPY . .
 
 # Builder l'application pour la production
-RUN npm run build
+# RUN npm run build
 
-# Variable d'environnement pour Next.js en mode production
-ENV NODE_ENV=production
+# # Variable d'environnement pour Next.js en mode production
+# ENV NODE_ENV=production
 
 # Exposer le port 3000
 EXPOSE 3000
