@@ -1,41 +1,26 @@
-FROM node:20-alpine AS base
+# Utiliser une image de Node.js légère basée sur Alpine
+FROM node:20-alpine
 
-# Install dependencies only when needed
-FROM base AS deps
-
+# Définir le dossier de travail dans le container
 WORKDIR /app
 
-COPY package.json package-lock.json* ./
+# Copier les fichiers package.json et package-lock.json
+COPY package*.json ./
+
+# Installer les dépendances
 RUN npm ci
 
-FROM base AS builder
-WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
+# Copier le reste de l'application dans le container
 COPY . .
 
+# Builder l'application pour la production
 RUN npm run build
 
-FROM base AS runner
+# Variable d'environnement pour Next.js en mode production
+ENV NODE_ENV=production
 
-WORKDIR /app
-COPY --from=builder /app/drizzle.config.ts ./drizzle.config.ts
-
-ENV NODE_ENV production
-
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
-
-COPY --from=builder /app/public ./public
-
-RUN mkdir .next
-RUN chown nextjs:nodejs .next
-
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
-
-USER nextjs
-
+# Exposer le port 3000
 EXPOSE 3000
-ENV PORT=3000
 
+# Commande pour lancer l'application en production
 CMD HOSTNAME="0.0.0.0" node server.js
