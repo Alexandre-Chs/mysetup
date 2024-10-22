@@ -10,8 +10,8 @@ services:
     environment:
       - DATABASE_HOST=postgres
       - DATABASE_PORT=5432
-      - DATABASE_USER=alex
-      - DATABASE_PASSWORD=alexandrechs
+      - DATABASE_USER=postgre
+      - DATABASE_PASSWORD=root
       - DATABASE_NAME=mysetup
     depends_on:
       - postgres
