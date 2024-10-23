@@ -29,6 +29,7 @@ FROM base AS runner
 
 WORKDIR /app
 COPY --from=builder /app/drizzle.config.ts ./drizzle.config.ts
+COPY --from=builder /app/src/db/migrate.ts ./migrate.ts
 
 ENV NODE_ENV production
 
@@ -39,8 +40,6 @@ COPY --from=builder /app/public ./public
 
 RUN mkdir .next
 RUN chown nextjs:nodejs .next
-RUN npm install -g pnpm
-RUN npm i drizzle-kit
 
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
