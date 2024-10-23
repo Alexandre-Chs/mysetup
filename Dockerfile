@@ -30,6 +30,7 @@ FROM base AS runner
 WORKDIR /app
 COPY --from=builder /app/drizzle.config.ts ./drizzle.config.ts
 COPY --from=builder /app/src/db/migrate.ts ./migrate.ts
+COPY --from=builder /app/src/db/migrations ./migrations
 
 ENV NODE_ENV production
 
