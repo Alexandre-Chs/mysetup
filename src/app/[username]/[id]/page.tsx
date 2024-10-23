@@ -13,7 +13,7 @@ export default async function Page({
   const { user } = await validateRequest();
 
   const setup = await getSetup(params.id, params.username);
-  if (!setup) {
+  if (!setup || (!setup.isPublished && setup.userId !== user?.id)) {
     notFound();
   }
 

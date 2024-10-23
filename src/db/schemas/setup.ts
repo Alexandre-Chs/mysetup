@@ -1,4 +1,4 @@
-import { AnyPgColumn, pgTable, text, timestamp } from "drizzle-orm/pg-core";
+import { AnyPgColumn, boolean, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 import { userTable } from "./user";
 import { setupPhotoTable } from "./setup_photo";
 
@@ -11,6 +11,7 @@ export const setupTable = pgTable("setup", {
   name: text("name"),
   description: text("description"),
   createdAt: timestamp("created_at").defaultNow(),
+  isPublished: boolean("is_published").default(false),
 });
 
 export type Setup = typeof setupTable.$inferSelect;

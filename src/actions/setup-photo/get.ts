@@ -7,7 +7,7 @@ import {
   setupTable,
   userTable,
 } from "@/db/schemas";
-import { desc, eq } from "drizzle-orm";
+import { desc, eq, and } from "drizzle-orm";
 
 export async function getAllSetupsPhotos() {
   return await db
@@ -23,7 +23,10 @@ export async function getAllSetupsPhotos() {
     .innerJoin(setupPhotoTable, eq(mediaTable.id, setupPhotoTable.mediaId))
     .innerJoin(setupTable, eq(setupPhotoTable.setupId, setupTable.id))
     .innerJoin(userTable, eq(setupTable.userId, userTable.id))
-    .where(eq(setupTable.thumbnailId, setupPhotoTable.id))
+    .where(and(
+      eq(setupTable.thumbnailId, setupPhotoTable.id),
+      eq(setupTable.isPublished, true),
+    ))
     .orderBy(desc(mediaTable.createdAt));
 }
 

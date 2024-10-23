@@ -1,8 +1,8 @@
 "use client";
 
-import { useEdit } from "@/context/EditContext";
 import React from "react";
 import UpdateName from "./update-setup/UpdateName";
+import TogglePublish from "./TogglePublish";
 
 const WrapperNameSetup = ({
   setupName,
@@ -16,7 +16,10 @@ const WrapperNameSetup = ({
   return (
     <div className="w-full">
       {isOwner ? (
-        <UpdateName currentName={setupName} setupId={setupId} />
+        <div className="flex flex-row items-center mb-1">
+          <UpdateName currentName={setupName} setupId={setupId} />
+          <TogglePublish />
+        </div>
       ) : (
         <h1 className="font-bold text-2xl pb-2 w-full">{setupName}</h1>
       )}
