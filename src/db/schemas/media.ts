@@ -1,11 +1,11 @@
-import { integer, pgTable, text, timestamp } from "drizzle-orm/pg-core";
+import { AnyPgColumn, integer, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 import { userTable } from "./user";
 
 export const mediaTable = pgTable("media", {
   id: text("id").primaryKey(),
   userId: text("user_id")
     .notNull()
-    .references(() => userTable.id),
+    .references((): AnyPgColumn => userTable.id),
   size: integer("size").notNull(),
   name: text("name").notNull(),
   type: text("type").notNull(),

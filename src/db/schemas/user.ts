@@ -1,4 +1,4 @@
-import { pgTable, text, boolean } from "drizzle-orm/pg-core";
+import { pgTable, text, boolean, AnyPgColumn } from "drizzle-orm/pg-core";
 import { mediaTable } from "./media";
 
 export const userTable = pgTable("user", {
@@ -8,7 +8,7 @@ export const userTable = pgTable("user", {
   email: text("email").unique(),
   email_verified: boolean("email_verified").default(false).notNull(),
   is_first_visit: boolean("is_first_visit").default(true).notNull(),
-  pictureId: text("picture_id").references(() => mediaTable.id),
+  pictureId: text("picture_id").references((): AnyPgColumn => mediaTable.id),
 });
 
 export type User = typeof userTable.$inferSelect;
