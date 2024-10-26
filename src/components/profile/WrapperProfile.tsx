@@ -56,6 +56,7 @@ const WrapperProfile = async ({
               style={{ pointerEvents: "none" }}
             >
               <div className="flex flex-col items-center justify-center gap-y-4 w-[300px] flex-wrap">
+                <img className="rounded-full size-24" src={userInfos?.media?.url || '/default-user.jpg'} alt="" />
                 <h1 className="flex items-start justify-center text-2xl text-textColorLighter font-bold">
                   {currentUsername}
                 </h1>

@@ -24,6 +24,7 @@ import {
 import { UserProfile, validUserInfosProfile } from "@/zod/profile/userinfos";
 import { toast } from "sonner";
 import { updateProfile } from "@/actions/user/updateProfile";
+import AvatarUpload from "./AvatarUpload";
 
 type SocialLink = {
   id: string;
@@ -114,6 +115,10 @@ const UpdateUserProfileCard = ({ userInfos }: { userInfos: any }) => {
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
+            <div className="flex flex-col justify-center items-start gap-2">
+              <Label htmlFor="profileDescription">Avatar</Label>
+              <AvatarUpload media={userInfos.media} editable={true} />
+            </div>
             <div className="flex flex-col justify-center items-start gap-2">
               <Label htmlFor="profileDescription">Profile Description</Label>
               <Textarea

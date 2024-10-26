@@ -3,7 +3,7 @@ import fs from "fs";
 import { generateIdFromEntropySize } from "lucia";
 import { db } from "@/db/db";
 import { validateRequest } from "@/lib/auth/validate-request";
-import { Media, mediaTable, setupTable } from "@/db/schemas";
+import { Media, mediaTable, setupTable, userTable } from "@/db/schemas";
 import { S3 } from "@aws-sdk/client-s3";
 import { setupPhotoTable } from "@/db/schemas";
 import { revalidatePath } from "next/cache";
@@ -119,4 +119,23 @@ export async function uploadSetupPicture(formData: FormData) {
   });
 
   revalidatePath(`/setup/${setupId}`);
+}
+
+export async function uploadUserPicture(formData: FormData) {
+  const { user } = await validateRequest();
+
+  const file = formData.get("file") as File;
+
+  const media = await uploadFile(file, `users/${user!.id}`);
+
+  if (!media) {
+    return { status: "error", message: "Error while uploading file" };
+  }
+
+  await db
+    .update(userTable)
+    .set({ pictureId: media.id })
+    .where(eq(userTable.id, user!.id));
+
+  revalidatePath(`/user/${user!.id}`);
 }

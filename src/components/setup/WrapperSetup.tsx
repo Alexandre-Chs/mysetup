@@ -41,17 +41,22 @@ const WrapperSetup = ({
 
       <div className="w-full h-full flex gap-x-2 xl:gap-y-2 row-span-2 col-span-1 xl:col-span-1 xl:row-span-2 xl:row-start-7 order-1 xl:grid grid-rows-2">
         <div className="flex-1 row-span-1 h-full min-h-[100px] xl:min-h-auto flex-col bento-smooth-gradient border-[1px] border-[#1F2022] text-white flex items-center justify-center gap-2 rounded-large">
-          <a href={`/${username}`} className="font-medium text-xl xl:text-base">
-            {username}
-          </a>
-          <div className="flex gap-x-4">
-            {userInfos?.socialLinks
-              ? userInfos?.socialLinks.map((link: any) => (
-                  <a key={link.id} href={link.link} target="_blank">
-                    {getSocialIcon(link.socialName)}
-                  </a>
-                ))
-              : null}
+          <div className="flex flex-row gap-4 w-full px-4">
+            <img src={userInfos?.media?.url || '/default-user.jpg'} className="size-12 rounded-full" />
+            <div>
+              <a href={`/${username}`} className="font-medium text-xl xl:text-base">
+                {username}
+              </a>
+              <div className="flex gap-x-4">
+                {userInfos?.socialLinks
+                  ? userInfos?.socialLinks.map((link: any) => (
+                    <a key={link.id} href={link.link} target="_blank">
+                      {getSocialIcon(link.socialName)}
+                    </a>
+                  ))
+                  : null}
+              </div>
+            </div>
           </div>
         </div>
         <div className="flex-1 w-full row-span-1 flex items-center justify-center">
