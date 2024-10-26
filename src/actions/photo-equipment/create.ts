@@ -4,12 +4,20 @@ import { db } from "@/db/db";
 import {
   equipmentsTable,
   photoEquipmentTable,
+  Setup,
+  SetupPhoto,
   setupPhotoTable,
 } from "@/db/schemas";
 import { validateRequest } from "@/lib/auth/validate-request";
 import { eq } from "drizzle-orm";
 import { generateIdFromEntropySize } from "lucia";
 import { revalidatePath } from "next/cache";
+
+type SetupPhotoWithSetup = SetupPhoto & {
+  setup: Setup & {
+    userId: string;
+  };
+};
 
 export async function createPhotoEquipment(
   setupPhotoId: string,
@@ -21,7 +29,7 @@ export async function createPhotoEquipment(
 
   if (!user) return;
   // get setupPhoto
-  const setupPhoto = await db.query.setupPhotoTable.findFirst({
+  const setupPhoto = (await db.query.setupPhotoTable.findFirst({
     where: eq(setupPhotoTable.id, setupPhotoId),
     with: {
       setup: {
@@ -30,7 +38,7 @@ export async function createPhotoEquipment(
         },
       },
     },
-  });
+  })) as SetupPhotoWithSetup;
 
   if (!setupPhoto || setupPhoto.setup.userId !== user.id) return;
 
@@ -45,7 +53,12 @@ export async function createPhotoEquipment(
     },
   });
 
-  if (!equipment || equipment.setup?.userId !== user.id) return;
+  if (
+    !equipment ||
+    Array.isArray(equipment.setup) ||
+    equipment.setup?.userId !== user.id
+  )
+    return;
 
   await db.insert(photoEquipmentTable).values({
     id: generateIdFromEntropySize(10),
@@ -54,6 +67,8 @@ export async function createPhotoEquipment(
     x,
     y,
   });
+
+  console.log("revalidatePath", setupPhoto);
 
   revalidatePath(`/${setupPhoto.setup.userId}/${setupPhoto.setup.id}`);
 }

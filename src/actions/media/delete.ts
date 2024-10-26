@@ -1,4 +1,5 @@
 "use server";
+
 import { db } from "@/db/db";
 import { userTable } from "@/db/schemas";
 import { validateRequest } from "@/lib/auth/validate-request";

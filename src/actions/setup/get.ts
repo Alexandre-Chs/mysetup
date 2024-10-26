@@ -13,7 +13,7 @@ import { ThumbsDown } from "lucide-react";
 import { revalidatePath } from "next/cache";
 
 export async function getSetup(id: string, username: string) {
-  const setup = await db.query.setupTable.findFirst({
+  const setup = (await db.query.setupTable.findFirst({
     where: eq(setupTable.id, id),
     with: {
       setupPhotos: {
@@ -30,14 +30,14 @@ export async function getSetup(id: string, username: string) {
       upVotes: true,
       user: true,
     },
-  });
+  })) as any;
 
   if (setup?.user.username !== username) return undefined;
 
   const thumbnailId = setup?.thumbnailId;
 
   if (setup) {
-    setup.setupPhotos.sort((a, b) => {
+    setup.setupPhotos.sort((a: any, b: any) => {
       if (a.id === thumbnailId) return -1;
       if (b.id === thumbnailId) return 1;
       return 0;
