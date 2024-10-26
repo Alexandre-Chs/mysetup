@@ -21,7 +21,7 @@ export async function uploadFile(file: File, prefix?: string) {
   let url: string;
 
   try {
-    if (process.env.NODE_ENV !== "development") {
+    if (process.env.NODE_ENV === "development") {
       fs.writeFileSync(`./public/uploads/${id}.${ext}`, buffer);
       url = `http://localhost:3000/uploads/${id}.${ext}`;
     } else {
@@ -58,7 +58,7 @@ export async function uploadFile(file: File, prefix?: string) {
     return { status: "error", message: "Error while uploading file" };
   }
 
-  const medias = await db
+  const medias: Media[] = (await db
     .insert(mediaTable)
     .values({
       id,
@@ -68,7 +68,7 @@ export async function uploadFile(file: File, prefix?: string) {
       name: file.name,
       type: file.type,
     })
-    .returning();
+    .returning()) as Media[];
 
   return medias[0];
 }
