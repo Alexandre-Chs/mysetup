@@ -1,7 +1,12 @@
 "use server";
 
 import { db } from "@/db/db";
-import { mediaTable, socialLinksTable, userProfileTable, userTable } from "@/db/schemas";
+import {
+  mediaTable,
+  socialLinksTable,
+  userProfileTable,
+  userTable,
+} from "@/db/schemas";
 import { eq } from "drizzle-orm";
 
 export async function getUserInfos(username: string) {
@@ -15,11 +20,13 @@ export async function getUserInfos(username: string) {
 
   if (user.length === 0) return null;
 
-  const media = await db
-    .select()
-    .from(mediaTable)
-    .where(eq(mediaTable.id, user[0].pictureId))
-    .limit(1);
+  const media = user[0].pictureId
+    ? await db
+        .select()
+        .from(mediaTable)
+        .where(eq(mediaTable.id, user[0].pictureId))
+        .limit(1)
+    : [];
 
   const userProfile = await db
     .select()

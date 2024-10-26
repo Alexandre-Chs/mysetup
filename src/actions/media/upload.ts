@@ -128,7 +128,7 @@ export async function uploadUserPicture(formData: FormData) {
 
   const media = await uploadFile(file, `users/${user!.id}`);
 
-  if (!media) {
+  if (!media || "status" in media) {
     return { status: "error", message: "Error while uploading file" };
   }
 
