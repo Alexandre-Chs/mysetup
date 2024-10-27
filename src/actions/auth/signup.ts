@@ -71,8 +71,9 @@ export async function signup(formData: FormData) {
     console.log(e);
   }
 
+  const baseUrl = process.env.BASE_URL;
   try {
-    await fetch("/api/send-welcome", {
+    await fetch(`${baseUrl}/api/send-welcome`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

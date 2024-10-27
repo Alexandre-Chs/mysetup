@@ -1,12 +1,11 @@
 "use server";
 
 import { TimeSpan, createDate } from "oslo";
-import { random, sha256 } from "oslo/crypto";
+import { sha256 } from "oslo/crypto";
 import { encodeHex } from "oslo/encoding";
 import { generateIdFromEntropySize } from "lucia";
 import { db } from "@/db/db";
 import { passwordResetToken } from "@/db/schemas/password_reset_token";
-import { validateRequest } from "@/lib/auth/validate-request";
 import { eq } from "drizzle-orm";
 import { userTable } from "@/db/schemas";
 
@@ -42,12 +41,11 @@ export async function resetPassword(email: string) {
     });
   }
 
-  //TODO base url ici
   const verificationToken = await createPasswordResetToken(currentUser[0].id);
-  const verificationLink =
-    "http://localhost:3000/reset-password/" + verificationToken;
+  const baseUrl = process.env.BASE_URL;
+  const verificationLink = `${baseUrl}/reset-password/${verificationToken}`;
 
-  await fetch("/api/send-welcome", {
+  await fetch(`${baseUrl}/api/send-reset-password`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({

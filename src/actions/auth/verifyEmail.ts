@@ -19,12 +19,11 @@ export async function SendVerifyEmail() {
     user.email
   );
 
-  //TODO: change url, base url ici
-  const verificationLink =
-    "http://localhost:3000/email-verification/" + verificationToken;
+  const baseUrl = process.env.BASE_URL;
+  const verificationLink = `${baseUrl}/email-verification/${verificationToken}`;
 
   try {
-    await fetch("/api/send-welcome", {
+    await fetch(`${baseUrl}/api/verification-email/`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
