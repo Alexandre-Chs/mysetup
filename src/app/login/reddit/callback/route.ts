@@ -124,10 +124,12 @@ export async function GET(request: Request) {
     });
   } catch (e) {
     if (e instanceof OAuth2RequestError) {
+      console.log(e);
       return new Response(null, {
         status: 400,
       });
     }
+    console.log(e);
     return new Response(null, {
       status: 500,
     });
