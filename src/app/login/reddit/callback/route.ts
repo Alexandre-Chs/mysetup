@@ -13,6 +13,12 @@ export async function GET(request: Request) {
 
   const storedState = cookies().get("reddit_oauth_state")?.value ?? null;
 
+  console.log({
+    code,
+    state,
+    storedState,
+  });
+
   //throw error if nothing matches
   if (!code || !state || !storedState || state !== storedState) {
     return new Response(null, {
