@@ -28,20 +28,17 @@ export async function GET(request: Request) {
 
   try {
     const tokens = await reddit.validateAuthorizationCode(code);
-    console.log("tokens", tokens);
+    const accessToken = tokens.accessToken;
     const redditUserResponse = await fetch(
       "https://oauth.reddit.com/api/v1/me",
       {
         headers: {
-          Authorization: `Bearer ${tokens.accessToken}`,
+          Authorization: `Bearer ${accessToken}`,
         },
       }
     );
-    console.log("redditUserResponse", redditUserResponse);
     const redditUser = await redditUserResponse.json();
-    console.log("redditUser", redditUser);
     const redditUserId = redditUser.id;
-    console.log("redditUserId", redditUserId);
     const existingUser = await db.query.userTable.findFirst({
       where: (user, { eq }) => eq(user.id, redditUserId),
     });
