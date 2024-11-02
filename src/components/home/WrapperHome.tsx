@@ -25,9 +25,8 @@ const WrapperHome = ({ allSetupsPhotos }: { allSetupsPhotos: any }) => {
               Endless Inspiration for your setup
             </div>
             <div className="font-light text-sm md:text-xl sm:text-medium text-textColor md:py-4 py-0 max-w-xl mx-auto text-center px-4 md:px-0">
-              Dive into a world of stunning setups. Explore, get inspired, and
-              effortlessly find the perfect pieces to bring your vision to life.
-              Your next favorite setup is just a click away
+              Browse setups you love, find the exact gear in seconds. Simple as
+              that.
             </div>
           </motion.div>
         </AuroraBackground>
