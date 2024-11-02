@@ -7,6 +7,7 @@ const AvatarUpload = ({ media, editable }: { media: any, editable?: boolean }) =
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = async (evt: React.ChangeEvent<HTMLInputElement>) => {
+    console.log("Uploading user picture");
     const files = evt.target.files;
     if (!files?.length) return;
     const file = files[0];

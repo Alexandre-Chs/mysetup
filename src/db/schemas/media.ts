@@ -7,6 +7,7 @@ export const mediaTable = pgTable("media", {
     .notNull()
     .references(() => userTable.id),
   size: integer("size").notNull(),
+  key: text("key").notNull(),
   name: text("name").notNull(),
   type: text("type").notNull(),
   url: text("url"),

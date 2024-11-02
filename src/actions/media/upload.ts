@@ -10,7 +10,6 @@ import { revalidatePath } from "next/cache";
 import { eq } from "drizzle-orm";
 
 export async function uploadFile(file: File, prefix?: string) {
-  console.log("Uploading file", file, prefix);
   const { user } = await validateRequest();
 
   const arrayBuffer = await file.arrayBuffer();
@@ -19,12 +18,17 @@ export async function uploadFile(file: File, prefix?: string) {
 
   const id = generateIdFromEntropySize(10);
   let url: string;
+  const key = prefix ? prefix + "/" + id + "." + ext : id + "." + ext;
 
   try {
     if (process.env.NODE_ENV === "development") {
-      fs.writeFileSync(`./public/uploads/${id}.${ext}`, buffer);
-      url = `http://localhost:3000/uploads/${id}.${ext}`;
+      const res = fs.readdirSync('.')
+
+      if (!fs.existsSync(`./public/uploads/${prefix}`)) fs.mkdirSync(`./public/uploads/${prefix}`, { recursive: true });
+      fs.writeFileSync(`./public/uploads/${key}`, buffer);
+      url = `http://localhost:3000/uploads/${key}`;
     } else {
+      console.log("Uploading to cloud");
       const s3 = new S3({
         credentials: {
           accessKeyId: process.env.S3_KEY!,
@@ -38,7 +42,7 @@ export async function uploadFile(file: File, prefix?: string) {
       const object = await s3
         .putObject({
           Bucket: process.env.S3_BUCKET!,
-          Key: prefix + "/" + id + "." + ext,
+          Key: key,
           Body: buffer,
           ACL: "public-read",
         })
@@ -55,6 +59,7 @@ export async function uploadFile(file: File, prefix?: string) {
       console.log("Upload to cloud :", object);
     }
   } catch (error) {
+    console.log("Error while uploading file", error);
     return { status: "error", message: "Error while uploading file" };
   }
 
@@ -64,6 +69,7 @@ export async function uploadFile(file: File, prefix?: string) {
       id,
       userId: user!.id,
       size: file.size,
+      key,
       url,
       name: file.name,
       type: file.type,
@@ -74,7 +80,6 @@ export async function uploadFile(file: File, prefix?: string) {
 }
 
 export async function uploadSetupPicture(formData: FormData) {
-  console.log("Uploading setup picture");
   const { user } = await validateRequest();
 
   const file = formData.get("file") as File;
@@ -137,5 +142,5 @@ export async function uploadUserPicture(formData: FormData) {
     .set({ pictureId: media.id })
     .where(eq(userTable.id, user!.id));
 
-  revalidatePath(`/user/${user!.id}`);
+  revalidatePath(`/${user!.id}`);
 }
