@@ -3,6 +3,7 @@
 import { db } from "@/db/db";
 import {
   equipmentsTable,
+  mediaTable,
   setupPhotoTable,
   setupTable,
   upVoteTable,
@@ -60,4 +61,13 @@ export async function getOneImageSetup(id: string) {
       media: true,
     },
   });
+}
+
+export async function getThumbnailPhoto(thumbnailId: string) {
+  const result = await db
+    .select()
+    .from(setupPhotoTable)
+    .leftJoin(mediaTable, eq(setupPhotoTable.mediaId, mediaTable.id))
+    .where(eq(setupPhotoTable.id, thumbnailId));
+  return result[0].media?.url;
 }
