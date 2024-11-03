@@ -15,6 +15,13 @@
       "when": 1729951536057,
       "tag": "0001_glorious_scourge",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1730622051211,
+      "tag": "0002_boring_norrin_radd",
+      "breakpoints": true
     }
   ]
 }
