@@ -22,20 +22,20 @@ export async function generateMetadata({
 
   const photoUrl = await getThumbnailPhoto(setup.thumbnailId);
   const setupTitle = setup.title
-    ? `${setup.title} by ${setup.user.name}`
-    : `${setup.user.name}'s Setup`;
+    ? `${setup.title} by ${params.username}`
+    : `${params.username}'s Setup`;
 
   return {
     title: `${setupTitle} | Setup Inspiration & Gear | MySetup`,
-    description: `Explore ${setup.user.name}'s stunning workspace setup and discover all the gear used. From desk accessories to complete setup inspiration, find everything you need.`,
+    description: `Explore ${params.username}'s stunning workspace setup and discover all the gear used. From desk accessories to complete setup inspiration, find everything you need.`,
     keywords: `${
-      setup.user.name
+      params.username
     } setup, workspace inspiration, desk setup, gaming setup, setup ideas, workspace gear, desk accessories, ${
       setup.title || "workspace setup"
     }, mysetup`,
     openGraph: {
       title: `${setupTitle} | Setup Inspiration & Gear | MySetup`,
-      description: `Explore ${setup.user.name}'s stunning workspace setup and discover all the gear used. Find your dream setup inspiration.`,
+      description: `Explore ${params.username}'s stunning workspace setup and discover all the gear used. Find your dream setup inspiration.`,
       type: "website",
       siteName: "MySetup",
       locale: "en_US",
@@ -45,7 +45,7 @@ export async function generateMetadata({
             url: photoUrl,
             width: 1200,
             height: 630,
-            alt: `${setup.user.name}'s workspace setup`,
+            alt: `${params.username}'s workspace setup`,
           },
         ],
       }),
@@ -53,7 +53,7 @@ export async function generateMetadata({
     twitter: {
       card: photoUrl ? "summary_large_image" : "summary",
       title: `${setupTitle} | MySetup`,
-      description: `Explore ${setup.user.name}'s stunning workspace setup and discover all the gear used.`,
+      description: `Explore ${params.username}'s stunning workspace setup and discover all the gear used.`,
       ...(photoUrl && {
         images: [photoUrl],
       }),
