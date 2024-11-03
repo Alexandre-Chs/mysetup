@@ -49,6 +49,7 @@ USER nextjs
 EXPOSE 3000
 ENV PORT=3000
 
+RUN npm i -g tsx
 RUN npx tsx db/migrate.ts 
 
 CMD HOSTNAME="0.0.0.0" node server.js
