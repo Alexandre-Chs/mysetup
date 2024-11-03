@@ -29,8 +29,7 @@ FROM base AS runner
 
 WORKDIR /app
 COPY --from=builder /app/drizzle.config.ts ./drizzle.config.ts
-COPY --from=builder /app/src/db/migrate.ts ./migrate.ts
-COPY --from=builder /app/src/db/migrations ./migrations
+COPY --from=builder /app/src/db ./src/db
 
 ENV NODE_ENV production
 
@@ -49,5 +48,7 @@ USER nextjs
 
 EXPOSE 3000
 ENV PORT=3000
+
+RUN npx tsx db/migrate.ts 
 
 CMD HOSTNAME="0.0.0.0" node server.js
