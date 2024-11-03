@@ -20,7 +20,11 @@ export async function deleteMedia(mediaId: string) {
   await db.delete(mediaTable).where(eq(mediaTable.id, mediaId));
 
   if (process.env.NODE_ENV === "development") {
-    fs.unlinkSync(`./public/uploads/${media.key}`);
+    try {
+      fs.unlinkSync(`./public/uploads/${media.key}`);
+    } catch (error) {
+      console.error("Error deleting file", error);
+    }
   } else {
     const s3 = new S3({
       credentials: {

@@ -69,5 +69,5 @@ export async function getThumbnailPhoto(thumbnailId: string) {
     .from(setupPhotoTable)
     .leftJoin(mediaTable, eq(setupPhotoTable.mediaId, mediaTable.id))
     .where(eq(setupPhotoTable.id, thumbnailId));
-  return result[0].media?.url;
+  return result[0]?.media?.url;
 }
