@@ -47,7 +47,7 @@ export default async function RootLayout({
           <p className="text-sm text-white">
             Found an issue?{" "}
             <a
-              href="https://discord.gg/Hxyt9dc7"
+              href="https://discord.gg/dzWzNBKUf3"
               target="_blank"
               rel="noopener noreferrer"
               className="text-purple-600 hover:text-purple-400 font-medium transition-colors"
