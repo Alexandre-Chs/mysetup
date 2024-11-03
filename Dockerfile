@@ -44,12 +44,12 @@ RUN chown nextjs:nodejs .next
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
+RUN npm i -g tsx
+RUN npx tsx db/migrate.ts 
+
 USER nextjs
 
 EXPOSE 3000
 ENV PORT=3000
-
-RUN npm i -g tsx
-RUN npx tsx db/migrate.ts 
 
 CMD HOSTNAME="0.0.0.0" node server.js
