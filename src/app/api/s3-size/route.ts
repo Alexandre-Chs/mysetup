@@ -1,15 +1,7 @@
-import { discordLog } from "@/actions/utils";
+import { discordLog, formatBytes } from "@/actions/utils";
 import { S3 } from "@aws-sdk/client-s3";
 
-function formatBytes(bytes: number): string {
-  if (bytes === 0) return "0 Bytes";
 
-  const k = 1024;
-  const sizes = ["Bytes", "KB", "MB", "GB", "TB"];
-  const i = Math.floor(Math.log(bytes) / Math.log(k));
-
-  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
-}
 
 export async function GET(req: Request) {
   const s3 = new S3({
