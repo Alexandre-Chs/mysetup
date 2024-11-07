@@ -8,7 +8,8 @@ import { S3 } from "@aws-sdk/client-s3";
 import { setupPhotoTable } from "@/db/schemas";
 import { revalidatePath } from "next/cache";
 import { eq } from "drizzle-orm";
-import { discordLog, formatBytes } from "../utils";
+import { discordLog } from "../utils";
+import { formatBytes } from "@/lib/utils/format-bytes";
 
 export async function uploadFile(file: File, prefix?: string) {
   const { user } = await validateRequest();
