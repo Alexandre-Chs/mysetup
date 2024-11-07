@@ -11,6 +11,8 @@ import { eq } from "drizzle-orm";
 import { discordLog } from "../utils";
 import { formatBytes } from "@/lib/utils/format-bytes";
 
+const MAX_SIZE_GB = 50;
+
 export async function uploadFile(file: File, prefix?: string) {
   const { user } = await validateRequest();
 
@@ -48,7 +50,7 @@ export async function uploadFile(file: File, prefix?: string) {
 
       const fileSizes = Contents?.reduce((acc, file) => acc + file.Size!, 0);
       // if file size is greater than 50GB, return error
-      if (fileSizes! > 53687091200) {
+      if (fileSizes! > (MAX_SIZE_GB * 1024 * 1024 * 1024)) {
         await discordLog("@everyone Bucket size exceeded: " + formatBytes(fileSizes!) + " (" + fileSizes + " bytes)");
 
         return { status: "error", message: "Bucket size exceeded" };
