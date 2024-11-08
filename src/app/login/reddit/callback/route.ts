@@ -27,7 +27,9 @@ export async function GET(request: Request) {
   }
 
   try {
+    console.log("in try");
     const tokens = await reddit.validateAuthorizationCode(code);
+    console.log("tokens", tokens);
     const accessToken = tokens.accessToken;
     const redditUserResponse = await fetch(
       "https://oauth.reddit.com/api/v1/me",
@@ -37,6 +39,7 @@ export async function GET(request: Request) {
         },
       }
     );
+    console.log("je vais json", redditUserResponse);
     const redditUser = await redditUserResponse.json();
     const redditUserId = redditUser.id;
     const existingUser = await db.query.userTable.findFirst({

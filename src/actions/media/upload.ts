@@ -8,6 +8,10 @@ import { S3 } from "@aws-sdk/client-s3";
 import { setupPhotoTable } from "@/db/schemas";
 import { revalidatePath } from "next/cache";
 import { eq } from "drizzle-orm";
+import { discordLog } from "../utils";
+import { formatBytes } from "@/lib/utils/format-bytes";
+
+const MAX_SIZE_GB = 50;
 
 export async function uploadFile(file: File, prefix?: string) {
   const { user } = await validateRequest();
@@ -38,6 +42,19 @@ export async function uploadFile(file: File, prefix?: string) {
         endpoint: process.env.S3_ENDPOINT!,
         tls: true,
       });
+
+      // get the size of the bucket
+      const { Contents } = await s3.listObjectsV2({
+        Bucket: process.env.S3_BUCKET!,
+      });
+
+      const fileSizes = Contents?.reduce((acc, file) => acc + file.Size!, 0);
+      // if file size is greater than 50GB, return error
+      if (fileSizes! > (MAX_SIZE_GB * 1024 * 1024 * 1024)) {
+        await discordLog("@everyone Bucket size exceeded: " + formatBytes(fileSizes!) + " (" + fileSizes + " bytes)");
+
+        return { status: "error", message: "Bucket size exceeded" };
+      }
 
       const object = await s3
         .putObject({
