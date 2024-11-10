@@ -49,7 +49,6 @@ const DropdownNavBar = ({ user }: { user: User }) => {
         <DropdownItem key="profile" textValue="Profile" onClick={handleProfile}>
           <p>My profile</p>
         </DropdownItem>
-        {/* Va savoir pourquoi cette fourberie marche */}
         {(!user?.emailVerified as unknown as Element) && (
           <DropdownItem
             key="verify"
@@ -59,6 +58,14 @@ const DropdownNavBar = ({ user }: { user: User }) => {
             <p>{isVerifying ? "Email sent" : "Verify my email"}</p>
           </DropdownItem>
         )}
+        <DropdownItem
+          textValue="discord"
+          key="discord"
+          className="text-purple-500 font-bold"
+          onClick={() => router.push("https://discord.gg/dzWzNBKUf3")}
+        >
+          Bug? Join Discord
+        </DropdownItem>
         <DropdownItem
           textValue="Logout"
           key="logout"
