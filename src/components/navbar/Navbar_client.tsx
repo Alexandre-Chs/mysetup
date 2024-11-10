@@ -8,7 +8,7 @@ import ShareSetupButton from "./ShareSetupButton";
 import SignOutMobileButton from "./SignOutMobileButton";
 import DropdownButton from "./DropdownButton";
 import VerifyEmailButton from "../auth/VerifyEmailButton";
-import { Divider } from "@nextui-org/react";
+import { Badge, Divider } from "@nextui-org/react";
 import { User } from "lucia";
 import clsx from "clsx";
 import Image from "next/image";
@@ -49,14 +49,16 @@ const NavbarClient = ({ user }: { user: User | null }) => {
             <div className="relative flex-col pb-6 pt-24 gap-y-6 flex items-center justify-center">
               <div className="absolute top-2 left-2">
                 <Link href="/" onClick={handleLinkClick}>
-                  <Image
-                    src="/logo.png"
-                    className="h-8 w-auto"
-                    alt="mysetup logo"
-                    width={100}
-                    height={100}
-                    priority
-                  />
+                  <Badge content="beta" color="primary">
+                    <Image
+                      src="/logo.png"
+                      className="h-8 w-auto"
+                      alt="mysetup logo"
+                      width={100}
+                      height={100}
+                      priority
+                    />
+                  </Badge>
                   <span className="sr-only">My setup</span>
                 </Link>
               </div>
@@ -69,13 +71,15 @@ const NavbarClient = ({ user }: { user: User | null }) => {
                   >
                     My profile
                   </Link>
-                  <Link
-                    href="/leaderboards"
-                    className="hover:text-textColorLighter text-textColorLighter"
-                    onClick={handleLinkClick}
-                  >
-                    Leaderboards
-                  </Link>
+                  <Badge content="soon">
+                    <Link
+                      href="#"
+                      className="hover:text-textColorLighter text-textColorLighter"
+                      onClick={handleLinkClick}
+                    >
+                      Leaderboards
+                    </Link>
+                  </Badge>
                   {user.emailVerified ? (
                     <ShareSetupButton
                       user={user}
@@ -94,13 +98,15 @@ const NavbarClient = ({ user }: { user: User | null }) => {
                 </div>
               ) : (
                 <>
-                  <Link
-                    href="/leaderboards"
-                    className="relative cursor-pointer text-sm text-white font-medium border-transparent bg-transparent px-4 py-2 rounded-xl border-1 group-hover:bg-transparent transition-colors"
-                    onClick={handleLinkClick}
-                  >
-                    Leaderboards
-                  </Link>
+                  <Badge content="soon">
+                    <Link
+                      href="#"
+                      className="relative cursor-pointer text-sm text-white font-medium border-transparent bg-transparent px-4 py-2 rounded-xl border-1 group-hover:bg-transparent transition-colors"
+                      onClick={handleLinkClick}
+                    >
+                      Leaderboards
+                    </Link>
+                  </Badge>
                   <Link
                     className="relative cursor-pointer text-sm text-white font-medium border-transparent bg-transparent px-4 py-2 rounded-xl border-1 group-hover:bg-transparent transition-colors"
                     href="/login"
@@ -126,16 +132,20 @@ const NavbarClient = ({ user }: { user: User | null }) => {
             height={100}
             priority
           />
-          <span className="sr-only">My setup</span>
+          <Badge content="beta" color="primary">
+            <span className="sr-only">My setup</span>
+          </Badge>
         </Link>
         <div className="flex-grow flex justify-center items-center flex-1">
-          <Link
-            href="/leaderboards"
-            className="text-textColorLighter hover:text-white cursor-pointer transition-colors hidden lg:flex"
-            onClick={handleLinkClick}
-          >
-            Leaderboards
-          </Link>
+          <Badge content="soon" className="hidden lg:flex">
+            <Link
+              href="#"
+              className="text-textColorLighter hover:text-white cursor-pointer transition-colors hidden lg:flex"
+              onClick={handleLinkClick}
+            >
+              Leaderboards
+            </Link>
+          </Badge>
         </div>
         <nav className="ml-auto hidden lg:flex items-center justify-end gap-6 flex-1">
           {user && user.email && user.username ? (
