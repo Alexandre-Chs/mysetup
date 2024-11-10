@@ -41,12 +41,12 @@ export const LoginProvider = () => {
       >
         <GrGoogle color="#A1A1A2" size={20} />
       </button>
-      <button
+      {/* <button
         onClick={() => redditMutation.mutate()}
         className="flex-1 h-[44px] rounded-md border-1 border-[#1F2022] bg-[#141516] hover:bg-[#202123] flex items-center justify-center transition-colors"
       >
         <PiRedditLogoFill color="#A1A1A2" size={26} />
-      </button>
+      </button> */}
     </div>
   );
 };
