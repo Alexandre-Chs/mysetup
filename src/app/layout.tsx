@@ -8,7 +8,7 @@ import ModalReceiveInfos from "@/components/auth/ModalReceiveInfos";
 import React from "react";
 
 export const metadata: Metadata = {
-  title: "My Setup : Find Setup Inspiration & Gear | Find Your Dream Workspace",
+  title: "My Setup - Find Setup Inspiration & Gear | Find Your Dream Workspace",
   description:
     "Browse stunning setups and discover the exact gear you need. From desk to gaming setups, find your inspiration in seconds.",
   keywords:
