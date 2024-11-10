@@ -83,7 +83,6 @@ const EndOfList = () => {
 
 const Feed = ({ photos }: { photos: any[] }) => {
   const router = useRouter();
-
   const [grid, setGrid] = useState<any>(null);
   const [dataLength, setDataLength] = useState(0);
   const [setupPhotos, setSetupPhotos] = useState<any[]>([]);
@@ -133,7 +132,7 @@ const Feed = ({ photos }: { photos: any[] }) => {
   return (
     <InfiniteScroll
       dataLength={dataLength}
-      next={addMore}
+      next={() => {}}
       hasMore={dataLength < 200}
       loader={<Loader />}
       endMessage={<EndOfList />}
