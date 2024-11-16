@@ -18,7 +18,7 @@ const UpVoteButton = ({
 
   return (
     <div
-      className="h-full w-full text-white flex items-center justify-center gap-x-2 px-4 rounded-large cursor-pointer bento-smooth-gradient"
+      className="h-full w-full text-white flex items-center justify-center gap-x-2 px-4 rounded-large cursor-pointer "
       onClick={() => toggleVote()}
     >
       <FaCaretUp

@@ -1,6 +1,7 @@
 "use client";
 
 import { updateSetupDescription } from "@/actions/setup/update";
+import Border from "@/components/ui/border";
 import { useDebounce } from "@/hook/useDebounce";
 import { useQueryClient } from "@tanstack/react-query";
 import React from "react";
@@ -25,15 +26,17 @@ const UpdateDescription = ({
   };
 
   return (
-    <div className="relative h-full bento-smooth-gradient text-white p-4 flex flex-col items-start justify-start rounded-large text-bold text-lg">
-      <textarea
-        className="w-full h-full rounded-md bg-transparent scrollbar text-lg text-white resize-none focus:outline-none focus:border-2 focus:border-transparent border-2 border-transparent"
-        placeholder="Add a description for your setup"
-        maxLength={530}
-        onChange={(e) => handleChangeTextarea(e)}
-        value={description ? description : ""}
-      />
-    </div>
+    <Border>
+      <div className="relative h-full  text-white p-4 flex flex-col items-start justify-start rounded-large text-bold text-lg min-h-[208px]">
+        <textarea
+          className="w-full h-full rounded-md bg-transparent scrollbar text-lg text-white resize-none focus:outline-none focus:border-2 focus:border-transparent border-2 border-transparent"
+          placeholder="Add a description for your setup"
+          maxLength={530}
+          onChange={(e) => handleChangeTextarea(e)}
+          value={description ? description : ""}
+        />
+      </div>
+    </Border>
   );
 };
 
