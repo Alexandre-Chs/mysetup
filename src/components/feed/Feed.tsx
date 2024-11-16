@@ -105,7 +105,7 @@ const Feed = ({ photos }: { photos: any[] }) => {
         newGrid.addWidget({
           w: random(),
           h: random(),
-          content: `<div class="grid-stack-item-content w-full h-full bg-cover bg-center rounded-lg" style="background-image: url('${item.url}')" data-route="${item.username}/${item.setupId}"></div>`,
+          content: `<div class="grid-stack-item-content w-full h-full bg-cover bg-center rounded-lg cursor-pointer" style="background-image: url('${item.url}')" data-route="${item.username}/${item.setupId}"></div>`,
         });
         setSetupPhotos((prev) => [...prev, item]);
       });
