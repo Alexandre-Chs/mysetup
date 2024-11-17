@@ -29,7 +29,9 @@ const WrapperSetup = ({ currentUser, isOwner }: { currentUser: User | null; isOw
   return (
     <div className="h-[900px] w-full grid xl:grid-cols-4 xl:grid-rows-8 gap-6">
       <div className="xl:col-span-3 xl:row-span-6">
-        <WrapperPhotosUser photos={setup.setupPhotos} isOwner={isOwner} />
+        <Border>
+          <WrapperPhotosUser photos={setup.setupPhotos} isOwner={isOwner} />
+        </Border>
       </div>
       <div className="xl:col-span-1 xl:row-span-6 order-3 max-h-[400px] min-h-[100px] xl:h-full xl:min-h-full xl:max-h-full">
         <WrapperEquipmentSetup setupId={setup?.id} isOwner={isOwner} />
@@ -38,7 +40,7 @@ const WrapperSetup = ({ currentUser, isOwner }: { currentUser: User | null; isOw
       <div className="w-full h-full min-h-[100px] flex items-center justify-between md:justify-normal gap-x-2 xl:gap-y-2 row-span-2 col-span-1 xl:col-span-1 xl:row-span-2 xl:row-start-7 order-1 xl:grid grid-rows-2">
         <Border>
           <div className="flex items-center justify-center flex-1 row-span-1 h-full xl:min-h-auto flex-col">
-            <div className="flex flex-col justify-center items-center sm:flex-row gap-1 sm:gap-4 w-full px-4">
+            <div className="flex justify-center items-center flex-row gap-x-4 sm:gap-4 w-full px-4">
               <Image alt="user profile picture" src={userInfos?.media?.url || "/default-user.jpg"} className="size-12 rounded-full" width={48} height={48} />
               <div>
                 <a href={`/${username}`} className="font-medium text-xl xl:text-base">
