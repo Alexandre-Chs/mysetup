@@ -10,14 +10,9 @@ import { getUserInfos } from "@/actions/user/getInfos";
 import { getSocialIcon } from "@/lib/utils/show-social-icons";
 import { useParams } from "next/navigation";
 import Border from "../ui/border";
+import Image from "next/image";
 
-const WrapperSetup = ({
-  currentUser,
-  isOwner,
-}: {
-  currentUser: User | null;
-  isOwner: boolean;
-}) => {
+const WrapperSetup = ({ currentUser, isOwner }: { currentUser: User | null; isOwner: boolean }) => {
   const setup = useSetupStore((state) => state.setup);
   const { username, id } = useParams();
 
@@ -40,26 +35,21 @@ const WrapperSetup = ({
         <WrapperEquipmentSetup setupId={setup?.id} isOwner={isOwner} />
       </div>
 
-      <div className="w-full h-full flex gap-x-2 xl:gap-y-2 row-span-2 col-span-1 xl:col-span-1 xl:row-span-2 xl:row-start-7 order-1 xl:grid grid-rows-2">
+      <div className="w-full h-full min-h-[100px] flex items-center justify-between md:justify-normal gap-x-2 xl:gap-y-2 row-span-2 col-span-1 xl:col-span-1 xl:row-span-2 xl:row-start-7 order-1 xl:grid grid-rows-2">
         <Border>
-          <div className="flex items-center justify-center flex-1 row-span-1 h-full xl:min-h-auto flex-col ">
-            <div className="flex flex-row gap-4 w-full px-4">
-              <img
-                src={userInfos?.media?.url || "/default-user.jpg"}
-                className="size-12 rounded-full"
-              />
+          <div className="flex items-center justify-center flex-1 row-span-1 h-full xl:min-h-auto flex-col">
+            <div className="flex flex-col justify-center items-center sm:flex-row gap-1 sm:gap-4 w-full px-4">
+              <Image alt="user profile picture" src={userInfos?.media?.url || "/default-user.jpg"} className="size-12 rounded-full" width={48} height={48} />
               <div>
-                <a
-                  href={`/${username}`}
-                  className="font-medium text-xl xl:text-base"
-                >
+                <a href={`/${username}`} className="font-medium text-xl xl:text-base">
                   {username}
                 </a>
                 <div className="flex gap-x-4">
                   {userInfos?.socialLinks
                     ? userInfos?.socialLinks.map((link: any) => (
                         <a key={link.id} href={link.link} target="_blank">
-                          {getSocialIcon(link.socialName)}
+                          {" "}
+                          {getSocialIcon(link.socialName)}{" "}
                         </a>
                       ))
                     : null}
@@ -77,11 +67,7 @@ const WrapperSetup = ({
       </div>
 
       <div className="xl:col-span-3 xl:row-span-2 xl:col-start-2 xl:row-start-7 order-2">
-        <WrapperDescriptionSetup
-          description={setup?.description as string}
-          setupId={setup?.id as string}
-          isOwner={isOwner}
-        />
+        <WrapperDescriptionSetup description={setup?.description as string} setupId={setup?.id as string} isOwner={isOwner} />
       </div>
     </div>
   );

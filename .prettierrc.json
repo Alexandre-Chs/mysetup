@@ -1,0 +1,7 @@
+{
+    "singleAttributePerLine": false,
+    "printWidth": 200,
+    "htmlWhitespaceSensitivity": "ignore",
+    "bracketSameLine": true,
+    "jsxBracketSameLine": true
+  }
