@@ -8,11 +8,7 @@ type TypeCreateSetupStore = {
   saveInfos: boolean;
   addNewDescription: (datas: { description: string }) => void;
   addNewNameSetup: (datas: { name: string }) => void;
-  addNewEquipments: (datas: {
-    name: String;
-    type: String;
-    url?: string;
-  }) => void;
+  addNewEquipments: (datas: { name: String; category: String; type: String; url?: string }) => void;
   deleteEquipment: (name: string) => void;
 };
 
@@ -41,9 +37,7 @@ export const useCreateSetupStore = create<TypeCreateSetupStore>()((set) => ({
   },
   deleteEquipment: (name: string) => {
     set((state: any) => ({
-      newEquipments: state.newEquipments.filter(
-        (item: { name: string; type: string }) => item.name !== name
-      ),
+      newEquipments: state.newEquipments.filter((item: { name: string; type: string }) => item.name !== name),
       saveInfos: true,
     }));
   },

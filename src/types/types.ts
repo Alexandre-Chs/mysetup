@@ -1,6 +1,7 @@
 export type TypeEquipment = {
   name: string;
   type: string;
+  category: string;
   url?: string;
 };
 

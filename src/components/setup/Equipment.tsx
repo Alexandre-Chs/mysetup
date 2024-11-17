@@ -1,14 +1,12 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./scrollbar.css";
 import { groupByType } from "@/lib/utils/group-by-type";
 import { EquipmentType } from "@/types/types";
 import { CircleX, LinkIcon } from "lucide-react";
 import { deleteOneEquipment } from "@/actions/setup/delete";
-import { getCountry, transformUrlToAffiliate } from "@/actions/api/get";
-import { redirect } from "next/navigation";
-import Link from "next/link";
+import { transformUrlToAffiliate } from "@/actions/api/get";
 import Border from "../ui/border";
 import { Spinner } from "../ui/spinner";
 
@@ -29,7 +27,6 @@ const Equipment = ({ equipments, action, setupId }: { equipments: EquipmentType[
     if (!url.startsWith("http://") && !url.startsWith("https://")) {
       url = `https://${url}`;
     }
-
     const affiliateUrl = await transformUrlToAffiliate(url);
     return affiliateUrl ? affiliateUrl : url;
   };
@@ -44,10 +41,8 @@ const Equipment = ({ equipments, action, setupId }: { equipments: EquipmentType[
     try {
       if (transformUrl) {
         window.open(transformUrl, "newWindow");
-        console.log("URL transformed:", transformUrl);
       } else {
         window.open(url, "newWindow");
-        console.log("URL:", url);
       }
     } catch (error) {
       console.error("Error getting URL:", error);

@@ -7,6 +7,7 @@ export const equipmentsTable = pgTable("equipments", {
     .notNull()
     .references(() => setupTable.id),
   name: text("name").notNull(),
+  category: text("category").notNull(),
   type: text("type").notNull(),
   url: text("url"),
   createdAt: timestamp("created_at").defaultNow(),

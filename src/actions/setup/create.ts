@@ -25,11 +25,7 @@ export async function createSetup() {
   redirect(`/${user!.username}/${setupId}`);
 }
 
-export async function createNewSetup(
-  name: string,
-  equipments: any,
-  description: string
-) {
+export async function createNewSetup(name: string, equipments: any, description: string) {
   const { user } = await validateRequest();
   let setupId;
   try {
@@ -51,6 +47,7 @@ export async function createNewSetup(
           id: generateIdFromEntropySize(10),
           setupId: setupId,
           name: equipments[i].name,
+          category: equipments[i].category,
           type: equipments[i].type,
           url: equipments[i].url,
         })
@@ -66,17 +63,15 @@ export async function createNewSetup(
 export async function createNewEquipments(
   setupId: string,
   equipments: {
-    type: "equipments" | "accessories" | "desk" | "wallpaper" | "others";
+    category: string;
+    type: string;
     name: string;
     url?: string | undefined;
-  }
+  },
 ) {
   const { user } = await validateRequest();
 
-  const currentSetup = await db
-    .select({ userId: setupTable.userId })
-    .from(setupTable)
-    .where(eq(setupTable.id, setupId));
+  const currentSetup = await db.select({ userId: setupTable.userId }).from(setupTable).where(eq(setupTable.id, setupId));
 
   if (!currentSetup || currentSetup[0].userId !== user!.id) {
     console.log("User is not the owner of the setup");
@@ -87,6 +82,7 @@ export async function createNewEquipments(
     id: generateIdFromEntropySize(10),
     setupId: setupId,
     name: equipments.name,
+    category: equipments.category,
     type: equipments.type,
     url: equipments.url,
   });
