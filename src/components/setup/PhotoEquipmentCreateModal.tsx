@@ -1,11 +1,11 @@
 "use client";
-import { groupByType } from "@/lib/utils/group-by-type";
 import { usePhotoEquipmentStore } from "@/store/PhotoEquipmentStore";
 import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from "@nextui-org/react";
 import { useState } from "react";
 import { Select, SelectItem, SelectSection } from "@nextui-org/react";
 import { createPhotoEquipment } from "@/actions/photo-equipment/create";
 import { useSetupStore } from "@/store/SetupStore";
+import { groupSetupItemsByCategory } from "@/lib/utils/group-by-type";
 
 function camelCase(str: string) {
   return str[0].toUpperCase() + str.slice(1).toLowerCase();
@@ -17,7 +17,7 @@ const PhotoEquipmentCreateModal = () => {
   const selectedPhotoId = usePhotoEquipmentStore((state) => state.selectedPhotoId);
   const setSelectedPhotoId = usePhotoEquipmentStore((state) => state.setSelectedPhotoId);
 
-  const setup = useSetupStore(state => state.setup);
+  const setup = useSetupStore((state) => state.setup);
   const equipments = setup?.equipments;
   const [selectedEquipmentId, setSelectedEquipmentId] = useState<any | null>(null);
 
@@ -26,7 +26,7 @@ const PhotoEquipmentCreateModal = () => {
     setSelectedPhotoId(null);
   }
 
-  const groupedItems = groupByType(equipments);
+  const groupedItems = groupSetupItemsByCategory(equipments);
 
   const addPhotoEquipment = async (onClose: Function) => {
     const equipmentId = selectedEquipmentId!.currentKey;
@@ -43,17 +43,13 @@ const PhotoEquipmentCreateModal = () => {
               <ModalHeader className="flex flex-col gap-1">Tag an equipment</ModalHeader>
               <ModalBody>
                 <p>Which equipment is present here ?</p>
-                <Select
-                  label="Equipment"
-                  placeholder="Select an equipment"
-                  className="max-w-xs"
-                  selectedKeys={selectedEquipmentId}
-                  onSelectionChange={setSelectedEquipmentId}
-                >
+                <Select label="Equipment" placeholder="Select an equipment" className="max-w-xs" selectedKeys={selectedEquipmentId} onSelectionChange={setSelectedEquipmentId}>
                   {Object.keys(groupedItems).map((type) => (
                     <SelectSection key={type} title={camelCase(type)}>
                       {groupedItems[type].map((item: any) => (
-                        <SelectItem key={item.id} value={item.id}>{item.name}</SelectItem>
+                        <SelectItem key={item.id} value={item.id}>
+                          {item.name}
+                        </SelectItem>
                       ))}
                     </SelectSection>
                   ))}

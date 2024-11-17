@@ -25,6 +25,7 @@ export type EquipmentType = {
   setupId: string;
   name: string;
   type: string;
+  category: string;
   url: string | null;
   createdAt: Date | null;
 };

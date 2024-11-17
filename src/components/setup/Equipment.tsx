@@ -2,20 +2,21 @@
 
 import React, { useState } from "react";
 import "./scrollbar.css";
-import { groupByType } from "@/lib/utils/group-by-type";
+import { groupSetupItemsByCategory } from "@/lib/utils/group-by-type";
 import { EquipmentType } from "@/types/types";
 import { CircleX, LinkIcon } from "lucide-react";
 import { deleteOneEquipment } from "@/actions/setup/delete";
 import { transformUrlToAffiliate } from "@/actions/api/get";
 import Border from "../ui/border";
 import { Spinner } from "../ui/spinner";
+import { CATEGORY_ORDER } from "@/lib/utils/equipments";
 
 const Equipment = ({ equipments, action, setupId }: { equipments: EquipmentType[]; action?: "add"; setupId?: string }) => {
   const [loadingStates, setLoadingStates] = useState<Record<string, boolean>>({});
 
   if (!equipments) return null;
 
-  const groupedItems = groupByType(equipments);
+  const groupedItems = groupSetupItemsByCategory(equipments);
 
   const handleDeleteItem = (e: any) => {
     const elementSelected = e.target.parentElement.dataset.name;
@@ -50,7 +51,6 @@ const Equipment = ({ equipments, action, setupId }: { equipments: EquipmentType[
       setLoadingStates((prev) => ({ ...prev, [url]: false }));
     }
   };
-
   return (
     <div className="h-full relative shrink-0">
       <Border>
@@ -58,47 +58,37 @@ const Equipment = ({ equipments, action, setupId }: { equipments: EquipmentType[
           {Object.keys(groupedItems).length === 0 ? (
             <p className="text-center pt-4 text-sm">No equipments shared</p>
           ) : (
-            Object.keys(groupedItems).map((type) => (
-              <div key={type}>
-                <h4 className="font-bold text-2xl pt-4 pb-2 capitalize">{type}</h4>
-                {!groupedItems ? (
-                  <p>No items available</p>
-                ) : (
-                  groupedItems[type].map(
-                    (
-                      item: {
-                        name: string;
-                        type: string;
-                        url: string;
-                      },
-                      index: number,
-                    ) => (
-                      <div className="flex gap-2 relative" key={index}>
-                        <div className="cursor-pointer w-full bg-[#141516] rounded-md flex items-center justify-start gap-2 py-2 px-4 mb-4 hover:bg-[#202123]">
-                          <p className="w-full">{item.name}</p>
-                          {item.url.length > 0 && (
-                            <button onClick={(evt) => handleClick(evt, item.url)}>
-                              {loadingStates[item.url] ? (
-                                <div>
-                                  <Spinner size="small" />
-                                </div>
-                              ) : (
-                                <div className="hover:bg-gray-700 p-1 rounded transition-colors">
-                                  <LinkIcon size={15} />
-                                </div>
-                              )}
-                            </button>
-                          )}
-                        </div>
-                        {action === "add" && (
-                          <button className="absolute right-2 top-2.5 rounded-l z-50 cursor-pointer" onClick={handleDeleteItem} data-name={item.name}>
-                            <CircleX size={20} className="text-red-500" />
-                          </button>
-                        )}
+            CATEGORY_ORDER.filter((category) => groupedItems[category] && groupedItems[category].length > 0).map((category) => (
+              <div key={category}>
+                <h4 className="font-bold text-2xl pt-4 pb-2 capitalize text-[#9D4EDD]">{category}</h4>
+                {groupedItems[category].map((item: { name: string; type: string; url: string }, index: number) => (
+                  <div className="flex gap-2 relative" key={index}>
+                    <div className="cursor-pointer w-full bg-[#141516] rounded-md flex items-center justify-between gap-2 py-2 px-4 mb-4 hover:bg-[#202123]">
+                      <div>
+                        <p className="text-xs">{item.type}</p>
+                        <p className="w-full pl-2">{item.name}</p>
                       </div>
-                    ),
-                  )
-                )}
+                      {item.url?.length > 0 && (
+                        <button onClick={(evt) => handleClick(evt, item.url)}>
+                          {loadingStates[item.url] ? (
+                            <div>
+                              <Spinner size="small" />
+                            </div>
+                          ) : (
+                            <div className="hover:bg-gray-700 p-1 rounded transition-colors">
+                              <LinkIcon size={15} />
+                            </div>
+                          )}
+                        </button>
+                      )}
+                    </div>
+                    {action === "add" && (
+                      <button className="absolute right-2 top-2.5 rounded-l z-50 cursor-pointer" onClick={handleDeleteItem} data-name={item.name}>
+                        <CircleX size={20} className="text-red-500" />
+                      </button>
+                    )}
+                  </div>
+                ))}
               </div>
             ))
           )}
