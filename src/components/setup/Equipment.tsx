@@ -60,7 +60,7 @@ const Equipment = ({ equipments, action, setupId }: { equipments: EquipmentType[
           ) : (
             CATEGORY_ORDER.filter((category) => groupedItems[category] && groupedItems[category].length > 0).map((category) => (
               <div key={category}>
-                <h4 className="font-bold text-2xl pt-4 pb-2 capitalize text-[#9D4EDD]">{category}</h4>
+                <h4 className="font-bold text-2xl pt-4 pb-2 capitalize text-white">{category}</h4>
                 {groupedItems[category].map((item: { name: string; type: string; url: string }, index: number) => (
                   <div className="flex gap-2 relative" key={index}>
                     <div className="cursor-pointer w-full bg-[#141516] rounded-md flex items-center justify-between gap-2 py-2 px-4 mb-4 hover:bg-[#202123]">
