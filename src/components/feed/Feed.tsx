@@ -1,6 +1,6 @@
 import { GridStack } from "gridstack";
 import InfiniteScroll from "react-infinite-scroll-component";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Skeleton } from "../ui/skeleton";
 import FeedGrid from "./FeedGrid";
 import { getPaginatedSetupPhotos } from "@/actions/setup-photo/get";
@@ -82,6 +82,8 @@ const Feed = () => {
   const [totalPage, setTotalPage] = useState(2);
   const [fetching, setFetching] = useState(false);
 
+  const loadedSetupIds = useRef<Set<string>>(new Set());
+
   useEffect(() => {
     const initGrid = () => {
       const newGrid = GridStack.init({
@@ -113,6 +115,8 @@ const Feed = () => {
       setDataLength((prevLength) => prevLength + data.length);
 
       data.forEach(item => {
+        if (loadedSetupIds.current.has(item.setupId)) return;
+        loadedSetupIds.current.add(item.setupId);
         grid.addWidget({
           w: random(),
           h: random(),
