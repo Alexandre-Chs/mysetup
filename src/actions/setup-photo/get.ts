@@ -65,8 +65,6 @@ export async function getPaginatedSetupPhotos(page: number, limit: number = 20) 
       eq(setupTable.isPublished, true),
     ));
 
-  console.log(count[0].count);
-  console.log(Math.ceil(count[0].count / limit));
   const totalPage = Math.ceil(count[0].count / limit);
   return { page, limit, totalPage, data };
 }
