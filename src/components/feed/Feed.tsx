@@ -1,11 +1,9 @@
-"use client";
-
-import "gridstack/dist/gridstack.min.css";
 import { GridStack } from "gridstack";
 import InfiniteScroll from "react-infinite-scroll-component";
 import React, { useCallback, useEffect, useState } from "react";
 import { Skeleton } from "../ui/skeleton";
-import { useRouter } from "next/navigation";
+import FeedGrid from "./FeedGrid";
+import { getPaginatedSetupPhotos } from "@/actions/setup-photo/get";
 
 function random() {
   const numbers = [2, 2, 2, 2, 2, 4, 4, 4];
@@ -20,12 +18,6 @@ function random() {
     return tabletNumbers[Math.floor(Math.random() * tabletNumbers.length)];
   }
   return numbers[Math.floor(Math.random() * numbers.length)];
-}
-
-// create an array of length passed in parameter and fill it with random number from the random
-function randomFill(length: number) {
-  let id = 0;
-  return Array.from({ length }, () => ({ id: id++, w: random(), h: random() }));
 }
 
 const Loader = () => {
@@ -77,69 +69,82 @@ const Loader = () => {
 
 const EndOfList = () => {
   return (
-    <h2 className="text-center text-3xl my-8 font-bold">No more setups !</h2>
+    <h2 className="font-light text-sm md:text-xl sm:text-medium text-textColor md:py-4 py-0 max-w-xl mx-auto text-center px-4 md:px-0">
+      No more setups for the moment
+    </h2>
   );
 };
 
-const Feed = ({ photos }: { photos: any[] }) => {
-  const router = useRouter();
-  const [grid, setGrid] = useState<any>(null);
+const Feed = () => {
+  const [grid, setGrid] = useState<GridStack | null>(null);
   const [dataLength, setDataLength] = useState(0);
-  const [setupPhotos, setSetupPhotos] = useState<any[]>([]);
-
-  const handleClick = (e: any) => {
-    const currId = e.target.dataset.route;
-    if (currId) {
-      router.push(currId);
-    }
-  };
+  const [page, setPage] = useState(0);
+  const [totalPage, setTotalPage] = useState(2);
 
   useEffect(() => {
-    const initGrid = async () => {
+    const initGrid = () => {
       const newGrid = GridStack.init({
         float: true,
         disableDrag: true,
         disableResize: true,
       });
-      photos.forEach((item) => {
-        newGrid.addWidget({
-          w: random(),
-          h: random(),
-          content: `<div class="grid-stack-item-content w-full h-full bg-cover bg-center rounded-lg cursor-pointer" style="background-image: url('${item.url}')" data-route="${item.username}/${item.setupId}"></div>`,
-        });
-        setSetupPhotos((prev) => [...prev, item]);
-      });
+
       setGrid(newGrid);
-      setDataLength(100);
+
+      return () => {
+        newGrid.destroy(false);
+      };
     };
 
     initGrid();
-  }, [photos]);
+  }, []);
 
-  const addMore = useCallback(() => {
-    if (grid) {
-      randomFill(20).forEach((item) =>
+  // Fonction pour récupérer les photos paginées
+  const getSetupPhotos = useCallback(async () => {
+    if (!grid || page >= totalPage) return;
+
+    try {
+      const { totalPage: fetchedTotalPage, data } = await getPaginatedSetupPhotos(page);
+
+      setTotalPage(fetchedTotalPage);
+      setPage((prevPage) => prevPage + 1);
+      setDataLength((prevLength) => prevLength + data.length);
+
+      data.forEach(item => {
         grid.addWidget({
-          w: item.w,
-          h: item.h,
-          content: `<div class="grid-stack-item-content w-full h-full bg-cover bg-center rounded-lg bg-[url('https://placehold.co/600x400')]"></div>`,
-        })
-      );
-      setDataLength((prevLength) => prevLength + 20);
+          w: random(),
+          h: random(),
+          content: `
+            <div
+              class="grid-stack-item-content w-full h-full bg-cover bg-center rounded-lg cursor-pointer"
+              style="background-image: url('${item.url}')"
+              data-route="${item.username}/${item.setupId}">
+            </div>
+          `,
+        });
+      });
+    } catch (error) {
+      console.error("Error while loading feed:", error);
     }
-  }, [grid]);
+  }, [grid, page, totalPage]);
+
+  useEffect(() => {
+    if (grid) {
+      getSetupPhotos();
+    }
+  }, [grid, getSetupPhotos]);
 
   return (
     <InfiniteScroll
       dataLength={dataLength}
-      next={() => {}}
-      hasMore={dataLength < 200}
+      next={getSetupPhotos}
+      hasMore={page < totalPage}
       loader={<Loader />}
       endMessage={<EndOfList />}
     >
-      <div className="grid-stack overflow-hidden" onClick={handleClick}></div>
+      <FeedGrid />
     </InfiniteScroll>
-  );
+  )
 };
 
 export default Feed;
