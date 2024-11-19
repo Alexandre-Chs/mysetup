@@ -6,7 +6,7 @@ import { AuroraBackground } from "./AuroraBackground";
 import { motion } from "framer-motion";
 import Footer from "../footer/Footer";
 
-const WrapperHome = ({ allSetupsPhotos }: { allSetupsPhotos: any }) => {
+const WrapperHome = () => {
   return (
     <>
       <div className="absolute inset-0 h-screen w-full overflow-hidden bg-[#07080A]">
@@ -32,7 +32,7 @@ const WrapperHome = ({ allSetupsPhotos }: { allSetupsPhotos: any }) => {
         </AuroraBackground>
       </div>
       <div className="xl:px-64 md:px-32 px-0 mx-auto mt-[45vh]">
-        <Feed photos={allSetupsPhotos} />
+        <Feed />
       </div>
       <Footer />
     </>
