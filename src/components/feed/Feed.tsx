@@ -80,6 +80,7 @@ const Feed = () => {
   const [dataLength, setDataLength] = useState(0);
   const [page, setPage] = useState(0);
   const [totalPage, setTotalPage] = useState(2);
+  const [fetching, setFetching] = useState(false);
 
   useEffect(() => {
     const initGrid = () => {
@@ -101,7 +102,8 @@ const Feed = () => {
 
   // Fonction pour récupérer les photos paginées
   const getSetupPhotos = useCallback(async () => {
-    if (!grid || page >= totalPage) return;
+    if (!grid || page >= totalPage || fetching) return;
+    setFetching(true);
 
     try {
       const { totalPage: fetchedTotalPage, data } = await getPaginatedSetupPhotos(page);
