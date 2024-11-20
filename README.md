@@ -22,3 +22,4 @@ npm run db:push # Envoi en DB tout les changements entre la db et les schemas
 # crée les fichiers de migrations liés aux schéma et les migres sur la base de donnée 
 npm run db:migrate 
 ```
+Bonjour git
