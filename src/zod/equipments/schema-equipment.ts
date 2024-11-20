@@ -8,7 +8,7 @@ export const validSchemaEquipment = z.object({
     .regex(/^[a-zA-Z0-9-_ ]+$/, {
       message: "Name can only contain letters, numbers, dashes and underscores",
     }),
-  category: z.enum(["Main Hardware", "Audio", "Desk Setup", "Lighting", "Accessories", "Decoration"], {
+  category: z.enum(["Main Hardware", "Audio", "Desk Setup", "Lighting", "Accessories", "Decoration", "Components"], {
     message: "You must select a type",
   }),
   type: z.string(),
