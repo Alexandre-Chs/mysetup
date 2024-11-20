@@ -1,10 +1,10 @@
 import { discordLog } from "@/actions/utils";
 import { formatBytes } from "@/lib/utils/format-bytes";
 import { S3 } from "@aws-sdk/client-s3";
+import { NextRequest } from "next/server";
 
-
-
-export async function GET(req: Request) {
+export async function GET(req: NextRequest) {
+  if (req.nextUrl.searchParams.get("code") !== process.env.S3_WEBHOOK_CODE) return Response.json({ message: "Invalid code" }, { status: 403 });
   const s3 = new S3({
     credentials: {
       accessKeyId: process.env.S3_KEY!,
