@@ -8,6 +8,7 @@ import { eq } from "drizzle-orm";
 import { generateIdFromEntropySize } from "lucia";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { discordLog } from "../utils";
 
 export async function createSetup() {
   const { user } = await validateRequest();
@@ -21,6 +22,8 @@ export async function createSetup() {
       createdAt: new Date(),
     })
     .returning();
+
+  await discordLog(`🖥️ Nouveau setup par ${user?.username} !`);
 
   redirect(`/${user!.username}/${setupId}`);
 }
