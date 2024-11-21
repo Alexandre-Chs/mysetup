@@ -8,6 +8,7 @@ import WrapperNameSetup from "@/components/setup/WrapperNameSetup";
 import WrapperSetup from "@/components/setup/WrapperSetup";
 import { useParams } from "next/navigation";
 import { User } from "lucia";
+import Signal from "./Signal";
 
 type SetupProps = {
   setup: SetupType;

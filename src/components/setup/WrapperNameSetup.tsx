@@ -3,6 +3,7 @@
 import React from "react";
 import UpdateName from "./update-setup/UpdateName";
 import TogglePublish from "./TogglePublish";
+import Signal from "./Signal";
 
 const WrapperNameSetup = ({
   setupName,
@@ -18,12 +19,15 @@ const WrapperNameSetup = ({
       {isOwner ? (
         <div className="flex flex-row items-center mb-1">
           <UpdateName currentName={setupName} setupId={setupId} />
-          <div className="mb-2">
+          <div className="mb-2 flex flex-row gap-2">
             <TogglePublish />
           </div>
         </div>
       ) : (
-        <h1 className="font-bold text-2xl pb-2 w-full">{setupName}</h1>
+        <div className="flex flex-row items-center justify-between pb-2">
+          <h1 className="font-bold text-2xl w-full">{setupName}</h1>
+          <Signal />
+        </div>
       )}
     </div>
   );
