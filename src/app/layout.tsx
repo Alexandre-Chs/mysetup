@@ -33,6 +33,11 @@ export default async function RootLayout({
       lang="en"
       className={`${montserrat.variable} ${inter.variable} bg-backgroundPrimary dark`}
     >
+      <head>
+        {process.env.NODE_ENV === "production" && (
+          <script defer src="https://analytics.mysetup.app/script.js" data-website-id="60b29f26-9d4c-4834-a865-02e28bd5b26"></script>
+        )}
+      </head>
       <body>
         <Providers>
           <NavBar />
