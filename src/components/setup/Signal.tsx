@@ -31,7 +31,7 @@ const Signal = () => {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>What's wrong ?</DialogTitle>
+          <DialogTitle>What&apos;s wrong ?</DialogTitle>
         </DialogHeader>
         <div className="flex flex-col gap-1">
           {REASONS.map((reason) => (
