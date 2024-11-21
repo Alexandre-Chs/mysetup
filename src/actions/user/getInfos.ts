@@ -22,10 +22,10 @@ export async function getUserInfos(username: string) {
 
   const media = user[0].pictureId
     ? await db
-        .select()
-        .from(mediaTable)
-        .where(eq(mediaTable.id, user[0].pictureId))
-        .limit(1)
+      .select()
+      .from(mediaTable)
+      .where(eq(mediaTable.id, user[0].pictureId))
+      .limit(1)
     : [];
 
   const userProfile = await db

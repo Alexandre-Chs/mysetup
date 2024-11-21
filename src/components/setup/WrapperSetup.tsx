@@ -17,10 +17,10 @@ const WrapperSetup = ({ currentUser, isOwner }: { currentUser: User | null; isOw
   const { username, id } = useParams();
 
   const { data: userInfos } = useQuery({
-    queryKey: ["userInfos", currentUser?.username],
+    queryKey: ["userInfos", username],
     queryFn: async () => {
       if (!currentUser) return null;
-      return await getUserInfos(currentUser.username);
+      return await getUserInfos(username as string);
     },
   });
 
@@ -49,11 +49,11 @@ const WrapperSetup = ({ currentUser, isOwner }: { currentUser: User | null; isOw
                 <div className="flex gap-x-4">
                   {userInfos?.socialLinks
                     ? userInfos?.socialLinks.map((link: any) => (
-                        <a key={link.id} href={link.link} target="_blank">
-                          {" "}
-                          {getSocialIcon(link.socialName)}{" "}
-                        </a>
-                      ))
+                      <a key={link.id} href={link.link} target="_blank">
+                        {" "}
+                        {getSocialIcon(link.socialName)}{" "}
+                      </a>
+                    ))
                     : null}
                 </div>
               </div>
