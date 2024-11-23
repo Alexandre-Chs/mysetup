@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+Allow: /leaderboards
+Allow: /*
+
+Disallow: /terms
+Disallow: /privacy
+Disallow: /api/*
+
+# Sitemap
+Sitemap: https://mysetup.app/sitemap.xml
+
+# Crawl-delay réduit pour permettre une indexation plus rapide
+Crawl-delay: 5
