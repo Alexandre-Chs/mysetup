@@ -6,6 +6,7 @@ const Terms = () => {
       <h1 className="text-3xl font-bold mb-8">Terms of Service</h1>
 
       <div className="space-y-8">
+        {/* Previous sections 1-3 remain the same */}
         <section>
           <h2 className="text-2xl font-semibold mb-4">1. Introduction</h2>
           <p className="mb-4">
@@ -31,9 +32,25 @@ const Terms = () => {
           <p className="mb-4">You must provide accurate and complete information when creating an account. You may not use false or misleading information.</p>
         </section>
 
+        {/* Updated section 4 with new subsection about content rights */}
         <section>
-          <h2 className="text-2xl font-semibold mb-4">4. User Content</h2>
+          <h2 className="text-2xl font-semibold mb-4">4. User Content and Rights</h2>
           <p className="mb-4">Users are responsible for the content they post on MySetup. By posting content, you represent that you own or have the necessary rights to share such content.</p>
+
+          <h3 className="text-xl font-semibold mb-3">4.1 Content License and Promotional Use</h3>
+          <p className="mb-4">
+            By submitting content to MySetup, you grant us a worldwide, non-exclusive, royalty-free license to use, reproduce, modify, adapt, publish, translate, and distribute your content. This
+            includes, but is not limited to:
+          </p>
+          <ul className="list-disc ml-6 mb-4">
+            <p className="mb-2">- Using your setup photos and descriptions for promotional purposes</p>
+            <p className="mb-2">- Featuring your setups in marketing materials</p>
+            <p className="mb-2">- Sharing your setups on social media platforms</p>
+            <p className="mb-2">- Using your setups in advertising campaigns</p>
+          </ul>
+          <p className="mb-4">While we may use your content for promotion, you retain all of your ownership rights in your content.</p>
+
+          <h3 className="text-xl font-semibold mb-3">4.2 Content Restrictions</h3>
           <p className="mb-4">Prohibited content includes but is not limited to:</p>
           <ul className="list-disc ml-6 mb-4">
             <p className="mb-2">- Content that is illegal, harmful, threatening, abusive, harassing, defamatory, or racially offensive</p>
@@ -43,6 +60,7 @@ const Terms = () => {
           </ul>
         </section>
 
+        {/* Rest of the sections remain the same */}
         <section>
           <h2 className="text-2xl font-semibold mb-4">5. Affiliate Links</h2>
           <p className="mb-4">When you share product links on MySetup, these links may be automatically converted into affiliate links. By using our service, you acknowledge and agree that:</p>
@@ -81,7 +99,7 @@ const Terms = () => {
 
         <section>
           <h2 className="text-2xl font-semibold mb-4">10. Contact</h2>
-          <p className="mb-4">If you have any questions about these Terms, please contact us at oliuuum@gmail.com .</p>
+          <p className="mb-4">If you have any questions about these Terms, please contact us.</p>
         </section>
       </div>
     </div>
