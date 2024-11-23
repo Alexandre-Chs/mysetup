@@ -1,12 +1,7 @@
 "use server";
 
 import { db } from "@/db/db";
-import {
-  mediaTable,
-  setupPhotoTable,
-  setupTable,
-  userTable,
-} from "@/db/schemas";
+import { mediaTable, setupPhotoTable, setupTable, userTable } from "@/db/schemas";
 import { desc, eq, and, sql } from "drizzle-orm";
 
 export async function getPaginatedSetupPhotos(page: number, limit: number = 20) {
@@ -17,16 +12,14 @@ export async function getPaginatedSetupPhotos(page: number, limit: number = 20) 
       userId: userTable.id,
       username: userTable.username,
       setupId: setupTable.id,
+      title: setupTable.name,
       createdAt: mediaTable.createdAt,
     })
     .from(mediaTable)
     .innerJoin(setupPhotoTable, eq(mediaTable.id, setupPhotoTable.mediaId))
     .innerJoin(setupTable, eq(setupPhotoTable.setupId, setupTable.id))
     .innerJoin(userTable, eq(setupTable.userId, userTable.id))
-    .where(and(
-      eq(setupTable.thumbnailId, setupPhotoTable.id),
-      eq(setupTable.isPublished, true),
-    ))
+    .where(and(eq(setupTable.thumbnailId, setupPhotoTable.id), eq(setupTable.isPublished, true)))
     .orderBy(desc(mediaTable.createdAt))
     .limit(limit)
     .offset(page * limit);
@@ -39,10 +32,7 @@ export async function getPaginatedSetupPhotos(page: number, limit: number = 20) 
     .innerJoin(setupPhotoTable, eq(mediaTable.id, setupPhotoTable.mediaId))
     .innerJoin(setupTable, eq(setupPhotoTable.setupId, setupTable.id))
     .innerJoin(userTable, eq(setupTable.userId, userTable.id))
-    .where(and(
-      eq(setupTable.thumbnailId, setupPhotoTable.id),
-      eq(setupTable.isPublished, true),
-    ));
+    .where(and(eq(setupTable.thumbnailId, setupPhotoTable.id), eq(setupTable.isPublished, true)));
 
   const totalPage = Math.ceil(count[0].count / limit);
   return { page, limit, totalPage, data };
