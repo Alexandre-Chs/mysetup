@@ -27,7 +27,7 @@ const WrapperSetup = ({ currentUser, isOwner }: { currentUser: User | null; isOw
   if (!setup) return;
 
   return (
-    <div className="h-[900px] w-full grid xl:grid-cols-4 xl:grid-rows-8 gap-6">
+    <div className="xl:h-[900px] w-full grid xl:grid-cols-4 xl:grid-rows-8 gap-6">
       <div className="xl:col-span-3 xl:row-span-6">
         <Border>
           <WrapperPhotosUser photos={setup.setupPhotos} isOwner={isOwner} />
@@ -49,11 +49,11 @@ const WrapperSetup = ({ currentUser, isOwner }: { currentUser: User | null; isOw
                 <div className="flex gap-x-4">
                   {userInfos?.socialLinks
                     ? userInfos?.socialLinks.map((link: any) => (
-                      <a key={link.id} href={link.link} target="_blank">
-                        {" "}
-                        {getSocialIcon(link.socialName)}{" "}
-                      </a>
-                    ))
+                        <a key={link.id} href={link.link} target="_blank">
+                          {" "}
+                          {getSocialIcon(link.socialName)}{" "}
+                        </a>
+                      ))
                     : null}
                 </div>
               </div>
