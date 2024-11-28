@@ -1,11 +1,14 @@
 User-agent: *
 Allow: /
 Allow: /leaderboards
-Allow: /*
 
 Disallow: /terms
 Disallow: /privacy
 Disallow: /api/*
+
+# Bloquer l'accès à tout le sous-domaine analytics.mysetup.app
+User-agent: *
+Disallow: https://analytics.mysetup.app/
 
 # Sitemap
 Sitemap: https://mysetup.app/sitemap.xml
