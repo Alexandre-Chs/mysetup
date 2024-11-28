@@ -36,7 +36,7 @@ export default async function RootLayout({
     >
       <head>
         {process.env.NODE_ENV === "production" && (
-          <Script src="https://analytics.mysetup.app/script.js" data-website-id="60b29f26-9d4c-4834-a865-02e28bd5b26" />
+          <Script async src="https://analytics.mysetup.app/script.js" data-website-id="60b29f26-9d4c-4834-a865-02e28bd5b26c" />
         )}
       </head>
       <body>
