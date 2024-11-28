@@ -6,6 +6,7 @@ import Providers from "./providers";
 import NavBar from "@/components/navbar/navBar";
 import ModalReceiveInfos from "@/components/auth/ModalReceiveInfos";
 import React from "react";
+import Script from 'next/script';
 
 export const metadata: Metadata = {
   title: "My Setup - Find Setup Inspiration & Gear | Find Your Dream Workspace",
@@ -35,7 +36,7 @@ export default async function RootLayout({
     >
       <head>
         {process.env.NODE_ENV === "production" && (
-          <script defer src="https://analytics.mysetup.app/script.js" data-website-id="60b29f26-9d4c-4834-a865-02e28bd5b26"></script>
+          <Script src="https://analytics.mysetup.app/script.js" data-website-id="60b29f26-9d4c-4834-a865-02e28bd5b26" />
         )}
       </head>
       <body>
