@@ -14,7 +14,7 @@ import Image from "next/image";
 
 const WrapperSetup = ({ currentUser, isOwner }: { currentUser: User | null; isOwner: boolean }) => {
   const setup = useSetupStore((state) => state.setup);
-  const { username, id } = useParams();
+  const { username } = useParams();
 
   const { data: userInfos } = useQuery({
     queryKey: ["userInfos", username],
