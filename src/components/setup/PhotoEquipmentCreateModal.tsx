@@ -29,7 +29,9 @@ const PhotoEquipmentCreateModal = () => {
   const groupedItems = groupSetupItemsByCategory(equipments);
 
   const addPhotoEquipment = async (onClose: Function) => {
+    if (!selectedEquipmentId) return;
     const equipmentId = selectedEquipmentId!.currentKey;
+
     await createPhotoEquipment(selectedPhotoId!, equipmentId, newTagCoordinates!.x, newTagCoordinates!.y);
     onClose();
   };
