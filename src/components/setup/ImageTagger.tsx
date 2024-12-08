@@ -23,17 +23,11 @@ const ImageTagger = ({ src, photoId, isOwner }: ImageTaggerProps) => {
   } | null>(null);
   const imageRef = useRef<HTMLImageElement>(null);
 
-  const setNewTagCoordinates = usePhotoEquipmentStore(
-    (state) => state.setNewTagCoordinates
-  );
-  const setSelectedPhotoId = usePhotoEquipmentStore(
-    (state) => state.setSelectedPhotoId
-  );
+  const setNewTagCoordinates = usePhotoEquipmentStore((state) => state.setNewTagCoordinates);
+  const setSelectedPhotoId = usePhotoEquipmentStore((state) => state.setSelectedPhotoId);
 
   const setup = useSetupStore((state) => state.setup);
-  const setupPhoto = setup?.setupPhotos.find(
-    (photo: any) => photo.id === photoId
-  );
+  const setupPhoto = setup?.setupPhotos.find((photo: any) => photo.id === photoId);
   const tags = setupPhoto?.photoEquipments;
 
   const handleMouseMove = (e: React.MouseEvent<HTMLImageElement>) => {
@@ -81,8 +75,7 @@ const ImageTagger = ({ src, photoId, isOwner }: ImageTaggerProps) => {
       {tagging && newTagCoords && (
         <div
           className="absolute w-3 h-3 bg-white border-2 border-black rounded-full transform -translate-x-1/2 -translate-y-1/2 pointer-events-none"
-          style={{ top: `${newTagCoords.y}%`, left: `${newTagCoords.x}%` }}
-        ></div>
+          style={{ top: `${newTagCoords.y}%`, left: `${newTagCoords.x}%` }}></div>
       )}
       {tags.map((tag: any) => (
         <Tooltip
@@ -90,24 +83,16 @@ const ImageTagger = ({ src, photoId, isOwner }: ImageTaggerProps) => {
           content={
             <div className="flex flex-row items-center gap-1">
               {tag.equipment.name}
-              {isOwner && (
-                <CircleX
-                  onClick={() => handleDeleteTag(tag.id, photoId)}
-                  size={20}
-                  className="text-red-500 cursor-pointer transition-all hover:scale-110 hover:rotate-90"
-                />
-              )}
+              {isOwner && <CircleX onClick={() => handleDeleteTag(tag.id, photoId)} size={20} className="text-red-500 cursor-pointer transition-all hover:scale-110 hover:rotate-90" />}
             </div>
-          }
-        >
+          }>
           <div
             onClick={(e: any) => handleRedirectUser(tag.equipment.url, e)}
-            className="absolute size-3 bg-white/85 border-2 border-black/65 rounded-full transform -translate-x-1/2 -translate-y-1/2 cursor-pointer transition-all hover:size-5"
+            className="absolute size-3 bg-white/85 border-2 border-gray-700 rounded-full transform -translate-x-1/2 -translate-y-1/2 cursor-pointer transition-all hover:size-5 animate-pulse"
             style={{
               top: `${tag.y}%`,
               left: `${tag.x}%`,
-            }}
-          ></div>
+            }}></div>
         </Tooltip>
       ))}
     </div>
