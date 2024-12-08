@@ -25,39 +25,32 @@ const Signal = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="secondary" className="p-3">
-          <TriangleAlert size={24} color="#718093" />
+        <Button className="px-2 bg-[#0D0D0F] border-[#18181B] hover:bg-[#26262b]">
+          <TriangleAlert size={22} color="#a30000" />
         </Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="border-[#18181B] bg-[#0D0D0F]">
         <DialogHeader>
           <DialogTitle>What&apos;s wrong ?</DialogTitle>
         </DialogHeader>
         <div className="flex flex-col gap-1">
           {REASONS.map((reason) => (
-            <Button
-              className="flex-1 py-4"
-              variant={selectedReason === reason ? "default" : "secondary"}
-              key={reason}
-              onClick={() => setSelectedReason(reason)}
-            >{reason}</Button>
+            <Button className="flex-1 py-4 bg-[#26262b] hover:bg-[#1b1b1e]" variant={selectedReason === reason ? "default" : "secondary"} key={reason} onClick={() => setSelectedReason(reason)}>
+              {reason}
+            </Button>
           ))}
         </div>
-        {!!selectedReason && (
-          <Textarea
-            placeholder="Tell us more about the issue"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-        )}
+        {!!selectedReason && <Textarea placeholder="Tell us more about the issue" value={description} onChange={(e) => setDescription(e.target.value)} />}
         {!!selectedReason && !!description && (
           <DialogClose asChild>
-            <Button className="w-full" variant="destructive" onClick={handleSignal}>Send report</Button>
+            <Button className="w-full" variant="destructive" onClick={handleSignal}>
+              Send report
+            </Button>
           </DialogClose>
         )}
       </DialogContent>
     </Dialog>
-  )
+  );
 };
 
 export default Signal;
