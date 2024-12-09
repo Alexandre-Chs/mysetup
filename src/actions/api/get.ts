@@ -1,20 +1,15 @@
 "use server";
 
-export async function transformUrlToAffiliate(url: string) {
+export async function transformUrlToAffiliate(url: string, lang: string) {
   const apiKey = process.env.OPTIMHUB_API_KEY;
-
-  // const country = await getCountry();
-  const params = new URLSearchParams({ url, country: "FR" });
+  const params = new URLSearchParams({ url, country: lang });
   try {
-    const response = await fetch(
-      `https://api.optimhub.com/api/link-builder?${params}`,
-      {
-        method: "GET",
-        headers: {
-          "x-api-key": apiKey as string,
-        },
-      }
-    );
+    const response = await fetch(`https://api.optimhub.com/api/link-builder?${params}`, {
+      method: "GET",
+      headers: {
+        "x-api-key": apiKey as string,
+      },
+    });
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -24,18 +19,5 @@ export async function transformUrlToAffiliate(url: string) {
   } catch (e) {
     console.error("Error while transform url:", e);
     return undefined;
-  }
-}
-
-export async function getCountry() {
-  try {
-    const response = await fetch("https://api.ipify.org?format=json");
-    const data = await response.json();
-    const userIP = data.ip;
-
-    const countryResponse = await fetch(`https://ipapi.co/${userIP}/country/`);
-    return await countryResponse.text();
-  } catch (error) {
-    console.error("Error fetching user country:", error);
   }
 }

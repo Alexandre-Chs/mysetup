@@ -28,7 +28,10 @@ const Equipment = ({ equipments, action, setupId }: { equipments: EquipmentType[
     if (!url.startsWith("http://") && !url.startsWith("https://")) {
       url = `https://${url}`;
     }
-    const affiliateUrl = await transformUrlToAffiliate(url);
+    const browserLanguage = navigator.languages[0];
+    const lang = browserLanguage.split("-")[1].toUpperCase();
+
+    const affiliateUrl = await transformUrlToAffiliate(url, lang);
     return affiliateUrl ? affiliateUrl : url;
   };
 

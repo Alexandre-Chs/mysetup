@@ -53,7 +53,9 @@ const ImageTagger = ({ src, photoId, isOwner }: ImageTaggerProps) => {
   const handleRedirectUser = async (url: string, e: any) => {
     e.preventDefault();
     if (!url) return;
-    const affiliateUrl = await transformUrlToAffiliate(url);
+    const browserLanguage = navigator.languages[0];
+    const lang = browserLanguage.split("-")[1].toUpperCase();
+    const affiliateUrl = await transformUrlToAffiliate(url, lang);
     if (affiliateUrl) {
       window.open(affiliateUrl, "newWindow");
     } else {
