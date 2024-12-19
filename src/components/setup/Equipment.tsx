@@ -10,6 +10,7 @@ import { transformUrlToAffiliate } from "@/actions/api/get";
 import Border from "../ui/border";
 import { Spinner } from "../ui/spinner";
 import { CATEGORY_ORDER } from "@/lib/utils/equipments";
+import { getMainLangUser } from "@/lib/utils/get-lang";
 
 const Equipment = ({ equipments, action, setupId }: { equipments: EquipmentType[]; action?: "add"; setupId?: string }) => {
   const [loadingStates, setLoadingStates] = useState<Record<string, boolean>>({});
@@ -28,9 +29,7 @@ const Equipment = ({ equipments, action, setupId }: { equipments: EquipmentType[
     if (!url.startsWith("http://") && !url.startsWith("https://")) {
       url = `https://${url}`;
     }
-    const browserLanguage = navigator.languages[0];
-    const lang = browserLanguage.split("-")[1].toUpperCase();
-
+    const lang = getMainLangUser();
     const affiliateUrl = await transformUrlToAffiliate(url, lang);
     return affiliateUrl ? affiliateUrl : url;
   };

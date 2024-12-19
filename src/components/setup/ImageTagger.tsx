@@ -7,6 +7,7 @@ import { Tooltip } from "@nextui-org/react";
 import { CircleX } from "lucide-react";
 import { deleteTagOnPhoto } from "@/actions/setup-photo/delete";
 import { transformUrlToAffiliate } from "@/actions/api/get";
+import { getMainLangUser } from "@/lib/utils/get-lang";
 
 type ImageTaggerProps = {
   src: string;
@@ -53,14 +54,9 @@ const ImageTagger = ({ src, photoId, isOwner }: ImageTaggerProps) => {
   const handleRedirectUser = async (url: string, e: any) => {
     e.preventDefault();
     if (!url) return;
-    const browserLanguage = navigator.languages[0];
-    const lang = browserLanguage.split("-")[1].toUpperCase();
+    const lang = getMainLangUser();
     const affiliateUrl = await transformUrlToAffiliate(url, lang);
-    if (affiliateUrl) {
-      window.open(affiliateUrl, "newWindow");
-    } else {
-      window.open(url, "newWindow");
-    }
+    window.open(affiliateUrl ? affiliateUrl : url, "newWindow");
   };
 
   return (
