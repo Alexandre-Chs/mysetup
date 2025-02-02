@@ -1,0 +1,15 @@
+0000000000000000000000000000000000000000 3f4fba1764a2b7886ab3e6da1e128fa76b3d5dc7 Alexandre Chanas <alexandrechs@Mac-mini-de-Alexandre.local> 1732774582 +0100	clone: from github.com:Alexandre-as-a-Service/my-setup.git
+3f4fba1764a2b7886ab3e6da1e128fa76b3d5dc7 a5d0aac7b9ff4a118be617447df293be4e16f161 Alexandre Chs <oliuuum@gmail.com> 1732777076 +0100	commit: avoid index analytics
+a5d0aac7b9ff4a118be617447df293be4e16f161 c307a7d3ab11da624cb4ed7c571e5809c50078b1 Alexandre Chs <oliuuum@gmail.com> 1732951103 +0100	commit: update regex on equipments
+c307a7d3ab11da624cb4ed7c571e5809c50078b1 d1c89b78a76cf30cfe3404669d6a76a45463461a Alexandre Chs <oliuuum@gmail.com> 1732951175 +0100	pull --tags origin main (start): checkout d1c89b78a76cf30cfe3404669d6a76a45463461a
+d1c89b78a76cf30cfe3404669d6a76a45463461a 01e192493595816b259c9ea56df1fcc1ee9acd69 Alexandre Chs <oliuuum@gmail.com> 1732951175 +0100	pull --tags origin main (pick): update regex on equipments
+01e192493595816b259c9ea56df1fcc1ee9acd69 01e192493595816b259c9ea56df1fcc1ee9acd69 Alexandre Chs <oliuuum@gmail.com> 1732951175 +0100	pull --tags origin main (finish): returning to refs/heads/main
+01e192493595816b259c9ea56df1fcc1ee9acd69 27b0c703c072024bf9f89f120387b20f5b42705b Alexandre Chs <oliuuum@gmail.com> 1732975913 +0100	commit: fix bug description if owner
+27b0c703c072024bf9f89f120387b20f5b42705b 741aee3726333d7e147757357e76d3c8f1039767 Alexandre Chs <oliuuum@gmail.com> 1733647559 +0100	commit: better design
+741aee3726333d7e147757357e76d3c8f1039767 6e3ad67da542bc5c9d13eacff02eaaf8a67858f9 Alexandre Chs <oliuuum@gmail.com> 1733648119 +0100	commit: avoid erros
+6e3ad67da542bc5c9d13eacff02eaaf8a67858f9 dda3fcee3b003877fb481349550e85accffe3717 Alexandre Chs <oliuuum@gmail.com> 1733648127 +0100	commit: better style
+dda3fcee3b003877fb481349550e85accffe3717 1677f962d2d0ff56c7e2b04094f6f45a4446cca7 Alexandre Chs <oliuuum@gmail.com> 1733729020 +0100	commit: select country by navigator
+1677f962d2d0ff56c7e2b04094f6f45a4446cca7 0fd757f601a7e267049e96e852877558ed5dc784 Alexandre Chs <oliuuum@gmail.com> 1734628655 +0100	commit: fix error lang
+0fd757f601a7e267049e96e852877558ed5dc784 1164400e562ed268dc0c7565bf7f936362a5ff53 Alexandre Chs <oliuuum@gmail.com> 1738504106 +0100	commit: fix
+1164400e562ed268dc0c7565bf7f936362a5ff53 0000000000000000000000000000000000000000 Alexandre Chs <oliuuum@gmail.com> 1738504169 +0100	Branch: renamed refs/heads/main to refs/heads/main
+1164400e562ed268dc0c7565bf7f936362a5ff53 1164400e562ed268dc0c7565bf7f936362a5ff53 Alexandre Chs <oliuuum@gmail.com> 1738504169 +0100	Branch: renamed refs/heads/main to refs/heads/main
