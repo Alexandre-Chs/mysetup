@@ -1,24 +1,13 @@
-# Share my setup
+# MySetup
 
-Un site qui permet facilement de retrouver pleins d’idées de setup autant gaming que bureautique. A la pinterest, une sorte de fil d’image, ou chaque user peut avoir sa propre page custom pour mettre en avant son setup avec toutes les infos autour. Cela permet surtout d’avoir une plateforme pour avoir des idées et où acheter ensuite.
+## Welcome to MySetup.app
 
-## Commandes disponibles
+### A Platform for Gaming and Bureautic Setup Ideas
 
-Lancer le server de developpement :
-```bash
-npm install
-npm run dev
-```
+**Share My Setup** is your go-to platform for discovering a wide variety of setup ideas, whether you're into gaming or office work. Inspired by Pinterest but with a unique twist, this site allows users to curate their own pages to highlight and showcase their setups in detail.
 
-Base de donnée :
+#### Key Features:
 
-```bash
-# lancer drizzle studio
-npm run db:ui
-# DEV
-npm run db:push # Envoi en DB tout les changements entre la db et les schemas
-
-# PROD
-# crée les fichiers de migrations liés aux schéma et les migres sur la base de donnée 
-npm run db:migrate 
-```
+- **Inspiration**: Find countless ideas for setting up your space, from ergonomic desks to high-performance gaming rigs.
+- **Customization**: Create your own page to showcase your setup with all the necessary details.
+- **Shopping Made Easy**: Once you find something you like, you can easily purchase it on the spot.
