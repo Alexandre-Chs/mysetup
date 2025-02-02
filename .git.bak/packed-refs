@@ -1,6 +1,0 @@
-# pack-refs with: peeled fully-peeled sorted 
-c9eb50313c0a126c78602b19281e1f4efaeed7b7 refs/remotes/origin/feat/alex1-setup
-e259632272637ff1b2e6f4efe2d4e8cf9a49aec9 refs/remotes/origin/feat/auth
-079e7ce014f9d21ba5d8cdf3deb3a80405e997e1 refs/remotes/origin/feat/auth-lucia
-5b2c33a15b57206448b229b19494e088fb38bccd refs/remotes/origin/feat/custom-page
-3f4fba1764a2b7886ab3e6da1e128fa76b3d5dc7 refs/remotes/origin/main
