@@ -28,5 +28,7 @@ export const loginWithGoogle = async () => {
     sameSite: "lax",
   });
 
+  console.log("SUCCESS LOGIN oura");
+
   redirect(url.toString());
 };

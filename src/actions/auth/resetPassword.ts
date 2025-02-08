@@ -9,12 +9,8 @@ import { passwordResetToken } from "@/db/schemas/password_reset_token";
 import { eq } from "drizzle-orm";
 import { userTable } from "@/db/schemas";
 
-export async function createPasswordResetToken(
-  userId: string
-): Promise<string> {
-  await db
-    .delete(passwordResetToken)
-    .where(eq(passwordResetToken.userId, userId as string));
+export async function createPasswordResetToken(userId: string): Promise<string> {
+  await db.delete(passwordResetToken).where(eq(passwordResetToken.userId, userId as string));
 
   const tokenId = generateIdFromEntropySize(25);
   const tokenHash = encodeHex(await sha256(new TextEncoder().encode(tokenId)));
@@ -30,12 +26,8 @@ export async function createPasswordResetToken(
 }
 
 export async function resetPassword(email: string) {
-  const currentUser = await db
-    .select()
-    .from(userTable)
-    .where(eq(userTable.email, email));
-
-  if (currentUser.length === 0) {
+  const currentUser = await db.select().from(userTable).where(eq(userTable.email, email));
+  if (!currentUser || currentUser.length === 0) {
     return new Response("Invalid email", {
       status: 400,
     });

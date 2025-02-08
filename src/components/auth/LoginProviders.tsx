@@ -1,8 +1,6 @@
 "use client";
 
-import { PiRedditLogoFill } from "react-icons/pi";
 import { GrGoogle } from "react-icons/gr";
-import { Button } from "@nextui-org/react";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { loginWithGoogle } from "@/actions/auth/loginWithGoogle";
@@ -37,8 +35,7 @@ export const LoginProvider = () => {
     <div className="flex flex-row items-center w-full justify-center gap-x-2 max-w-lg bg-backgroundPrimary">
       <button
         onClick={() => googleMutation.mutate()}
-        className="flex-1 h-[44px] rounded-md border-1 border-[#1F2022] bg-[#141516] hover:bg-[#202123] flex items-center justify-center transition-colors"
-      >
+        className="flex-1 h-[44px] rounded-md border-1 border-[#1F2022] bg-[#141516] hover:bg-[#202123] flex items-center justify-center transition-colors">
         <GrGoogle color="#A1A1A2" size={20} />
       </button>
       {/* <button
