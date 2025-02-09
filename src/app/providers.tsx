@@ -1,7 +1,7 @@
 "use client";
 
 import { EditContext } from "@/context/EditContext";
-import { NextUIProvider } from "@nextui-org/react";
+import { HeroUIProvider } from "@heroui/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import React, { PropsWithChildren } from "react";
 
@@ -12,11 +12,11 @@ const Providers = ({ children }: PropsWithChildren) => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <NextUIProvider>
+      <HeroUIProvider>
         <EditContext.Provider value={{ isEditing, setIsEditing }}>
           {children}
         </EditContext.Provider>
-      </NextUIProvider>
+      </HeroUIProvider>
     </QueryClientProvider>
   );
 };

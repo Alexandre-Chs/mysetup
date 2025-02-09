@@ -1,9 +1,9 @@
-import { uploadSetupPicture } from "@/actions/media/upload";
 import { useParams } from "next/navigation";
 import { useRef } from "react";
 import { LuImagePlus } from "react-icons/lu";
 import { toast } from "sonner";
-import { Tooltip } from "@nextui-org/react";
+import { Tooltip } from "@heroui/react";
+import { uploadSetupPicture } from "@/app/api/media/actions";
 
 const UploadSetupPicture = ({ isOwner }: { isOwner?: boolean }) => {
   const params = useParams<{ id: string }>();
@@ -36,21 +36,9 @@ const UploadSetupPicture = ({ isOwner }: { isOwner?: boolean }) => {
     <>
       {isOwner ? (
         <>
-          <input
-            ref={fileInput}
-            type="file"
-            name=""
-            id=""
-            className="hidden"
-            accept="image/*"
-            multiple
-            onChange={handleFileChange}
-          />
+          <input ref={fileInput} type="file" name="" id="" className="hidden" accept="image/*" multiple onChange={handleFileChange} />
           <Tooltip content="Upload an image" closeDelay={100}>
-            <button
-              className="embla__button_setup"
-              onClick={() => openFilePicker()}
-            >
+            <button className="embla__button_setup" onClick={() => openFilePicker()}>
               <LuImagePlus size={18} />
             </button>
           </Tooltip>

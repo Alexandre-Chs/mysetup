@@ -3,11 +3,11 @@
 import { usePhotoEquipmentStore } from "@/store/PhotoEquipmentStore";
 import { useSetupStore } from "@/store/SetupStore";
 import { useRef, useState } from "react";
-import { Tooltip } from "@nextui-org/react";
+import { Tooltip } from "@heroui/react";
 import { CircleX } from "lucide-react";
-import { deleteTagOnPhoto } from "@/actions/setup-photo/delete";
 import { transformUrlToAffiliate } from "@/app/api/linker/actions";
 import { getMainLangUser } from "@/lib/utils/get-lang";
+import { deleteTagOnPhoto } from "@/app/api/setups/media/actions";
 
 type ImageTaggerProps = {
   src: string;

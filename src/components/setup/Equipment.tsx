@@ -5,12 +5,12 @@ import "./scrollbar.css";
 import { groupSetupItemsByCategory } from "@/lib/utils/group-by-type";
 import { EquipmentType } from "@/types/types";
 import { CircleX, LinkIcon } from "lucide-react";
-import { deleteOneEquipment } from "@/actions/setup/delete";
 import { transformUrlToAffiliate } from "@/app/api/linker/actions";
 import Border from "../ui/border";
 import { Spinner } from "../ui/spinner";
 import { CATEGORY_ORDER } from "@/lib/utils/equipments";
 import { getMainLangUser } from "@/lib/utils/get-lang";
+import { deleteOneEquipment } from "@/app/api/setups/actions";
 
 const Equipment = ({ equipments, action, setupId }: { equipments: EquipmentType[]; action?: "add"; setupId?: string }) => {
   const [loadingStates, setLoadingStates] = useState<Record<string, boolean>>({});

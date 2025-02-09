@@ -2,7 +2,7 @@
 
 import { logout } from "@/app/api/(auth)/signout/actions";
 import React from "react";
-import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@nextui-org/react";
+import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@heroui/react";
 import { useRouter } from "next/navigation";
 import { User } from "lucia";
 import { ChevronDownIcon, User as UserIcon } from "lucide-react";

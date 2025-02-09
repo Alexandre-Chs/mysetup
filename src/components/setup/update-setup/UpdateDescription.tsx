@@ -1,6 +1,6 @@
 "use client";
 
-import { updateSetupDescription } from "@/actions/setup/update";
+import { updateSetupDescription } from "@/app/api/setups/actions";
 import Border from "@/components/ui/border";
 import { useDebounce } from "@/hook/useDebounce";
 import React, { useEffect } from "react";

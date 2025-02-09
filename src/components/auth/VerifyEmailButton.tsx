@@ -1,7 +1,7 @@
 "use client";
 
 import { SendVerifyEmail } from "@/app/api/(auth)/verification-email/actions";
-import { Button } from "@nextui-org/react";
+import { Button } from "@heroui/react";
 import React from "react";
 
 const VerifyEmailButton = () => {

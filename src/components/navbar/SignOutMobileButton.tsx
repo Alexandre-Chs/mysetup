@@ -1,7 +1,7 @@
 "use client";
 
 import { logout } from "@/app/api/(auth)/signout/actions";
-import { Button } from "@nextui-org/react";
+import { Button } from "@heroui/react";
 import React from "react";
 
 const SignOutMobileButton = () => {

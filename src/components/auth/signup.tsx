@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { toast } from "sonner";
 import { validSchemaAuthWithEmail } from "@/zod/auth/schema-auth";
-import { Button } from "@nextui-org/react";
+import { Button } from "@heroui/react";
 import Link from "next/link";
 import { MoveRight } from "lucide-react";
 import { signup } from "@/app/api/(auth)/signup/actions";

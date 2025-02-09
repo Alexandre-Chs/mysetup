@@ -1,12 +1,8 @@
-import { listUserSetup } from "@/actions/setup/list";
 import WrapperProfile from "@/components/profile/WrapperProfile";
 import { notFound } from "next/navigation";
+import { listUserSetup } from "../api/setups/actions";
 
-export default async function Page({
-  params,
-}: {
-  params: { username: string };
-}) {
+export default async function Page({ params }: { params: { username: string } }) {
   const { username } = params;
   let setups;
   try {

@@ -4,14 +4,13 @@ import { EmblaOptionsType } from "embla-carousel";
 import { DotButton, useDotButton } from "./CarouselDotButton";
 import { PrevButton, NextButton, usePrevNextButtons } from "./CarouselArrowButtons";
 import useEmblaCarousel from "embla-carousel-react";
-import { deleteSetupPhoto } from "@/actions/setup-photo/delete";
 import UploadSetupPicture from "../UploadSetupPicture";
 import ImageTagger from "../ImageTagger";
 import ToggleThumbnail from "../ToggleThumbnail";
 import { IoClose } from "react-icons/io5";
 import { useSetupStore } from "@/store/SetupStore";
-import { ifPhotoAsThumbnail } from "@/actions/setup-photo/get";
 import { toast } from "sonner";
+import { deleteSetupPhoto, ifPhotoAsThumbnail } from "@/app/api/setups/media/actions";
 
 type PropType = {
   slides: any[];

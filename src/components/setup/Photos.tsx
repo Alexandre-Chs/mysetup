@@ -6,7 +6,7 @@ import { GridStack } from "gridstack";
 import React from "react";
 import { toast } from "sonner";
 import UploadSetupPicture from "./UploadSetupPicture";
-import { updateSetupPhoto } from "@/actions/setup-photo/update";
+import { updateSetupPhoto } from "@/app/api/setups/media/actions";
 
 function randomFill(length: number) {
   let id = 0;
@@ -29,12 +29,8 @@ class PhotosUser extends React.Component<any> {
 
   async componentDidUpdate(prevProps: any) {
     if (prevProps.photos === this.props.photos) return;
-    const allReadyExistingItems = this.state.grid.engine.nodes.map(
-      (item: any) => item.id
-    );
-    const newItems = this.props.photos.filter(
-      (item: any) => !allReadyExistingItems.includes(item.id)
-    );
+    const allReadyExistingItems = this.state.grid.engine.nodes.map((item: any) => item.id);
+    const newItems = this.props.photos.filter((item: any) => !allReadyExistingItems.includes(item.id));
     newItems.forEach((item: any) => {
       this.state.grid.addWidget({
         w: item.width,

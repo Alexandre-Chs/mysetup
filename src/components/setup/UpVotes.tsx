@@ -1,8 +1,8 @@
 "use client";
-import { hasUserUpVotedSetup } from "@/actions/up-vote/up-vote.get";
 import React, { useEffect } from "react";
 import UpVoteButton from "./UpVoteButton";
 import { useSetupStore } from "@/store/SetupStore";
+import { hasUserUpVotedSetup } from "@/app/api/setups/media/actions";
 
 const UpVotes = ({ setupId }: { setupId?: string }) => {
   const setup = useSetupStore((state) => state.setup);
@@ -17,13 +17,7 @@ const UpVotes = ({ setupId }: { setupId?: string }) => {
     fetchData();
   });
 
-  return (
-    <UpVoteButton
-      upVotesCount={setup?.upVotes?.length}
-      userUpVoted={isUpVoted}
-      setupId={setupId as string}
-    />
-  );
+  return <UpVoteButton upVotesCount={setup?.upVotes?.length} userUpVoted={isUpVoted} setupId={setupId as string} />;
 };
 
 export default UpVotes;

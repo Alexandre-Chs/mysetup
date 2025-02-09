@@ -4,8 +4,8 @@ import { db } from "@/db/db";
 import { userTable } from "@/db/schemas";
 import { validateRequest } from "@/lib/auth/validate-request";
 import { updateUserInfosEmailZod, updateUserInfosUsernameZod } from "@/zod/auth/update-user";
-import { discordLog } from "../../../../actions/utils";
 import { eq, sql } from "drizzle-orm";
+import { discordLog } from "../../(utils)/actions";
 
 //
 //#region ifUsernameExistInDatabase

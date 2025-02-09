@@ -1,26 +1,11 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import {
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Button,
-} from "@nextui-org/react";
-import { deleteSetup } from "@/actions/setup/delete";
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button } from "@heroui/react";
 import { toast } from "sonner";
+import { deleteSetup } from "@/app/api/setups/actions";
 
-export default function DeleteSetupModal({
-  show,
-  setShowModal,
-  setupId,
-}: {
-  show: boolean;
-  setShowModal: (show: boolean) => void;
-  setupId: string;
-}) {
+export default function DeleteSetupModal({ show, setShowModal, setupId }: { show: boolean; setShowModal: (show: boolean) => void; setupId: string }) {
   const [isDeleting, setIsDeleting] = useState(false);
 
   const handleClose = () => {
@@ -50,12 +35,7 @@ export default function DeleteSetupModal({
           <p>Are you sure you want to delete this setup?</p>
         </ModalBody>
         <ModalFooter>
-          <Button
-            color="danger"
-            variant="light"
-            onPress={handleClose}
-            disabled={isDeleting}
-          >
+          <Button color="danger" variant="light" onPress={handleClose} disabled={isDeleting}>
             Close
           </Button>
           <Button color="primary" onPress={handleAction} disabled={isDeleting}>

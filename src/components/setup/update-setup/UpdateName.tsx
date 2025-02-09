@@ -1,16 +1,10 @@
 "use client";
 
-import { updateSetupName } from "@/actions/setup/update";
+import { updateSetupName } from "@/app/api/setups/actions";
 import { useDebounce } from "@/hook/useDebounce";
 import React from "react";
 
-const UpdateName = ({
-  currentName,
-  setupId,
-}: {
-  currentName: string;
-  setupId: string;
-}) => {
+const UpdateName = ({ currentName, setupId }: { currentName: string; setupId: string }) => {
   const [name, setName] = React.useState(currentName);
 
   const handleDebounceText = useDebounce((term: string) => {

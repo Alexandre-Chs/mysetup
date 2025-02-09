@@ -1,15 +1,77 @@
 "use server";
-import fs from "fs";
-import { generateIdFromEntropySize } from "lucia";
+
 import { db } from "@/db/db";
 import { validateRequest } from "@/lib/auth/validate-request";
-import { Media, mediaTable, setupTable, userTable } from "@/db/schemas";
+import { eq } from "drizzle-orm";
 import { S3 } from "@aws-sdk/client-s3";
+import fs from "fs";
+import { generateIdFromEntropySize } from "lucia";
+import { Media, mediaTable, setupTable, userTable } from "@/db/schemas";
 import { setupPhotoTable } from "@/db/schemas";
 import { revalidatePath } from "next/cache";
-import { eq } from "drizzle-orm";
-import { discordLog } from "../utils";
 import { formatBytes } from "@/lib/utils/format-bytes";
+import { discordLog } from "../(utils)/actions";
+
+//
+//#region deleteMedia
+//
+
+export async function deleteMedia(mediaId: string) {
+  const { user } = await validateRequest();
+
+  const media = await db.query.mediaTable.findFirst({
+    where: (media, { eq, and }) => and(eq(media.id, mediaId), eq(media.userId, user!.id)),
+  });
+
+  if (!media) return { status: "error", message: "Media not found" };
+
+  await db.delete(mediaTable).where(eq(mediaTable.id, mediaId));
+
+  if (process.env.NODE_ENV === "development") {
+    try {
+      fs.unlinkSync(`./public/uploads/${media.key}`);
+    } catch (error) {
+      console.error("Error deleting file", error);
+    }
+  } else {
+    const s3 = new S3({
+      credentials: {
+        accessKeyId: process.env.S3_KEY!,
+        secretAccessKey: process.env.S3_SECRET!,
+      },
+      region: process.env.S3_REGION!,
+      endpoint: process.env.S3_ENDPOINT!,
+      tls: true,
+    });
+
+    await s3.deleteObject({
+      Bucket: process.env.S3_BUCKET!,
+      Key: media.key,
+    });
+  }
+}
+
+//
+//#region deleteUserPicture
+//
+
+export async function deleteUserPicture() {
+  const { user } = await validateRequest();
+
+  const completeUser = await db.query.userTable.findFirst({
+    where: eq(userTable.id, user!.id),
+  });
+
+  await db.update(userTable).set({ pictureId: null }).where(eq(userTable.id, user!.id));
+
+  await deleteMedia(completeUser!.pictureId!);
+
+  revalidatePath(`/user/${user!.id}`);
+}
+
+//
+//#region uploadFile
+//
 
 const MAX_SIZE_GB = 50;
 
@@ -26,7 +88,7 @@ export async function uploadFile(file: File, prefix?: string) {
 
   try {
     if (process.env.NODE_ENV === "development") {
-      const res = fs.readdirSync('.')
+      const res = fs.readdirSync(".");
 
       if (!fs.existsSync(`./public/uploads/${prefix}`)) fs.mkdirSync(`./public/uploads/${prefix}`, { recursive: true });
       fs.writeFileSync(`./public/uploads/${key}`, buffer);
@@ -50,7 +112,7 @@ export async function uploadFile(file: File, prefix?: string) {
 
       const fileSizes = Contents?.reduce((acc, file) => acc + file.Size!, 0);
       // if file size is greater than 50GB, return error
-      if (fileSizes! > (MAX_SIZE_GB * 1024 * 1024 * 1024)) {
+      if (fileSizes! > MAX_SIZE_GB * 1024 * 1024 * 1024) {
         await discordLog("@everyone Bucket size exceeded: " + formatBytes(fileSizes!) + " (" + fileSizes + " bytes)");
 
         return { status: "error", message: "Bucket size exceeded" };
@@ -96,6 +158,10 @@ export async function uploadFile(file: File, prefix?: string) {
   return medias[0];
 }
 
+//
+//#region uploadSetupPicture
+//
+
 export async function uploadSetupPicture(formData: FormData) {
   const { user } = await validateRequest();
 
@@ -133,15 +199,16 @@ export async function uploadSetupPicture(formData: FormData) {
     });
 
     if (!updatedSetup?.thumbnailId) {
-      await trx
-        .update(setupTable)
-        .set({ thumbnailId: newPhotoId })
-        .where(eq(setupTable.id, setupId));
+      await trx.update(setupTable).set({ thumbnailId: newPhotoId }).where(eq(setupTable.id, setupId));
     }
   });
 
   revalidatePath(`/setup/${setupId}`);
 }
+
+//
+//#region uploadUserPicture
+//
 
 export async function uploadUserPicture(formData: FormData) {
   const { user } = await validateRequest();
@@ -154,10 +221,7 @@ export async function uploadUserPicture(formData: FormData) {
     return { status: "error", message: "Error while uploading file" };
   }
 
-  await db
-    .update(userTable)
-    .set({ pictureId: media.id })
-    .where(eq(userTable.id, user!.id));
+  await db.update(userTable).set({ pictureId: media.id }).where(eq(userTable.id, user!.id));
 
   revalidatePath(`/${user!.id}`);
 }

@@ -3,7 +3,7 @@
 import React from "react";
 import ButtonAdd from "@/components/ui/button-add";
 import AddEquipmentModal from "@/components/ui/modal/AddEquipmentModal";
-import { Tooltip } from "@nextui-org/react";
+import { Tooltip } from "@heroui/react";
 import { EquipmentType } from "@/types/types";
 import Equipment from "../Equipment";
 import EquipmentPhotoLinker from "../EquipmentPhotoLinker";

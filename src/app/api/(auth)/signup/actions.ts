@@ -6,8 +6,8 @@ import { lucia } from "@/lib/auth/auth";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { validSchemaAuthWithEmail } from "@/zod/auth/schema-auth";
-import { discordLog } from "@/actions/utils";
 import { addUserToDatabase, ifEmailExistInDatabase, ifUsernameExistInDatabase } from "../user/actions";
+import { discordLog } from "../../(utils)/actions";
 
 export async function signup(formData: FormData) {
   //check if data is valid

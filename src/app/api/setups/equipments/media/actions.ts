@@ -1,13 +1,7 @@
 "use server";
 
 import { db } from "@/db/db";
-import {
-  equipmentsTable,
-  photoEquipmentTable,
-  Setup,
-  SetupPhoto,
-  setupPhotoTable,
-} from "@/db/schemas";
+import { equipmentsTable, photoEquipmentTable, Setup, SetupPhoto, setupPhotoTable } from "@/db/schemas";
 import { validateRequest } from "@/lib/auth/validate-request";
 import { eq } from "drizzle-orm";
 import { generateIdFromEntropySize } from "lucia";
@@ -19,12 +13,11 @@ type SetupPhotoWithSetup = SetupPhoto & {
   };
 };
 
-export async function createPhotoEquipment(
-  setupPhotoId: string,
-  equipmentId: string,
-  x: number,
-  y: number
-) {
+//
+//#region createPhotoEquipment
+//
+
+export async function createPhotoEquipment(setupPhotoId: string, equipmentId: string, x: number, y: number) {
   const { user } = await validateRequest();
 
   if (!user) return;
@@ -53,12 +46,7 @@ export async function createPhotoEquipment(
     },
   });
 
-  if (
-    !equipment ||
-    Array.isArray(equipment.setup) ||
-    equipment.setup?.userId !== user.id
-  )
-    return;
+  if (!equipment || Array.isArray(equipment.setup) || equipment.setup?.userId !== user.id) return;
 
   await db.insert(photoEquipmentTable).values({
     id: generateIdFromEntropySize(10),
@@ -71,4 +59,14 @@ export async function createPhotoEquipment(
   console.log("revalidatePath", setupPhoto);
 
   revalidatePath(`/${setupPhoto.setup.userId}/${setupPhoto.setup.id}`);
+}
+
+//
+//#region getPhotoEquipments
+//
+
+export async function getPhotoEquipments(setupPhotoId: string) {
+  return await db.query.photoEquipmentTable.findMany({
+    where: eq(photoEquipmentTable.setupPhotoId, setupPhotoId),
+  });
 }

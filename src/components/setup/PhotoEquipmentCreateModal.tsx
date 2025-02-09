@@ -1,11 +1,11 @@
 "use client";
 import { usePhotoEquipmentStore } from "@/store/PhotoEquipmentStore";
-import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from "@nextui-org/react";
+import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from "@heroui/react";
 import { useState } from "react";
-import { Select, SelectItem, SelectSection } from "@nextui-org/react";
-import { createPhotoEquipment } from "@/actions/photo-equipment/create";
+import { Select, SelectItem, SelectSection } from "@heroui/react";
 import { useSetupStore } from "@/store/SetupStore";
 import { groupSetupItemsByCategory } from "@/lib/utils/group-by-type";
+import { createPhotoEquipment } from "@/app/api/setups/equipments/media/actions";
 
 function camelCase(str: string) {
   return str[0].toUpperCase() + str.slice(1).toLowerCase();

@@ -1,12 +1,12 @@
 import React from "react";
-import { Divider } from "@nextui-org/react";
+import { Divider } from "@heroui/react";
 import { GlareCard } from "./GlareCard";
 import Link from "next/link";
 import { Card, Carousel } from "./CarouselCard";
 import UpdateUserProfileCard from "./UpdateUserProfileCard";
 import { validateRequest } from "@/lib/auth/validate-request";
-import { getUserInfos } from "@/actions/user/getInfos";
 import { getSocialIcon } from "@/lib/utils/show-social-icons";
+import { getUserInfos } from "@/app/api/users/actions";
 
 const WrapperProfile = async ({ setups, currentUsername }: { setups: any; currentUsername: string }) => {
   const { user } = await validateRequest();

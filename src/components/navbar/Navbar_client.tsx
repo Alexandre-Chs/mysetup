@@ -8,7 +8,7 @@ import ShareSetupButton from "./ShareSetupButton";
 import SignOutMobileButton from "./SignOutMobileButton";
 import DropdownButton from "./DropdownButton";
 import VerifyEmailButton from "../auth/VerifyEmailButton";
-import { Badge, Divider } from "@nextui-org/react";
+import { Badge, Divider } from "@heroui/react";
 import { User } from "lucia";
 import clsx from "clsx";
 import Image from "next/image";

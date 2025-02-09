@@ -4,8 +4,8 @@ import { Button } from "../ui/button";
 import { useState } from "react";
 import { TriangleAlert } from "lucide-react";
 import { Textarea } from "../ui/textarea";
-import { signalSetup } from "@/actions/setup/signal";
 import { toast } from "sonner";
+import { signalSetup } from "@/app/api/setups/actions";
 
 const REASONS = ["Some/All pictures are not related to a setup", "Inappropriate content (NSFW, Violence, etc.)", "Stolen content", "Duplicate setup", "Other"];
 

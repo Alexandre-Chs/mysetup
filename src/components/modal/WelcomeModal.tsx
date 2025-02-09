@@ -2,11 +2,11 @@
 "use client";
 
 import React from "react";
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure } from "@heroui/react";
 
 import { User } from "lucia";
-import { setFirstVisit } from "@/actions/user/firstVisit";
 import { SendVerifyEmail } from "@/app/api/(auth)/verification-email/actions";
+import { setFirstVisit } from "@/app/api/users/actions";
 
 export default function WelcomeModal({ user }: { user: User }) {
   const [showModal, setShowModal] = React.useState(true);

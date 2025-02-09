@@ -3,7 +3,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Skeleton } from "../ui/skeleton";
 import FeedGrid from "./FeedGrid";
-import { getPaginatedSetupPhotos } from "@/actions/setup-photo/get";
+import { getPaginatedSetupPhotos } from "@/app/api/setups/media/actions";
 
 function random() {
   const numbers = [2, 2, 2, 2, 2, 4, 4, 4];

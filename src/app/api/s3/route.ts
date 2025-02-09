@@ -1,7 +1,7 @@
-import { discordLog } from "@/actions/utils";
 import { formatBytes } from "@/lib/utils/format-bytes";
 import { S3 } from "@aws-sdk/client-s3";
 import { NextRequest } from "next/server";
+import { discordLog } from "../(utils)/actions";
 
 export async function GET(req: NextRequest) {
   if (req.nextUrl.searchParams.get("code") !== process.env.S3_WEBHOOK_CODE) return Response.json({ message: "Invalid code" }, { status: 403 });
@@ -23,6 +23,6 @@ export async function GET(req: NextRequest) {
   const fileSizes = Contents?.reduce((acc, file) => acc + file.Size!, 0);
 
   await discordLog("S3 bucket size: " + formatBytes(fileSizes!) + " (" + fileSizes + " bytes)");
-  // just return 
+  // just return
   return Response.json({ message: "ok" });
 }

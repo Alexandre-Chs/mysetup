@@ -6,11 +6,11 @@ import { User } from "@/types/types";
 import WrapperEquipmentSetup from "./WrapperEquipmentSetup";
 import { useSetupStore } from "@/store/SetupStore";
 import { useQuery } from "@tanstack/react-query";
-import { getUserInfos } from "@/actions/user/getInfos";
 import { getSocialIcon } from "@/lib/utils/show-social-icons";
 import { useParams } from "next/navigation";
 import Border from "../ui/border";
 import Image from "next/image";
+import { getUserInfos } from "@/app/api/users/actions";
 
 const WrapperSetup = ({ currentUser, isOwner }: { currentUser: User | null; isOwner: boolean }) => {
   const setup = useSetupStore((state) => state.setup);
