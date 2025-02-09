@@ -6,7 +6,7 @@ import { useRef, useState } from "react";
 import { Tooltip } from "@nextui-org/react";
 import { CircleX } from "lucide-react";
 import { deleteTagOnPhoto } from "@/actions/setup-photo/delete";
-import { transformUrlToAffiliate } from "@/actions/api/get";
+import { transformUrlToAffiliate } from "@/app/api/linker/actions";
 import { getMainLangUser } from "@/lib/utils/get-lang";
 
 type ImageTaggerProps = {

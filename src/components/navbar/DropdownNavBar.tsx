@@ -1,17 +1,12 @@
 "use client";
 
-import { logout } from "@/actions/auth/signout";
+import { logout } from "@/app/api/(auth)/signout/actions";
 import React from "react";
-import {
-  Dropdown,
-  DropdownTrigger,
-  DropdownMenu,
-  DropdownItem,
-} from "@nextui-org/react";
+import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
-import { SendVerifyEmail } from "@/actions/auth/verifyEmail";
 import { User } from "lucia";
 import { ChevronDownIcon, User as UserIcon } from "lucide-react";
+import { SendVerifyEmail } from "@/app/api/(auth)/verification-email/actions";
 
 const DropdownNavBar = ({ user }: { user: User }) => {
   const [isVerifying, setIsVerifying] = React.useState(false);
@@ -50,29 +45,14 @@ const DropdownNavBar = ({ user }: { user: User }) => {
           <p>My profile</p>
         </DropdownItem>
         {(!user?.emailVerified as unknown as Element) && (
-          <DropdownItem
-            key="verify"
-            textValue="verify my email"
-            onClick={handleVerifyEmail}
-          >
+          <DropdownItem key="verify" textValue="verify my email" onClick={handleVerifyEmail}>
             <p>{isVerifying ? "Email sent" : "Verify my email"}</p>
           </DropdownItem>
         )}
-        <DropdownItem
-          textValue="discord"
-          key="discord"
-          className="text-purple-500 font-bold"
-          onClick={() => router.push("https://discord.gg/dzWzNBKUf3")}
-        >
+        <DropdownItem textValue="discord" key="discord" className="text-purple-500 font-bold" onClick={() => router.push("https://discord.gg/dzWzNBKUf3")}>
           Bug? Join Discord
         </DropdownItem>
-        <DropdownItem
-          textValue="Logout"
-          key="logout"
-          className="text-danger"
-          color="danger"
-          onClick={handleSignOut}
-        >
+        <DropdownItem textValue="Logout" key="logout" className="text-danger" color="danger" onClick={handleSignOut}>
           Logout
         </DropdownItem>
       </DropdownMenu>

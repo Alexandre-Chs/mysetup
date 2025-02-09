@@ -1,12 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
-import { signup } from "@/actions/auth/signup";
 import { toast } from "sonner";
 import { validSchemaAuthWithEmail } from "@/zod/auth/schema-auth";
 import { Button } from "@nextui-org/react";
 import Link from "next/link";
 import { MoveRight } from "lucide-react";
+import { signup } from "@/app/api/(auth)/signup/actions";
 
 const SignUp = () => {
   const [errorMessage, setErrorMessage] = useState("");
@@ -25,9 +25,7 @@ const SignUp = () => {
     });
 
     if (!parseDataWithZod.success) {
-      const errorMessages = parseDataWithZod.error.errors
-        .map((error) => error.message)
-        .join(", ");
+      const errorMessages = parseDataWithZod.error.errors.map((error) => error.message).join(", ");
       setErrorMessage(errorMessages);
       return;
     }
@@ -71,10 +69,7 @@ const SignUp = () => {
           />
         </div>
         {errorMessage && <p className="text-red-500 text-sm">{errorMessage}</p>}
-        <Button
-          type="submit"
-          className="w-full text-black bg-[#D0D1D1] relative px-4 py-2 rounded-[8px] flex items-center justify-center group"
-        >
+        <Button type="submit" className="w-full text-black bg-[#D0D1D1] relative px-4 py-2 rounded-[8px] flex items-center justify-center group">
           Continue
         </Button>
         <p className="text-xs text-textColor max-w-52 mx-auto text-center mt-4">
@@ -85,10 +80,7 @@ const SignUp = () => {
         </p>
       </form>
 
-      <Link
-        href="/login"
-        className="text-textColor text-sm w-full flex items-center justify-center group hover:text-white transition-colors"
-      >
+      <Link href="/login" className="text-textColor text-sm w-full flex items-center justify-center group hover:text-white transition-colors">
         <button className="w-full flex items-center justify-center border-1 border-[#202123] px-6 py-3 rounded-[8px] group mt-8">
           I already have an account
           <span className="group-hover:translate-x-1 transition-transform">

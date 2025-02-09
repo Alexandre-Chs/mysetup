@@ -2,18 +2,12 @@
 
 import { hash } from "@node-rs/argon2";
 import { generateIdFromEntropySize } from "lucia";
-import {
-  addUserToDatabase,
-  ifEmailExistInDatabase,
-  ifUsernameExistInDatabase,
-} from "./user";
 import { lucia } from "@/lib/auth/auth";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { validSchemaAuthWithEmail } from "@/zod/auth/schema-auth";
-import { discordLog } from "../utils";
-
-//TODO: vérifier si email valide, si pas déjà existante dans la BDD.
+import { discordLog } from "@/actions/utils";
+import { addUserToDatabase, ifEmailExistInDatabase, ifUsernameExistInDatabase } from "../user/actions";
 
 export async function signup(formData: FormData) {
   //check if data is valid
@@ -41,9 +35,7 @@ export async function signup(formData: FormData) {
   });
   const userId = generateIdFromEntropySize(10);
 
-  const ifUsernameAlreadyExist = await ifUsernameExistInDatabase(
-    parseData.username
-  );
+  const ifUsernameAlreadyExist = await ifUsernameExistInDatabase(parseData.username);
   if (ifUsernameAlreadyExist) {
     return {
       status: "error",
@@ -64,9 +56,7 @@ export async function signup(formData: FormData) {
   await addUserToDatabase(userId, parseData.username, passwordHash, email);
 
   try {
-    await discordLog(
-      `🎉 NOUVEAU USER ! Username : ${parseData.username} - Email : ${email} via les credentials !`
-    );
+    await discordLog(`🎉 NOUVEAU USER ! Username : ${parseData.username} - Email : ${email} via les credentials !`);
   } catch (e) {
     console.log(e);
   }
@@ -88,11 +78,7 @@ export async function signup(formData: FormData) {
   //config session
   const session = await lucia.createSession(userId, {});
   const sessionCookie = lucia.createSessionCookie(session.id);
-  cookies().set(
-    sessionCookie.name,
-    sessionCookie.value,
-    sessionCookie.attributes
-  );
+  cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
 
   return redirect("/");
 }

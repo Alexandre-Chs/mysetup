@@ -3,8 +3,7 @@
 import { GrGoogle } from "react-icons/gr";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { loginWithGoogle } from "@/actions/auth/loginWithGoogle";
-import { loginWithReddit } from "@/actions/auth/loginWithReddit";
+import { loginWithGoogle, loginWithReddit } from "@/app/api/(auth)/signin/actions";
 
 export const LoginProvider = () => {
   const googleMutation = useMutation({

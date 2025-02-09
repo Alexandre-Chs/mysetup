@@ -2,16 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { VerifyEmail } from "@/actions/auth/verifyEmail";
+import { VerifyEmail } from "@/app/api/(auth)/verification-email/actions";
 
-export default function EmailVerificationPage({
-  params,
-}: {
-  params: { token: string };
-}) {
-  const [status, setStatus] = useState<"verifying" | "success" | "error">(
-    "verifying"
-  );
+export default function EmailVerificationPage({ params }: { params: { token: string } }) {
+  const [status, setStatus] = useState<"verifying" | "success" | "error">("verifying");
   const router = useRouter();
 
   useEffect(() => {
@@ -32,12 +26,8 @@ export default function EmailVerificationPage({
   return (
     <div>
       {status === "verifying" && <p>We are verifying your email...</p>}
-      {status === "success" && (
-        <p>Email verified successfully! Redirecting...</p>
-      )}
-      {status === "error" && (
-        <p>Error while verifying your email. Please try again.</p>
-      )}
+      {status === "success" && <p>Email verified successfully! Redirecting...</p>}
+      {status === "error" && <p>Error while verifying your email. Please try again.</p>}
     </div>
   );
 }

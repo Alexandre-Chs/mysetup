@@ -1,6 +1,6 @@
 "use client";
 
-import { login } from "@/actions/auth/login";
+import { login } from "@/app/api/(auth)/signin/actions";
 import { validSchemaAuth } from "@/zod/auth/schema-auth";
 import { MoveRight } from "lucide-react";
 import Link from "next/link";
@@ -21,9 +21,7 @@ const Login = () => {
     });
 
     if (!parseDataWithZod.success) {
-      const errorMessages = parseDataWithZod.error.errors
-        .map((error) => error.message)
-        .join(", ");
+      const errorMessages = parseDataWithZod.error.errors.map((error) => error.message).join(", ");
       setErrorMessage(errorMessages);
       return;
     }
@@ -58,25 +56,16 @@ const Login = () => {
           />
         </div>
         {errorMessage && <p className="text-red-500 text-sm">{errorMessage}</p>}
-        <button
-          type="submit"
-          className="w-full text-black bg-[#D0D1D1] relative px-4 py-2 rounded-[8px] flex items-center justify-center group"
-        >
+        <button type="submit" className="w-full text-black bg-[#D0D1D1] relative px-4 py-2 rounded-[8px] flex items-center justify-center group">
           <p>Continue</p>
           <div className="absolute -top-[7px] -left-[27px] w-[350px] h-[55px] group-hover:bg-white/20 blur-xl transition-colors rounded-xl "></div>
         </button>
       </form>
 
-      <Link
-        href="/forgot-password"
-        className="text-textColor text-sm w-full flex items-center justify-center group hover:text-white transition-colors mt-6"
-      >
+      <Link href="/forgot-password" className="text-textColor text-sm w-full flex items-center justify-center group hover:text-white transition-colors mt-6">
         Forgot password ?
       </Link>
-      <Link
-        href="/signup"
-        className="text-textColor text-sm w-full flex items-center justify-center group hover:text-white transition-colors mt-2"
-      >
+      <Link href="/signup" className="text-textColor text-sm w-full flex items-center justify-center group hover:text-white transition-colors mt-2">
         <button className="w-full flex items-center border-1 border-[#202123] px-6 py-3 rounded-[8px] group">
           Don&apos;t have an account? Sign up
           <span className="group-hover:translate-x-1 transition-transform">

@@ -6,7 +6,7 @@ import { groupSetupItemsByCategory } from "@/lib/utils/group-by-type";
 import { EquipmentType } from "@/types/types";
 import { CircleX, LinkIcon } from "lucide-react";
 import { deleteOneEquipment } from "@/actions/setup/delete";
-import { transformUrlToAffiliate } from "@/actions/api/get";
+import { transformUrlToAffiliate } from "@/app/api/linker/actions";
 import Border from "../ui/border";
 import { Spinner } from "../ui/spinner";
 import { CATEGORY_ORDER } from "@/lib/utils/equipments";
@@ -31,6 +31,7 @@ const Equipment = ({ equipments, action, setupId }: { equipments: EquipmentType[
     }
     const lang = getMainLangUser();
     const affiliateUrl = await transformUrlToAffiliate(url, lang);
+    console.log("affiliateUrl", affiliateUrl);
     return affiliateUrl ? affiliateUrl : url;
   };
 

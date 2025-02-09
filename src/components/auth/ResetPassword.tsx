@@ -1,6 +1,6 @@
 "use client";
 
-import { resetPassword } from "@/actions/auth/resetPassword";
+import { resetPassword } from "@/app/api/(auth)/reset-password/actions";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";

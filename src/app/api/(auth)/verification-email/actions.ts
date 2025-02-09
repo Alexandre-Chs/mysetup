@@ -1,23 +1,43 @@
 "use server";
 
-import { createEmailVerificationToken } from "./verificationToken";
-import { validateRequest } from "@/lib/auth/validate-request";
 import { db } from "@/db/db";
 import { emailVerificationToken } from "@/db/schemas/email_verification_token";
+import { validateRequest } from "@/lib/auth/validate-request";
 import { eq } from "drizzle-orm";
-import { isWithinExpirationDate } from "oslo";
+import { generateIdFromEntropySize } from "lucia";
+import { TimeSpan, createDate, isWithinExpirationDate } from "oslo";
 import { userTable } from "@/db/schemas";
 import { lucia } from "@/lib/auth/auth";
 import { cookies } from "next/headers";
 
+//
+//#region createEmailVerificationToken
+//
+
+export async function createEmailVerificationToken(userId: string, email: string): Promise<string> {
+  // optionally invalidate all existing tokens for the current user id
+  await db.delete(emailVerificationToken).where(eq(emailVerificationToken.userId, userId));
+
+  const tokenId = generateIdFromEntropySize(25);
+
+  await db.insert(emailVerificationToken).values({
+    id: tokenId,
+    userId,
+    email,
+    expires_at: createDate(new TimeSpan(2, "h")),
+  });
+
+  return tokenId;
+}
+
+//
+//#region SendVerifyEmail
+//
 export async function SendVerifyEmail() {
   const { user } = await validateRequest();
   if (!user) return console.log("user not found for verification email");
 
-  const verificationToken = await createEmailVerificationToken(
-    user.id,
-    user.email
-  );
+  const verificationToken = await createEmailVerificationToken(user.id, user.email);
 
   const baseUrl = process.env.BASE_URL;
   const verificationLink = `${baseUrl}/email-verification/${verificationToken}`;
@@ -36,17 +56,16 @@ export async function SendVerifyEmail() {
   }
 }
 
+//
+//#region VerifyEmail
+//
+
 export async function VerifyEmail(verificationToken: string) {
   try {
-    const token = await db
-      .select()
-      .from(emailVerificationToken)
-      .where(eq(emailVerificationToken.id, verificationToken));
+    const token = await db.select().from(emailVerificationToken).where(eq(emailVerificationToken.id, verificationToken));
 
     if (token) {
-      await db
-        .delete(emailVerificationToken)
-        .where(eq(emailVerificationToken.id, token[0].id));
+      await db.delete(emailVerificationToken).where(eq(emailVerificationToken.id, token[0].id));
     }
 
     if (!token || !isWithinExpirationDate(token[0].expires_at)) {
@@ -54,10 +73,7 @@ export async function VerifyEmail(verificationToken: string) {
         status: 400,
       });
     }
-    const user = await db
-      .select()
-      .from(userTable)
-      .where(eq(userTable.id, token[0].userId));
+    const user = await db.select().from(userTable).where(eq(userTable.id, token[0].userId));
 
     // const user = await db.table("user").where("id", "=", token.user_id).get();
     if (!user || user[0].email !== token[0].email) {
@@ -67,19 +83,12 @@ export async function VerifyEmail(verificationToken: string) {
     }
 
     await lucia.invalidateUserSessions(user[0].id);
-    await db
-      .update(userTable)
-      .set({ email_verified: true })
-      .where(eq(userTable.id, user[0].id));
+    await db.update(userTable).set({ email_verified: true }).where(eq(userTable.id, user[0].id));
 
     const session = await lucia.createSession(user[0].id, {});
     const sessionCookie = lucia.createSessionCookie(session.id);
 
-    cookies().set(
-      sessionCookie.name,
-      sessionCookie.value,
-      sessionCookie.attributes
-    );
+    cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
 
     return {
       message: "Email verified successfully",
