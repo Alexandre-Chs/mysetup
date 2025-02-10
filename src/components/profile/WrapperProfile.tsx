@@ -7,8 +7,14 @@ import UpdateUserProfileCard from "./UpdateUserProfileCard";
 import { validateRequest } from "@/lib/auth/validate-request";
 import { getSocialIcon } from "@/lib/utils/show-social-icons";
 import { getUserInfos } from "@/app/api/users/actions";
+import { Setup } from "@/db/schemas";
 
-const WrapperProfile = async ({ setups, currentUsername }: { setups: any; currentUsername: string }) => {
+type WrapperProfileProps = {
+  setups: Setup[];
+  currentUsername: string;
+};
+
+const WrapperProfile = async ({ setups, currentUsername }: WrapperProfileProps) => {
   const { user } = await validateRequest();
   const userInfos = await getUserInfos(currentUsername);
 

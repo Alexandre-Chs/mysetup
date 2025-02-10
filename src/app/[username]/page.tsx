@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { listUserSetup } from "../api/setups/actions";
 
 export default async function Page({ params }: { params: { username: string } }) {
-  const { username } = params;
+  const { username } = await params;
   let setups;
   try {
     setups = await listUserSetup(username);
