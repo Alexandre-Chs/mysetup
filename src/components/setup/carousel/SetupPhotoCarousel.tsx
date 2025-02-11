@@ -1,12 +1,12 @@
 "use client";
 import React, { useCallback, useEffect } from "react";
 import { EmblaOptionsType } from "embla-carousel";
-import { DotButton, useDotButton } from "./CarouselDotButton";
-import { PrevButton, NextButton, usePrevNextButtons } from "./CarouselArrowButtons";
+import { DotButton, useDotButton } from "./SetupCarouselDotButtons";
+import { PrevButton, NextButton, usePrevNextButtons } from "./SetupCarouselArrowButtons";
 import useEmblaCarousel from "embla-carousel-react";
-import UploadSetupPicture from "../UploadSetupPicture";
-import ImageTagger from "../ImageTagger";
-import ToggleThumbnail from "../ToggleThumbnail";
+import UploadSetupPicture from "../media/SetupMediaUpload";
+import ImageTagger from "../tag/SetupMediaTagger";
+import ToggleThumbnail from "../thumbnail/SetupToggleThumbnail";
 import { IoClose } from "react-icons/io5";
 import { useSetupStore } from "@/store/SetupStore";
 import { toast } from "sonner";

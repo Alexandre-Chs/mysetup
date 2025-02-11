@@ -3,7 +3,7 @@ import { toggleUpVote } from "@/app/api/setups/media/actions";
 import clsx from "clsx";
 import { FaCaretUp } from "react-icons/fa";
 
-const UpVoteButton = ({ upVotesCount, userUpVoted, setupId }: { upVotesCount: number; userUpVoted: boolean; setupId: string }) => {
+const SetupUpvoteButton = ({ upVotesCount, userUpVoted, setupId }: { upVotesCount: number; userUpVoted: boolean; setupId: string }) => {
   const toggleVote = async () => {
     await toggleUpVote(setupId);
   };
@@ -18,4 +18,4 @@ const UpVoteButton = ({ upVotesCount, userUpVoted, setupId }: { upVotesCount: nu
   );
 };
 
-export default UpVoteButton;
+export default SetupUpvoteButton;

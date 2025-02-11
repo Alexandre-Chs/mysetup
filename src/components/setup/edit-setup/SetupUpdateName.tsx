@@ -4,7 +4,7 @@ import { updateSetupName } from "@/app/api/setups/actions";
 import { useDebounce } from "@/hook/useDebounce";
 import React from "react";
 
-const UpdateName = ({ currentName, setupId }: { currentName: string; setupId: string }) => {
+const SetupUpdateName = ({ currentName, setupId }: { currentName: string; setupId: string }) => {
   const [name, setName] = React.useState(currentName);
 
   const handleDebounceText = useDebounce((term: string) => {
@@ -30,4 +30,4 @@ const UpdateName = ({ currentName, setupId }: { currentName: string; setupId: st
   );
 };
 
-export default UpdateName;
+export default SetupUpdateName;

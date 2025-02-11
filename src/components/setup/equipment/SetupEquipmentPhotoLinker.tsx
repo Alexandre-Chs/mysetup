@@ -6,7 +6,7 @@ import { Tag } from "lucide-react";
 import clsx from "clsx";
 import { getEquipmentsSetup } from "@/app/api/setups/actions";
 
-const EquipmentPhotoLinker = () => {
+const SetupEquipmentPhotoLinker = () => {
   const { id } = useParams();
   const [equipments, setEquipments] = useState<EquipmentType[]>([]);
 
@@ -28,4 +28,4 @@ const EquipmentPhotoLinker = () => {
   );
 };
 
-export default EquipmentPhotoLinker;
+export default SetupEquipmentPhotoLinker;

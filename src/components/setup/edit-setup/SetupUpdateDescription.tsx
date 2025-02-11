@@ -5,7 +5,7 @@ import Border from "@/components/ui/border";
 import { useDebounce } from "@/hook/useDebounce";
 import React, { useEffect } from "react";
 
-const UpdateDescription = ({ currentDescription, setupId }: { currentDescription: string; setupId: string }) => {
+const SetupUpdateDescription = ({ currentDescription, setupId }: { currentDescription: string; setupId: string }) => {
   const [description, setDescription] = React.useState(currentDescription);
 
   useEffect(() => {
@@ -37,4 +37,4 @@ const UpdateDescription = ({ currentDescription, setupId }: { currentDescription
   );
 };
 
-export default UpdateDescription;
+export default SetupUpdateDescription;

@@ -1,7 +1,7 @@
+import Border from "@/components/ui/border";
 import React from "react";
-import Border from "../ui/border";
 
-const Description = ({ description }: { description: string | null }) => {
+const SetupEquipmentDescription = ({ description }: { description: string | null }) => {
   return (
     <Border>
       <div className="h-full text-white p-4 flex flex-col items-start justify-start text-bold text-lg">
@@ -17,4 +17,4 @@ const Description = ({ description }: { description: string | null }) => {
   );
 };
 
-export default Description;
+export default SetupEquipmentDescription;

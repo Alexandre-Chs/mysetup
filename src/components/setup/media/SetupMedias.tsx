@@ -5,7 +5,7 @@ import "gridstack/dist/gridstack-extra.min.css";
 import { GridStack } from "gridstack";
 import React from "react";
 import { toast } from "sonner";
-import UploadSetupPicture from "./UploadSetupPicture";
+import UploadSetupPicture from "./SetupMediaUpload";
 import { updateSetupPhoto } from "@/app/api/setups/media/actions";
 
 function randomFill(length: number) {
@@ -13,7 +13,7 @@ function randomFill(length: number) {
   return Array.from({ length }, () => ({ id: id++, w: 1, h: 1 }));
 }
 
-class PhotosUser extends React.Component<any> {
+class SetupMedias extends React.Component<any> {
   state: any;
 
   constructor(props: any) {
@@ -152,4 +152,4 @@ class PhotosUser extends React.Component<any> {
   }
 }
 
-export default PhotosUser;
+export default SetupMedias;

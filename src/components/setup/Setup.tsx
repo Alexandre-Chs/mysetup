@@ -3,8 +3,8 @@
 import React from "react";
 import { Setup as SetupType } from "@/db/schemas";
 import { useSetupStore } from "@/store/SetupStore";
-import PhotoEquipmentCreateModal from "@/components/setup/PhotoEquipmentCreateModal";
-import WrapperNameSetup from "@/components/setup/WrapperNameSetup";
+import PhotoEquipmentCreateModal from "@/components/setup/equipment/SetupEquipmentPhotoCreateModal";
+import WrapperNameSetup from "@/components/setup/name/WrapperNameSetup";
 import WrapperSetup from "@/components/setup/WrapperSetup";
 import { useParams } from "next/navigation";
 import { User } from "lucia";

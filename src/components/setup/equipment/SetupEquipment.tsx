@@ -6,13 +6,13 @@ import { groupSetupItemsByCategory } from "@/lib/utils/group-by-type";
 import { EquipmentType } from "@/types/types";
 import { CircleX, LinkIcon } from "lucide-react";
 import { transformUrlToAffiliate } from "@/app/api/linker/actions";
-import Border from "../ui/border";
-import { Spinner } from "../ui/spinner";
 import { CATEGORY_ORDER } from "@/lib/utils/equipments";
 import { getMainLangUser } from "@/lib/utils/get-lang";
 import { deleteOneEquipment } from "@/app/api/setups/actions";
+import Border from "@/components/ui/border";
+import { Spinner } from "@/components/ui/spinner";
 
-const Equipment = ({ equipments, action, setupId }: { equipments: EquipmentType[]; action?: "add"; setupId?: string }) => {
+const SetupEquipment = ({ equipments, action, setupId }: { equipments: EquipmentType[]; action?: "add"; setupId?: string }) => {
   const [loadingStates, setLoadingStates] = useState<Record<string, boolean>>({});
 
   if (!equipments) return null;
@@ -101,4 +101,4 @@ const Equipment = ({ equipments, action, setupId }: { equipments: EquipmentType[
   );
 };
 
-export default Equipment;
+export default SetupEquipment;

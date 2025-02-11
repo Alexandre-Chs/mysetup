@@ -1,9 +1,9 @@
 import { useSetupStore } from "@/store/SetupStore";
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 import { toast } from "sonner";
 import { updateSetupPublished } from "@/app/api/setups/actions";
 
-const TogglePublish = () => {
+const SetupTogglePublish = () => {
   const setup = useSetupStore((state) => state.setup);
 
   if (!setup) return null;
@@ -16,4 +16,4 @@ const TogglePublish = () => {
   return <Button onClick={togglePublish}>{setup.isPublished ? "Unpublish your setup" : "Publish your setup"}</Button>;
 };
 
-export default TogglePublish;
+export default SetupTogglePublish;

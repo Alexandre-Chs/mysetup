@@ -1,4 +1,4 @@
-import AddNameNewSetup from "@/components/add-setup/AddNameNewSetup";
+import AddNameNewSetup from "@/components/setup/name/SetupAddNewName";
 import WrapperNewSetup from "@/components/setup/new-setup/WrapperNewSetup";
 import React from "react";
 

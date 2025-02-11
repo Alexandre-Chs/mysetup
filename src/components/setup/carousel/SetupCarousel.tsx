@@ -2,15 +2,12 @@
 
 import React, { useEffect } from "react";
 import { EmblaOptionsType } from "embla-carousel";
-import { DotButton, useDotButton } from "./CarouselDotButton";
-import {
-  PrevButton,
-  NextButton,
-  usePrevNextButtons,
-} from "./CarouselArrowButtons";
+import { DotButton, useDotButton } from "./SetupCarouselDotButtons";
+import { PrevButton, NextButton, usePrevNextButtons } from "./SetupCarouselArrowButtons";
 import useEmblaCarousel from "embla-carousel-react";
-import Equipment from "../Equipment";
-import ImageTagger from "../ImageTagger";
+
+import ImageTagger from "../tag/SetupMediaTagger";
+import Equipment from "../equipment/SetupEquipment";
 
 type PropType = {
   slides: any[];
@@ -18,12 +15,11 @@ type PropType = {
   selectedId?: string;
 };
 
-const Carousel: React.FC<PropType> = (props) => {
+const SetupCarousel: React.FC<PropType> = (props) => {
   const { slides, options, selectedId } = props;
   const [emblaRef, emblaApi] = useEmblaCarousel(options);
 
-  const { selectedIndex, scrollSnaps, onDotButtonClick } =
-    useDotButton(emblaApi);
+  const { selectedIndex, scrollSnaps, onDotButtonClick } = useDotButton(emblaApi);
 
   useEffect(() => {
     if (selectedId) {
@@ -34,12 +30,7 @@ const Carousel: React.FC<PropType> = (props) => {
     }
   }, [selectedId, emblaApi, slides]);
 
-  const {
-    prevBtnDisabled,
-    nextBtnDisabled,
-    onPrevButtonClick,
-    onNextButtonClick,
-  } = usePrevNextButtons(emblaApi);
+  const { prevBtnDisabled, nextBtnDisabled, onPrevButtonClick, onNextButtonClick } = usePrevNextButtons(emblaApi);
 
   return (
     <div className="flex flex-row h-full w-full p-8 gap-4">
@@ -49,10 +40,7 @@ const Carousel: React.FC<PropType> = (props) => {
             <div className="embla__viewport" ref={emblaRef}>
               <div className="embla__container">
                 {slides.map((slide) => (
-                  <div
-                    className="embla__slide flex items-center"
-                    key={slide.id}
-                  >
+                  <div className="embla__slide flex items-center" key={slide.id}>
                     <ImageTagger photoId={slide.id} src={slide.media.url} />
                   </div>
                 ))}
@@ -63,39 +51,23 @@ const Carousel: React.FC<PropType> = (props) => {
         <div className="h-1/6 w-full">
           <div className="embla__controls !m-0">
             <div className="embla__buttons">
-              <PrevButton
-                onClick={onPrevButtonClick}
-                disabled={prevBtnDisabled}
-              />
-              <NextButton
-                onClick={onNextButtonClick}
-                disabled={nextBtnDisabled}
-              />
+              <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} />
+              <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />
             </div>
 
             <div className="embla__dots">
               {scrollSnaps.map((_, index) => (
-                <DotButton
-                  key={index}
-                  onClick={() => onDotButtonClick(index)}
-                  className={"embla__dot".concat(
-                    index === selectedIndex ? " embla__dot--selected" : ""
-                  )}
-                />
+                <DotButton key={index} onClick={() => onDotButtonClick(index)} className={"embla__dot".concat(index === selectedIndex ? " embla__dot--selected" : "")} />
               ))}
             </div>
           </div>
         </div>
       </div>
       <div className="w-1/6 h-full">
-        <Equipment
-          equipments={slides[selectedIndex]?.photoEquipments.map(
-            (pE: any) => pE.equipment
-          )}
-        />
+        <Equipment equipments={slides[selectedIndex]?.photoEquipments.map((pE: any) => pE.equipment)} />
       </div>
     </div>
   );
 };
 
-export default Carousel;
+export default SetupCarousel;

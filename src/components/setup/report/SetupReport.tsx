@@ -1,23 +1,23 @@
 import { useParams } from "next/navigation";
-import { Dialog, DialogClose, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
-import { Button } from "../ui/button";
 import { useState } from "react";
 import { TriangleAlert } from "lucide-react";
-import { Textarea } from "../ui/textarea";
 import { toast } from "sonner";
-import { signalSetup } from "@/app/api/setups/actions";
+import { reportSetup } from "@/app/api/setups/actions";
+import { Dialog, DialogClose, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
 
 const REASONS = ["Some/All pictures are not related to a setup", "Inappropriate content (NSFW, Violence, etc.)", "Stolen content", "Duplicate setup", "Other"];
 
-const Signal = () => {
+const SetupReport = () => {
   const { id } = useParams();
 
   const [selectedReason, setSelectedReason] = useState<string | null>(null);
   const [description, setDescription] = useState("");
 
-  async function handleSignal() {
-    await signalSetup(id as string, selectedReason as string, description);
-    toast.success("Signal sent");
+  async function handleReport() {
+    await reportSetup(id as string, selectedReason as string, description);
+    toast.success("Report sent");
     setSelectedReason(null);
     setDescription("");
   }
@@ -43,7 +43,7 @@ const Signal = () => {
         {!!selectedReason && <Textarea placeholder="Tell us more about the issue" value={description} onChange={(e) => setDescription(e.target.value)} />}
         {!!selectedReason && !!description && (
           <DialogClose asChild>
-            <Button className="w-full" variant="destructive" onClick={handleSignal}>
+            <Button className="w-full" variant="destructive" onClick={handleReport}>
               Send report
             </Button>
           </DialogClose>
@@ -53,4 +53,4 @@ const Signal = () => {
   );
 };
 
-export default Signal;
+export default SetupReport;

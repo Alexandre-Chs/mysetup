@@ -1,9 +1,9 @@
 import React from "react";
-import UpVotes from "./UpVotes";
-import WrapperPhotosUser from "./WrapperPhotosUser";
-import WrapperDescriptionSetup from "./WrapperDescriptionSetup";
+import UpVotes from "./upvote/SetupUpvote";
+import WrapperPhotosUser from "./media/WrapperPhotosUser";
+import WrapperDescriptionSetup from "./description/WrapperDescriptionSetup";
 import { User } from "@/types/types";
-import WrapperEquipmentSetup from "./WrapperEquipmentSetup";
+import WrapperEquipmentSetup from "./equipment/WrapperEquipmentSetup";
 import { useSetupStore } from "@/store/SetupStore";
 import { useQuery } from "@tanstack/react-query";
 import { getSocialIcon } from "@/lib/utils/show-social-icons";

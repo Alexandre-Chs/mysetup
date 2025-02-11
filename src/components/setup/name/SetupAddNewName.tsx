@@ -1,10 +1,10 @@
 "use client";
 
 import React from "react";
-import { Input } from "../ui/input";
+import { Input } from "../../ui/input";
 import { useCreateSetupStore } from "@/store/CreateSetupStore";
 
-const AddNameNewSetup = () => {
+const SetupAddNewName = () => {
   const [name, setName] = React.useState("");
   const { addNewNameSetup } = useCreateSetupStore();
 
@@ -13,14 +13,7 @@ const AddNameNewSetup = () => {
     addNewNameSetup({ name: e.target.value });
   };
 
-  return (
-    <Input
-      placeholder="Enter your setup name"
-      className="w-2/4 rounded-md p-2 text-sm"
-      onChange={(e) => handleChangeName(e)}
-      value={name}
-    />
-  );
+  return <Input placeholder="Enter your setup name" className="w-2/4 rounded-md p-2 text-sm" onChange={(e) => handleChangeName(e)} value={name} />;
 };
 
-export default AddNameNewSetup;
+export default SetupAddNewName;

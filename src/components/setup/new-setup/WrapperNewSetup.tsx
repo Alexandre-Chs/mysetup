@@ -1,9 +1,9 @@
 import React from "react";
-import UserProfile from "../UserProfile";
-import UpVotes from "../UpVotes";
-import NewDescription from "./NewDescription";
-import PhotosUser from "../Photos";
-import NewEquipmentsClient from "./NewEquipments.client";
+import UserProfile from "../../user/UserProfile";
+import UpVotes from "../upvote/SetupUpvote";
+import NewDescription from "../description/SetupNewDescription";
+import PhotosUser from "../media/SetupMedias";
+import NewEquipmentsClient from "../equipment/SetupNewEquipments.client";
 
 const WrapperNewSetup = () => {
   return (

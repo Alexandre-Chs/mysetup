@@ -317,10 +317,10 @@ export async function listUserSetup(username: string) {
 }
 
 //
-//#region signalSetup
+//#region reportSetup
 //
 
-export async function signalSetup(setupId: string, reason: string, explication?: string) {
+export async function reportSetup(setupId: string, reason: string, explication?: string) {
   const { user } = await validateRequest();
 
   await discordLog(`🚨 Signal du setup ${setupId} par ${user?.username} !\nRaison : ${reason}\nComplément :\n\`\`\`${explication}\`\`\``);

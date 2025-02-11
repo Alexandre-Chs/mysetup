@@ -9,13 +9,13 @@ import { transformUrlToAffiliate } from "@/app/api/linker/actions";
 import { getMainLangUser } from "@/lib/utils/get-lang";
 import { deleteTagOnPhoto } from "@/app/api/setups/media/actions";
 
-type ImageTaggerProps = {
+type SetupMediaTaggerProps = {
   src: string;
   photoId: string;
   isOwner?: boolean;
 };
 
-const ImageTagger = ({ src, photoId, isOwner }: ImageTaggerProps) => {
+const SetupMediaTagger = ({ src, photoId, isOwner }: SetupMediaTaggerProps) => {
   const tagging = useSetupStore((state) => state.tagging);
 
   const [newTagCoords, setNewTagCoords] = useState<{
@@ -97,4 +97,4 @@ const ImageTagger = ({ src, photoId, isOwner }: ImageTaggerProps) => {
   );
 };
 
-export default ImageTagger;
+export default SetupMediaTagger;

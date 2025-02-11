@@ -4,7 +4,7 @@ import ButtonAdd from "@/components/ui/button-add";
 import { useCreateSetupStore } from "@/store/CreateSetupStore";
 import React, { useRef, useEffect } from "react";
 
-const NewDescription = () => {
+const SetupNewDescription = () => {
   const [addDescription, setAddDescription] = React.useState(false);
   const [description, setDescription] = React.useState("");
   const { addNewDescription } = useCreateSetupStore();
@@ -38,13 +38,10 @@ const NewDescription = () => {
           value={description}
         />
       ) : (
-        <ButtonAdd
-          onClickFunction={handleAddDescription}
-          text="Add description"
-        />
+        <ButtonAdd onClickFunction={handleAddDescription} text="Add description" />
       )}
     </div>
   );
 };
 
-export default NewDescription;
+export default SetupNewDescription;

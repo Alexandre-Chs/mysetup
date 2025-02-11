@@ -6,7 +6,7 @@ import { Star } from "lucide-react";
 import { toast } from "sonner";
 import { setThumbnail } from "@/app/api/setups/actions";
 
-const ToggleThumbnail = ({ isOwner }: { isOwner: boolean }) => {
+const SetupToggleThumbnail = ({ isOwner }: { isOwner: boolean }) => {
   const { id } = useParams<{ id: string }>();
   const currentPhotoId = useSetupStore((state) => state.currentPhotoId);
   const setup = useSetupStore((state) => state.setup);
@@ -30,4 +30,4 @@ const ToggleThumbnail = ({ isOwner }: { isOwner: boolean }) => {
   );
 };
 
-export default ToggleThumbnail;
+export default SetupToggleThumbnail;

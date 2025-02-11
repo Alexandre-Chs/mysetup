@@ -11,7 +11,7 @@ function camelCase(str: string) {
   return str[0].toUpperCase() + str.slice(1).toLowerCase();
 }
 
-const PhotoEquipmentCreateModal = () => {
+const SetupEquipmentPhotoCreateModal = () => {
   const newTagCoordinates = usePhotoEquipmentStore((state) => state.newTagCoordinates);
   const setNewTagCoordinates = usePhotoEquipmentStore((state) => state.setNewTagCoordinates);
   const selectedPhotoId = usePhotoEquipmentStore((state) => state.selectedPhotoId);
@@ -73,4 +73,4 @@ const PhotoEquipmentCreateModal = () => {
   );
 };
 
-export default PhotoEquipmentCreateModal;
+export default SetupEquipmentPhotoCreateModal;

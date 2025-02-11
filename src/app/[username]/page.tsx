@@ -1,4 +1,4 @@
-import WrapperProfile from "@/components/profile/WrapperProfile";
+import WrapperProfile from "@/components/user/WrapperProfile";
 import { notFound } from "next/navigation";
 import { listUserSetup } from "../api/setups/actions";
 

@@ -1,11 +1,11 @@
 "use client";
 import React, { useEffect } from "react";
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure } from "@heroui/react";
-import Carousel from "./Carousel";
+import Carousel from "./SetupCarousel";
 
-const OPTIONS = { loop: true }
+const OPTIONS = { loop: true };
 
-export default function ModalCarousel({ photos, selectedId }: { photos: any, selectedId: string | undefined }) {
+export default function SetupCarouselModal({ photos, selectedId }: { photos: any; selectedId: string | undefined }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   useEffect(() => {

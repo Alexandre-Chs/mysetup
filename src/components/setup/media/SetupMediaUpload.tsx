@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import { Tooltip } from "@heroui/react";
 import { uploadSetupPicture } from "@/app/api/media/actions";
 
-const UploadSetupPicture = ({ isOwner }: { isOwner?: boolean }) => {
+const SetupMediaUpload = ({ isOwner }: { isOwner?: boolean }) => {
   const params = useParams<{ id: string }>();
 
   const fileInput = useRef<HTMLInputElement>(null);
@@ -48,4 +48,4 @@ const UploadSetupPicture = ({ isOwner }: { isOwner?: boolean }) => {
   );
 };
 
-export default UploadSetupPicture;
+export default SetupMediaUpload;
