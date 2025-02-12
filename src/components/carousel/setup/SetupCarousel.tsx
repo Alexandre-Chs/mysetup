@@ -5,9 +5,8 @@ import { EmblaOptionsType } from "embla-carousel";
 import { DotButton, useDotButton } from "./SetupCarouselDotButtons";
 import { PrevButton, NextButton, usePrevNextButtons } from "./SetupCarouselArrowButtons";
 import useEmblaCarousel from "embla-carousel-react";
-
-import ImageTagger from "../tag/SetupMediaTagger";
-import Equipment from "../equipment/SetupEquipment";
+import SetupEquipment from "@/components/setup/equipment/SetupEquipment";
+import SetupMediaTagger from "@/components/setup/tag/SetupMediaTagger";
 
 type PropType = {
   slides: any[];
@@ -41,7 +40,7 @@ const SetupCarousel: React.FC<PropType> = (props) => {
               <div className="embla__container">
                 {slides.map((slide) => (
                   <div className="embla__slide flex items-center" key={slide.id}>
-                    <ImageTagger photoId={slide.id} src={slide.media.url} />
+                    <SetupMediaTagger photoId={slide.id} src={slide.media.url} />
                   </div>
                 ))}
               </div>
@@ -64,7 +63,7 @@ const SetupCarousel: React.FC<PropType> = (props) => {
         </div>
       </div>
       <div className="w-1/6 h-full">
-        <Equipment equipments={slides[selectedIndex]?.photoEquipments.map((pE: any) => pE.equipment)} />
+        <SetupEquipment equipments={slides[selectedIndex]?.photoEquipments.map((pE: any) => pE.equipment)} />
       </div>
     </div>
   );

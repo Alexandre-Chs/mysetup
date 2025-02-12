@@ -1,10 +1,9 @@
 "use client";
 
 import { logout } from "@/app/api/(auth)/signout/actions";
-import { Button } from "@heroui/react";
 import React from "react";
 
-const SignOutMobileButton = () => {
+const NavbarButtonSignout = () => {
   const handleClick = async () => {
     await logout();
   };
@@ -18,4 +17,4 @@ const SignOutMobileButton = () => {
   );
 };
 
-export default SignOutMobileButton;
+export default NavbarButtonSignout;

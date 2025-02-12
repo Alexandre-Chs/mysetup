@@ -4,13 +4,13 @@ import { EmblaOptionsType } from "embla-carousel";
 import { DotButton, useDotButton } from "./SetupCarouselDotButtons";
 import { PrevButton, NextButton, usePrevNextButtons } from "./SetupCarouselArrowButtons";
 import useEmblaCarousel from "embla-carousel-react";
-import UploadSetupPicture from "../media/SetupMediaUpload";
-import ImageTagger from "../tag/SetupMediaTagger";
-import ToggleThumbnail from "../thumbnail/SetupToggleThumbnail";
 import { IoClose } from "react-icons/io5";
 import { useSetupStore } from "@/store/SetupStore";
 import { toast } from "sonner";
 import { deleteSetupPhoto, ifPhotoAsThumbnail } from "@/app/api/setups/media/actions";
+import SetupMediaTagger from "@/components/setup/tag/SetupMediaTagger";
+import SetupMediaUpload from "@/components/setup/media/SetupMediaUpload";
+import SetupToggleThumbnail from "@/components/setup/thumbnail/SetupToggleThumbnail";
 
 type PropType = {
   slides: any[];
@@ -72,7 +72,7 @@ const SetupPhotoCarousel: React.FC<PropType> = (props) => {
               <div className="embla__container !w-auto">
                 {slides.map((slide: any) => (
                   <div className="embla__slide flex items-center relative group" key={slide.id}>
-                    <ImageTagger photoId={slide.id} src={slide.media.url} isOwner={props.isOwner} />
+                    <SetupMediaTagger photoId={slide.id} src={slide.media.url} isOwner={props.isOwner} />
                     {props.isOwner && (
                       <div
                         onClick={() => handleDelete(slide.id)}
@@ -91,8 +91,8 @@ const SetupPhotoCarousel: React.FC<PropType> = (props) => {
             <div className="embla__buttons">
               <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} />
               <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />
-              <UploadSetupPicture isOwner={props.isOwner} />
-              <ToggleThumbnail isOwner={props.isOwner} />
+              <SetupMediaUpload isOwner={props.isOwner} />
+              <SetupToggleThumbnail isOwner={props.isOwner} />
             </div>
 
             <div className="embla__dots">

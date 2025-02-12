@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 import { User } from "lucia";
 import { updateUserInfosEmail, updateUserInfosUsername } from "@/app/api/(auth)/user/actions";
 
-export default function UserInfosModal({ user }: { user: User }) {
+export default function ModalUserInfos({ user }: { user: User }) {
   const [isOpenModal, setIsOpenModal] = React.useState(true);
   const [isMounted, setIsMounted] = React.useState(false);
   const [username, setUsername] = React.useState("");

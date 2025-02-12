@@ -7,7 +7,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { toast } from "sonner";
 
-const Login = () => {
+const AuthLogin = () => {
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -77,4 +77,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default AuthLogin;

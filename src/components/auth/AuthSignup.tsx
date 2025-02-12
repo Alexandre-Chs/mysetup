@@ -8,7 +8,7 @@ import Link from "next/link";
 import { MoveRight } from "lucide-react";
 import { signup } from "@/app/api/(auth)/signup/actions";
 
-const SignUp = () => {
+const AuthSignUp = () => {
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -92,4 +92,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default AuthSignUp;

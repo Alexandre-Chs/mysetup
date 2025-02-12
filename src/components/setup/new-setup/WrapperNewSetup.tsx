@@ -1,5 +1,5 @@
 import React from "react";
-import UserProfile from "../../user/UserProfile";
+import UserProfile from "../../user/profile/UserProfile";
 import UpVotes from "../upvote/SetupUpvote";
 import NewDescription from "../description/SetupNewDescription";
 import PhotosUser from "../media/SetupMedias";

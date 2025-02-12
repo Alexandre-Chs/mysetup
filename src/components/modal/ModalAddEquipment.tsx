@@ -9,7 +9,7 @@ import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Select, Selec
 import { MoveRight } from "lucide-react";
 import React from "react";
 
-const AddEquipmentModal = ({ show, setShowModal, setupId }: { show: boolean; setShowModal: Function; setupId?: string }) => {
+const ModalAddEquipment = ({ show, setShowModal, setupId }: { show: boolean; setShowModal: Function; setupId?: string }) => {
   const [newEquipment, setNewEquipment] = React.useState<TypeEquipment>({ name: "", type: "", category: "", url: "" });
   const [errorMessage, setErrorMessage] = React.useState("");
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -117,4 +117,4 @@ const AddEquipmentModal = ({ show, setShowModal, setupId }: { show: boolean; set
     </Modal>
   );
 };
-export default AddEquipmentModal;
+export default ModalAddEquipment;

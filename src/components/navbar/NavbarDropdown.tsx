@@ -8,7 +8,7 @@ import { User } from "lucia";
 import { ChevronDownIcon, User as UserIcon } from "lucide-react";
 import { SendVerifyEmail } from "@/app/api/(auth)/verification-email/actions";
 
-const DropdownNavBar = ({ user }: { user: User }) => {
+const NavbarDropdown = ({ user }: { user: User }) => {
   const [isVerifying, setIsVerifying] = React.useState(false);
   const router = useRouter();
 
@@ -60,4 +60,4 @@ const DropdownNavBar = ({ user }: { user: User }) => {
   );
 };
 
-export default DropdownNavBar;
+export default NavbarDropdown;

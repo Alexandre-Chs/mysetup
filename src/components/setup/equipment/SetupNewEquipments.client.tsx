@@ -2,7 +2,7 @@
 
 import React from "react";
 import ButtonAdd from "@/components/ui/button-add";
-import AddEquipmentModal from "@/components/modal/AddEquipmentModal";
+import AddEquipmentModal from "@/components/modal/ModalAddEquipment";
 import { Tooltip } from "@heroui/react";
 import { EquipmentType } from "@/types/types";
 

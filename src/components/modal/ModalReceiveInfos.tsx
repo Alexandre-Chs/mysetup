@@ -1,7 +1,7 @@
 import { validateRequest } from "@/lib/auth/validate-request";
 import React from "react";
-import UserInfosModal from "../modal/UserInfosModal";
-import WelcomeModal from "../modal/WelcomeModal";
+import UserInfosModal from "./ModalUserInfos";
+import WelcomeModal from "./ModalWelcome";
 
 const ModalReceiveInfos = async () => {
   const { user } = await validateRequest();

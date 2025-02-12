@@ -7,7 +7,7 @@ import { User } from "@/types/types";
 import { MoveRight, Loader2 } from "lucide-react";
 import { createSetup } from "@/app/api/setups/actions";
 
-const ShareSetupButton = ({ user, setIsMenuOpen }: { user: User; setIsMenuOpen: (value: boolean) => void }) => {
+const NavbarButtonShareSetup = ({ user, setIsMenuOpen }: { user: User; setIsMenuOpen: (value: boolean) => void }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleShareSetup = async () => {
@@ -41,4 +41,4 @@ const ShareSetupButton = ({ user, setIsMenuOpen }: { user: User; setIsMenuOpen: 
   );
 };
 
-export default ShareSetupButton;
+export default NavbarButtonShareSetup;

@@ -4,7 +4,7 @@ import { SendVerifyEmail } from "@/app/api/(auth)/verification-email/actions";
 import { Button } from "@heroui/react";
 import React from "react";
 
-const VerifyEmailButton = () => {
+const AuthVerifyEmailButton = () => {
   const [isVerifying, setIsVerifying] = React.useState(false);
 
   const handleVerifyEmail = async () => {
@@ -28,4 +28,4 @@ const VerifyEmailButton = () => {
   );
 };
 
-export default VerifyEmailButton;
+export default AuthVerifyEmailButton;

@@ -1,13 +1,13 @@
 import React from "react";
 import { Divider } from "@heroui/react";
-import { GlareCard } from "./GlareCard";
 import Link from "next/link";
-import { Card, Carousel } from "./CarouselCard";
-import UpdateUserProfileCard from "./UpdateUserProfileCard";
+import { Card, CarouselUserProfileCard } from "./CarouselUserProfileCard";
+import UpdateUserProfileCard from "./UserProfileUpdateInfos";
 import { validateRequest } from "@/lib/auth/validate-request";
 import { getSocialIcon } from "@/lib/utils/show-social-icons";
 import { getUserInfos } from "@/app/api/users/actions";
 import { Setup } from "@/db/schemas";
+import { UserProfileGlareCard } from "./UserProfileGlareCard";
 
 type WrapperProfileProps = {
   setups: Setup[];
@@ -43,7 +43,7 @@ const WrapperProfile = async ({ setups, currentUsername }: WrapperProfileProps) 
       <div className="flex flex-col xl:flex-row w-full h-full items-center justify-start xl:gap-x-32">
         <div className="group relative flex-shrink-0">
           <div className="absolute -left-[5px] top-0 w-[320px] h-[400px] group-hover:bg-[#2f2f37] blur-xl transition-colors rounded-xl"></div>
-          <GlareCard className="relative z-50">
+          <UserProfileGlareCard className="relative z-50">
             <div className="absolute top-5 right-5">{user?.username === currentUsername && <UpdateUserProfileCard userInfos={userInfos} />}</div>
             <div className="relative flex flex-col items-center justify-center h-full gap-y-12" style={{ pointerEvents: "none" }}>
               <div className="flex flex-col items-center justify-center gap-y-4 w-[300px] flex-wrap">
@@ -66,13 +66,13 @@ const WrapperProfile = async ({ setups, currentUsername }: WrapperProfileProps) 
                 </div>
               </div>
             </div>
-          </GlareCard>
+          </UserProfileGlareCard>
         </div>
 
         <Divider orientation="vertical" className="hidden xl:block h-[600px] w-[1px] bg-gradient-to-t from-transparent via-separator/20 to-transparent mx-4 md:mx-6 lg:mx-8 flex-shrink-0" />
 
         <div className="flex-grow overflow-x-auto w-full">
-          <Carousel items={carouselItems} initialScroll={0} user={user} currentUsername={currentUsername} />
+          <CarouselUserProfileCard items={carouselItems} initialScroll={0} user={user} currentUsername={currentUsername} />
         </div>
       </div>
     </div>

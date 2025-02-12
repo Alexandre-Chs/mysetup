@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { validPassword } from "@/zod/auth/schema-auth";
 import { toast } from "sonner";
 
-export default function ResetPasswordForm({ token }: { token: string }) {
+export default function AuthResetPasswordForm({ token }: { token: string }) {
   const [password, setPassword] = useState("");
   const [isSendingEmail, setIsSendingEmail] = useState(false);
   const [error, setError] = useState("");
@@ -45,10 +45,7 @@ export default function ResetPasswordForm({ token }: { token: string }) {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="max-w-[18rem] w-full flex items-center justify-center flex-col gap-y-3"
-    >
+    <form onSubmit={handleSubmit} className="max-w-[18rem] w-full flex items-center justify-center flex-col gap-y-3">
       <input
         type="password"
         value={password}
@@ -61,8 +58,7 @@ export default function ResetPasswordForm({ token }: { token: string }) {
       <button
         type="submit"
         className="w-full text-black bg-[#D0D1D1] relative px-4 py-2 rounded-[8px] flex items-center justify-center group disabled:opacity-50 disabled:cursor-not-allowed"
-        disabled={isSendingEmail}
-      >
+        disabled={isSendingEmail}>
         {isSendingEmail ? "Loading..." : "Reset password"}
       </button>
       {error && <p className="text-red-500">{error}</p>}

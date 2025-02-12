@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect } from "react";
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure } from "@heroui/react";
-import Carousel from "./SetupCarousel";
+import { Modal, ModalContent, useDisclosure } from "@heroui/react";
+import SetupCarousel from "./SetupCarousel";
 
 const OPTIONS = { loop: true };
 
@@ -20,7 +20,7 @@ export default function SetupCarouselModal({ photos, selectedId }: { photos: any
         <ModalContent className="bg-stone-700 bg-opacity-90 border-none shadow-none w-[90vw] h-[90vh] !max-w-none !m-0">
           {(onClose) => (
             <div className="h-full w-full flex items-center justify-center">
-              <Carousel slides={photos} options={OPTIONS} selectedId={selectedId} />
+              <SetupCarousel slides={photos} options={OPTIONS} selectedId={selectedId} />
             </div>
           )}
         </ModalContent>

@@ -5,10 +5,10 @@ import React, { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogTrigger } from "@/components/ui/dialog";
 import { Button, Input, Textarea } from "@heroui/react";
 import { Label } from "@radix-ui/react-label";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "../../ui/select";
 import { UserProfile, validUserInfosProfile } from "@/zod/profile/userinfos";
 import { toast } from "sonner";
-import AvatarUpload from "./AvatarUpload";
+import AvatarUpload from "../UserUploadAvatarMedia";
 import { updateProfile } from "@/app/api/users/actions";
 
 type SocialLink = {
@@ -33,7 +33,7 @@ const socialLinksItems = [
   { name: "youtube", label: "Youtube" },
 ];
 
-const UpdateUserProfileCard = ({ userInfos }: { userInfos: any }) => {
+const UserProfileUpdateInfos = ({ userInfos }: { userInfos: any }) => {
   const [socialLinks, setSocialLinks] = useState<SocialLink[]>(userInfos.socialLinks ? userInfos.socialLinks : []);
   const [profileDescription, setProfileDescription] = useState(userInfos?.profile?.profileDescription ? userInfos.profile.profileDescription : "");
   const [open, setOpen] = useState(false);
@@ -127,4 +127,4 @@ const UpdateUserProfileCard = ({ userInfos }: { userInfos: any }) => {
   );
 };
 
-export default UpdateUserProfileCard;
+export default UserProfileUpdateInfos;

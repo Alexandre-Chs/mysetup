@@ -2,7 +2,7 @@ import { deleteUserPicture, uploadUserPicture } from "@/app/api/media/actions";
 import { Trash2 } from "lucide-react";
 import { useRef } from "react";
 
-const AvatarUpload = ({ media, editable }: { media: any; editable?: boolean }) => {
+const UserUploadAvatarMedia = ({ media, editable }: { media: any; editable?: boolean }) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = async (evt: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,4 +41,4 @@ const AvatarUpload = ({ media, editable }: { media: any; editable?: boolean }) =
   );
 };
 
-export default AvatarUpload;
+export default UserUploadAvatarMedia;

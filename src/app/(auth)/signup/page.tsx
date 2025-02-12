@@ -1,9 +1,9 @@
-import { LoginProvider } from "@/components/auth/LoginProviders";
-import SignUp from "@/components/auth/Signup";
+import { LoginProvider } from "@/components/auth/AuthLoginProviders";
+import SignUp from "@/components/auth/AuthSignup";
 import React from "react";
 import { Divider } from "@heroui/divider";
 import "@/components/carousel/signup-carousel/embla.css";
-import WrapperSignupCarousel from "@/components/carousel/signup-carousel/WrapperSignupCarousel";
+import WrapperSignupCarousel from "@/components/carousel/signup/WrapperSignupCarousel";
 
 const Page = () => {
   return (

@@ -5,7 +5,7 @@ import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button } from
 import { toast } from "sonner";
 import { deleteSetup } from "@/app/api/setups/actions";
 
-export default function DeleteSetupModal({ show, setShowModal, setupId }: { show: boolean; setShowModal: (show: boolean) => void; setupId: string }) {
+export default function ModalDeleteSetup({ show, setShowModal, setupId }: { show: boolean; setShowModal: (show: boolean) => void; setupId: string }) {
   const [isDeleting, setIsDeleting] = useState(false);
 
   const handleClose = () => {

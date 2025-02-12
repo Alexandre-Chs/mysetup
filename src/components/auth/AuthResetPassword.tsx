@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "sonner";
 
-const ResetPassword = () => {
+const AuthResetPassword = () => {
   const [isSendingEmail, setIsSendingEmail] = useState(false);
   const [error, setError] = useState("");
 
@@ -51,4 +51,4 @@ const ResetPassword = () => {
   );
 };
 
-export default ResetPassword;
+export default AuthResetPassword;

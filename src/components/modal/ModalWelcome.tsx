@@ -8,7 +8,7 @@ import { User } from "lucia";
 import { SendVerifyEmail } from "@/app/api/(auth)/verification-email/actions";
 import { setFirstVisit } from "@/app/api/users/actions";
 
-export default function WelcomeModal({ user }: { user: User }) {
+export default function ModalWelcome({ user }: { user: User }) {
   const [showModal, setShowModal] = React.useState(true);
   const [isVerifying, setIsVerifying] = React.useState(false);
 
