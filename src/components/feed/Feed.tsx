@@ -1,9 +1,9 @@
-import { GridStack } from "gridstack";
-import InfiniteScroll from "react-infinite-scroll-component";
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { Skeleton } from "../ui/skeleton";
-import FeedGrid from "./FeedGrid";
-import { getPaginatedSetupPhotos } from "@/app/api/setups/media/actions";
+import { GridStack } from 'gridstack';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { Skeleton } from '../ui/skeleton';
+import FeedGrid from './FeedGrid';
+import { getPaginatedSetupPhotos } from '@/app/api/setups/media/actions';
 
 function random() {
   const numbers = [2, 2, 2, 2, 2, 4, 4, 4];
@@ -21,13 +21,13 @@ function random() {
 }
 
 const Loader = () => {
-  const [points, setPoints] = React.useState(".");
+  const [points, setPoints] = React.useState('.');
 
   useEffect(() => {
     const interval = setInterval(() => {
       setPoints((prev) => {
-        if (prev.length === 3) return ".";
-        return prev + ".";
+        if (prev.length === 3) return '.';
+        return prev + '.';
       });
     }, 500);
 
@@ -69,7 +69,7 @@ const EndOfList = () => {
   return <h2 className="font-light text-sm md:text-xl sm:text-medium text-textColor md:py-4 py-0 max-w-xl mx-auto text-center px-4 md:px-0">No more setups for the moment</h2>;
 };
 
-const Feed = () => {
+export const Feed = () => {
   const [grid, setGrid] = useState<GridStack | null>(null);
   const [dataLength, setDataLength] = useState(0);
   const [page, setPage] = useState(0);
@@ -124,7 +124,7 @@ const Feed = () => {
               </div>
               <div class="absolute bottom-0 left-0 right-0 p-4 bg-black/30 backdrop-blur-lg transform translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out">
                 <p class="text-white text-center font-medium">
-                  ${item.username}${item.title ? " - " + item.title : ""}
+                  ${item.username}${item.title ? ' - ' + item.title : ''}
                 </p>
               </div>
             </div>
@@ -132,7 +132,7 @@ const Feed = () => {
         });
       });
     } catch (error) {
-      console.error("Error while loading feed:", error);
+      console.error('Error while loading feed:', error);
     }
   }, [grid, page, totalPage]);
 
@@ -148,5 +148,3 @@ const Feed = () => {
     </InfiniteScroll>
   );
 };
-
-export default Feed;
