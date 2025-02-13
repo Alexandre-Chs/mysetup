@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState, createContext, JSX } from "react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/utils";
 import { motion } from "framer-motion";
 import Image, { ImageProps } from "next/image";
 import { ChevronLeftIcon, ChevronRightIcon, Trash2 } from "lucide-react";

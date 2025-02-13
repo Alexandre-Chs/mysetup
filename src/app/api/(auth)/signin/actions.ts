@@ -1,6 +1,6 @@
 "use server";
 
-import { validSchemaAuth } from "@/zod/auth/schema-auth";
+import { validSchemaAuth } from "@/lib/zod/auth";
 import { ActionResult } from "next/dist/server/app-render/types";
 import { verify } from "@node-rs/argon2";
 import { reddit } from "@/lib/auth/providers";

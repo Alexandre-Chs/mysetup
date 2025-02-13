@@ -1,10 +1,10 @@
 "use client";
 
 import { createNewEquipments } from "@/app/api/setups/actions";
-import { CATEGORY_ORDER, getItemCategory, SETUP_CATEGORIES } from "@/lib/utils/equipments";
+import { CATEGORY_ORDER, getItemCategory, SETUP_CATEGORIES } from "@/lib/setup/categories";
 import { useCreateSetupStore } from "@/store/CreateSetupStore";
 import { TypeEquipment } from "@/types/types";
-import { validSchemaEquipment } from "@/zod/equipments/schema-equipment";
+import { validSchemaEquipment } from "@/lib/zod/equipments";
 import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Select, SelectItem, SelectSection, useDisclosure } from "@heroui/react";
 import { MoveRight } from "lucide-react";
 import React from "react";

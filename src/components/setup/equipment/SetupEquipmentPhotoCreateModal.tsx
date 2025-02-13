@@ -4,7 +4,7 @@ import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from
 import { useState } from "react";
 import { Select, SelectItem, SelectSection } from "@heroui/react";
 import { useSetupStore } from "@/store/SetupStore";
-import { groupSetupItemsByCategory } from "@/lib/utils/group-by-type";
+import { groupSetupItemsByCategory } from "@/lib/setup/group-items-by-category";
 import { createPhotoEquipment } from "@/app/api/setups/equipments/media/actions";
 
 function camelCase(str: string) {

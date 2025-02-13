@@ -2,12 +2,12 @@
 
 import React, { useState } from "react";
 import "./scrollbar.css";
-import { groupSetupItemsByCategory } from "@/lib/utils/group-by-type";
+import { groupSetupItemsByCategory } from "@/lib/setup/group-items-by-category";
 import { EquipmentType } from "@/types/types";
 import { CircleX, LinkIcon } from "lucide-react";
 import { transformUrlToAffiliate } from "@/app/api/linker/actions";
-import { CATEGORY_ORDER } from "@/lib/utils/equipments";
-import { getMainLangUser } from "@/lib/utils/get-lang";
+import { CATEGORY_ORDER } from "@/lib/setup/categories";
+import { getMainLangUser } from "@/utils/get-lang";
 import { deleteOneEquipment } from "@/app/api/setups/actions";
 import Border from "@/components/ui/border";
 import { Spinner } from "@/components/ui/spinner";

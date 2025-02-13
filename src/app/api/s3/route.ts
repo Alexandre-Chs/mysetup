@@ -1,4 +1,4 @@
-import { formatBytes } from "@/lib/utils/format-bytes";
+import { formatBytes } from "@/utils/format-bytes";
 import { S3 } from "@aws-sdk/client-s3";
 import { NextRequest } from "next/server";
 import { discordLog } from "../(utils)/actions";

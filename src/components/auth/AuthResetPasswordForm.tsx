@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { validPassword } from "@/zod/auth/schema-auth";
+import { validPassword } from "@/lib/zod/auth";
 import { toast } from "sonner";
 
 export default function AuthResetPasswordForm({ token }: { token: string }) {

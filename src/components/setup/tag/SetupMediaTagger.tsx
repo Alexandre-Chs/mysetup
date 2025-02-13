@@ -6,7 +6,7 @@ import { useRef, useState } from "react";
 import { Tooltip } from "@heroui/react";
 import { CircleX } from "lucide-react";
 import { transformUrlToAffiliate } from "@/app/api/linker/actions";
-import { getMainLangUser } from "@/lib/utils/get-lang";
+import { getMainLangUser } from "@/utils/get-lang";
 import { deleteTagOnPhoto } from "@/app/api/setups/media/actions";
 
 type SetupMediaTaggerProps = {

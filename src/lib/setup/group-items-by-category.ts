@@ -1,4 +1,4 @@
-import { CATEGORY_ORDER } from "./equipments";
+import { CATEGORY_ORDER } from "./categories";
 
 type SetupItem = {
   id: string;

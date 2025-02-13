@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import React from "react";
 import { useMutation } from "@tanstack/react-query";
 import { Spinner } from "../ui/spinner";
-import { updateUserInfosEmailZod, updateUserInfosUsernameAndEmailZod, updateUserInfosUsernameZod } from "@/zod/auth/update-user";
+import { updateUserInfosEmailZod, updateUserInfosUsernameAndEmailZod, updateUserInfosUsernameZod } from "@/lib/zod/user";
 import { useRouter } from "next/navigation";
 import { User } from "lucia";
 import { updateUserInfosEmail, updateUserInfosUsername } from "@/app/api/(auth)/user/actions";

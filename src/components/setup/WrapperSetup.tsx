@@ -6,7 +6,7 @@ import { User } from "@/types/types";
 import WrapperEquipmentSetup from "./equipment/WrapperEquipmentSetup";
 import { useSetupStore } from "@/store/SetupStore";
 import { useQuery } from "@tanstack/react-query";
-import { getSocialIcon } from "@/lib/utils/show-social-icons";
+import { getSocialIcon } from "@/components/common/SocialIcons";
 import { useParams } from "next/navigation";
 import Border from "../ui/border";
 import Image from "next/image";

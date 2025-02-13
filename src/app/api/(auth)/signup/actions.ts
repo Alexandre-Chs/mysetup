@@ -5,7 +5,7 @@ import { generateIdFromEntropySize } from "lucia";
 import { lucia } from "@/lib/auth/auth";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { validSchemaAuthWithEmail } from "@/zod/auth/schema-auth";
+import { validSchemaAuthWithEmail } from "@/lib/zod/auth";
 import { addUserToDatabase, ifEmailExistInDatabase, ifUsernameExistInDatabase } from "../user/actions";
 import { discordLog } from "../../(utils)/actions";
 

@@ -6,10 +6,10 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Di
 import { Button, Input, Textarea } from "@heroui/react";
 import { Label } from "@radix-ui/react-label";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "../../ui/select";
-import { UserProfile, validUserInfosProfile } from "@/zod/profile/userinfos";
 import { toast } from "sonner";
 import AvatarUpload from "../UserUploadAvatarMedia";
 import { updateProfile } from "@/app/api/users/actions";
+import { UserProfile, validUserInfosProfile } from "@/lib/zod/user";
 
 type SocialLink = {
   id: string;

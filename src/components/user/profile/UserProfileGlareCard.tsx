@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/utils";
 import { useRef } from "react";
 
 export const UserProfileGlareCard = ({ children, className }: { children: React.ReactNode; className?: string }) => {

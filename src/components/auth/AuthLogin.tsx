@@ -1,7 +1,7 @@
 "use client";
 
 import { login } from "@/app/api/(auth)/signin/actions";
-import { validSchemaAuth } from "@/zod/auth/schema-auth";
+import { validSchemaAuth } from "@/lib/zod/auth";
 import { MoveRight } from "lucide-react";
 import Link from "next/link";
 import React, { useState } from "react";

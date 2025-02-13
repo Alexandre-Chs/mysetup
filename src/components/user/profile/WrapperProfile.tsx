@@ -4,10 +4,10 @@ import Link from "next/link";
 import { Card, CarouselUserProfileCard } from "./CarouselUserProfileCard";
 import UpdateUserProfileCard from "./UserProfileUpdateInfos";
 import { validateRequest } from "@/lib/auth/validate-request";
-import { getSocialIcon } from "@/lib/utils/show-social-icons";
 import { getUserInfos } from "@/app/api/users/actions";
 import { Setup } from "@/db/schemas";
 import { UserProfileGlareCard } from "./UserProfileGlareCard";
+import { SocialIcons } from "@/components/common/SocialIcons";
 
 type WrapperProfileProps = {
   setups: Setup[];
@@ -60,7 +60,7 @@ const WrapperProfile = async ({ setups, currentUsername }: WrapperProfileProps) 
                   {userInfos &&
                     userInfos.socialLinks.map((link) => (
                       <Link key={link.id} href={link.link} style={{ pointerEvents: "auto" }} className="flex items-center justify-center p-1 rounded-xl w-full cursor-pointer pointer-events-auto">
-                        {getSocialIcon(link.socialName)}
+                        {SocialIcons(link.socialName)}
                       </Link>
                     ))}
                 </div>

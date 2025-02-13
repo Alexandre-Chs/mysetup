@@ -14,7 +14,7 @@ import { FaXTwitter } from "react-icons/fa6";
 import { IoLogoYoutube } from "react-icons/io5";
 import { FaLink } from "react-icons/fa6";
 
-export const getSocialIcon = (label: string) => {
+export const SocialIcons = (label: string) => {
   switch (label.toLowerCase()) {
     case "discord":
       return <FaDiscord />;

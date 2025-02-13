@@ -3,7 +3,7 @@
 import { db } from "@/db/db";
 import { userTable } from "@/db/schemas";
 import { validateRequest } from "@/lib/auth/validate-request";
-import { updateUserInfosEmailZod, updateUserInfosUsernameZod } from "@/zod/auth/update-user";
+import { updateUserInfosEmailZod, updateUserInfosUsernameZod } from "@/lib/zod/user";
 import { eq, sql } from "drizzle-orm";
 import { discordLog } from "../../(utils)/actions";
 

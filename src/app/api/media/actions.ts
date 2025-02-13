@@ -9,7 +9,7 @@ import { generateIdFromEntropySize } from "lucia";
 import { Media, mediaTable, setupTable, userTable } from "@/db/schemas";
 import { setupPhotoTable } from "@/db/schemas";
 import { revalidatePath } from "next/cache";
-import { formatBytes } from "@/lib/utils/format-bytes";
+import { formatBytes } from "@/utils/format-bytes";
 import { discordLog } from "../(utils)/actions";
 
 //
