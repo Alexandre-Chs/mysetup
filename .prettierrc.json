@@ -1,7 +1,12 @@
 {
-    "singleAttributePerLine": false,
-    "printWidth": 200,
-    "htmlWhitespaceSensitivity": "ignore",
-    "bracketSameLine": true,
-    "jsxBracketSameLine": true
-  }
+  "singleAttributePerLine": false,
+  "printWidth": 200,
+  "htmlWhitespaceSensitivity": "ignore",
+  "jsxBracketSameLine": true,
+  "tabWidth": 2,
+  "bracketSameLine": false,
+  "jsxSingleQuote": false,
+  "singleQuote": true,
+  "arrowParens": "always",
+  "endOfLine": "lf"
+}
