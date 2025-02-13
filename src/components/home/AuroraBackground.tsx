@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { cn } from "@/utils/utils";
-import React, { ReactNode } from "react";
+import { cn } from '@/utils/cn';
+import React, { ReactNode } from 'react';
 
 interface AuroraBackgroundProps extends React.HTMLProps<HTMLDivElement> {
   children: ReactNode;
@@ -11,7 +11,7 @@ interface AuroraBackgroundProps extends React.HTMLProps<HTMLDivElement> {
 export const AuroraBackground = ({ className, children, showRadialGradient = true, ...props }: AuroraBackgroundProps) => {
   return (
     <main>
-      <div className={cn("relative flex flex-col h-[65vh] items-center justify-center bg-zinc-50 dark:bg-[#070709]  text-slate-950 transition-bg", className)} {...props}>
+      <div className={cn('relative flex flex-col h-[65vh] items-center justify-center bg-zinc-50 dark:bg-[#070709]  text-slate-950 transition-bg', className)} {...props}>
         <div className="absolute inset-0 overflow-hidden">
           <div
             //   I'm sorry but this is what peak developer performance looks like // trigger warning

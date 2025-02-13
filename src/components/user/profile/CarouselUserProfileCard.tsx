@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import React, { useEffect, useState, createContext, JSX } from "react";
-import { cn } from "@/utils/utils";
-import { motion } from "framer-motion";
-import Image, { ImageProps } from "next/image";
-import { ChevronLeftIcon, ChevronRightIcon, Trash2 } from "lucide-react";
-import { useRouter } from "next/navigation";
-import clsx from "clsx";
-import DeleteSetupModal from "../../modal/ModalDeleteSetup";
-import { User } from "lucia";
+import React, { useEffect, useState, createContext, JSX } from 'react';
+import { cn } from '@/utils/cn';
+import { motion } from 'framer-motion';
+import Image, { ImageProps } from 'next/image';
+import { ChevronLeftIcon, ChevronRightIcon, Trash2 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import clsx from 'clsx';
+import DeleteSetupModal from '../../modal/ModalDeleteSetup';
+import { User } from 'lucia';
 
 interface CarouselProps {
   items: JSX.Element[];
@@ -55,13 +55,13 @@ export const CarouselUserProfileCard = ({ items, initialScroll = 0, user, curren
 
   const scrollLeft = () => {
     if (carouselRef.current) {
-      carouselRef.current.scrollBy({ left: -300, behavior: "smooth" });
+      carouselRef.current.scrollBy({ left: -300, behavior: 'smooth' });
     }
   };
 
   const scrollRight = () => {
     if (carouselRef.current) {
-      carouselRef.current.scrollBy({ left: 300, behavior: "smooth" });
+      carouselRef.current.scrollBy({ left: 300, behavior: 'smooth' });
     }
   };
 
@@ -72,7 +72,7 @@ export const CarouselUserProfileCard = ({ items, initialScroll = 0, user, curren
       const scrollPosition = (cardWidth + gap) * (index + 1);
       carouselRef.current.scrollTo({
         left: scrollPosition,
-        behavior: "smooth",
+        behavior: 'smooth',
       });
       setCurrentIndex(index);
     }
@@ -86,9 +86,8 @@ export const CarouselUserProfileCard = ({ items, initialScroll = 0, user, curren
     <CarouselContext.Provider value={{ onCardClose: handleCardClose, currentIndex }}>
       <div className="relative w-full">
         <div className="flex w-full overflow-x-scroll overscroll-x-auto py-10 md:py-20 scroll-smooth [scrollbar-width:none] text-center" ref={carouselRef} onScroll={checkScrollability}>
-          <div className={cn("absolute right-0 z-[1000] h-auto w-[5%] overflow-hidden bg-gradient-to-l")}></div>
-
-          <div className={cn("flex flex-row justify-start gap-4 pl-4")}>
+          <div className={cn('absolute right-0 z-[1000] h-auto w-[5%] overflow-hidden bg-gradient-to-l')}></div>
+          <div className={cn('flex flex-row justify-start gap-4 pl-4')}>
             {items.length > 0 ? (
               items.map((item, index) => (
                 <motion.div
@@ -102,11 +101,11 @@ export const CarouselUserProfileCard = ({ items, initialScroll = 0, user, curren
                     transition: {
                       duration: 0.5,
                       delay: 0.2 * index,
-                      ease: "easeOut",
+                      ease: 'easeOut',
                       once: true,
                     },
                   }}
-                  key={"card" + index}
+                  key={'card' + index}
                   className="last:pr-[5%] md:last:pr-[33%] rounded-3xl">
                   {React.cloneElement(item, { user, currentUsername })}
                 </motion.div>
@@ -151,8 +150,8 @@ export const Card = ({ card, layout = false, user, currentUsername }: { card: Ca
       <motion.div
         layoutId={layout ? `card-${card.title}` : undefined}
         className={clsx(
-          "rounded-3xl bg-backgroundTertiary h-80 w-56 md:h-[40rem] md:w-96 overflow-hidden flex flex-col items-start justify-start relative z-10 cursor-pointer group",
-          card.src === "" ? "bg-backgroundTertiary" : "dark:bg-neutral-900"
+          'rounded-3xl bg-backgroundTertiary h-80 w-56 md:h-[40rem] md:w-96 overflow-hidden flex flex-col items-start justify-start relative z-10 cursor-pointer group',
+          card.src === '' ? 'bg-backgroundTertiary' : 'dark:bg-neutral-900'
         )}
         onClick={handleCardClick}>
         <div className="absolute h-full top-0 inset-x-0 bg-gradient-to-b from-black/50 via-transparent to-transparent z-30 pointer-events-none" />
@@ -172,7 +171,7 @@ export const Card = ({ card, layout = false, user, currentUsername }: { card: Ca
             </div>
           )}
         </div>
-        {card.src !== "" ? (
+        {card.src !== '' ? (
           <BlurImage src={card.src} alt={card.title} fill className="object-cover absolute z-10 inset-0" />
         ) : (
           <div className="w-full h-full bg-backgroundTertiary flex items-center justify-center">
@@ -188,15 +187,15 @@ export const BlurImage = ({ height, width, src, className, alt, ...rest }: Image
   const [isLoading, setLoading] = useState(true);
   return (
     <Image
-      className={cn("transition duration-300", isLoading ? "blur-sm" : "blur-0", className)}
+      className={cn('transition duration-300', isLoading ? 'blur-sm' : 'blur-0', className)}
       onLoad={() => setLoading(false)}
       src={src}
       width={width}
       height={height}
       loading="lazy"
       decoding="async"
-      blurDataURL={typeof src === "string" ? src : undefined}
-      alt={alt ? alt : "Photo of a beautiful setup"}
+      blurDataURL={typeof src === 'string' ? src : undefined}
+      alt={alt ? alt : 'Photo of a beautiful setup'}
       {...rest}
     />
   );
