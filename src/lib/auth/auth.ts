@@ -1,9 +1,9 @@
 // src/auth.ts
-import { db } from "@/db/db";
-import { sessionTable } from "@/db/schemas";
-import { userTable } from "@/db/schemas";
-import { DrizzlePostgreSQLAdapter } from "@lucia-auth/adapter-drizzle";
-import { Lucia } from "lucia";
+import { db } from '@/db/db';
+import { sessionTable } from '@/db/schemas';
+import { userTable } from '@/db/schemas';
+import { DrizzlePostgreSQLAdapter } from '@lucia-auth/adapter-drizzle';
+import { Lucia } from 'lucia';
 
 const adapter = new DrizzlePostgreSQLAdapter(db, sessionTable, userTable);
 
@@ -11,7 +11,7 @@ export const lucia = new Lucia(adapter, {
   sessionCookie: {
     expires: false,
     attributes: {
-      secure: process.env.NODE_ENV === "production",
+      secure: process.env.NODE_ENV === 'production',
     },
   },
   getUserAttributes(databaseUserAttributes) {
@@ -26,7 +26,7 @@ export const lucia = new Lucia(adapter, {
 });
 
 // IMPORTANT!
-declare module "lucia" {
+declare module 'lucia' {
   interface Register {
     Lucia: typeof lucia;
     DatabaseUserAttributes: DatabaseUserAttributes;

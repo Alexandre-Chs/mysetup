@@ -21,4 +21,7 @@
     "userinfos",
     "zustand"
   ],
+  "prettier.printWidth": 600,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "prettier.requireConfig": true
 }

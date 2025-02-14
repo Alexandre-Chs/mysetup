@@ -1,6 +1,6 @@
-import WrapperProfile from "@/components/user/profile/WrapperProfile";
-import { notFound } from "next/navigation";
-import { listUserSetup } from "../api/setups/actions";
+import { notFound } from 'next/navigation';
+import { listUserSetup } from '../api/setups/actions';
+import { WrapperProfile } from '@/components/user/profile/WrapperProfile';
 
 export default async function Page({ params }: { params: { username: string } }) {
   const { username } = await params;

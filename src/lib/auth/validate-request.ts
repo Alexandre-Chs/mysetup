@@ -1,8 +1,9 @@
-import { cache } from "react";
-import { cookies } from "next/headers";
+'use server';
 
-import { type Session, type User } from "lucia";
-import { lucia } from "./auth";
+import { cache } from 'react';
+import { cookies } from 'next/headers';
+import { type Session, type User } from 'lucia';
+import { lucia } from './auth';
 
 export const validateRequest = cache(async (): Promise<{ user: User; session: Session } | { user: null; session: null }> => {
   const sessionId = (await cookies()).get(lucia.sessionCookieName)?.value ?? null;

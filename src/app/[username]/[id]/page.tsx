@@ -1,10 +1,10 @@
-import { getSetup, getThumbnailPhoto } from "@/app/api/setups/actions";
-import Footer from "@/components/footer/Footer";
-import Setup from "@/components/setup/Setup";
+import { getSetup, getThumbnailPhoto } from '@/app/api/setups/actions';
+import { Footer } from '@/components';
+import Setup from '@/components/setup/Setup';
 
-import { validateRequest } from "@/lib/auth/validate-request";
-import { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { validateRequest } from '@/lib/auth/validate-request';
+import { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 
 export async function generateMetadata({ params }: { params: { id: string; username: string } }): Promise<Metadata> {
   const { id, username } = await params;
@@ -12,8 +12,8 @@ export async function generateMetadata({ params }: { params: { id: string; usern
 
   if (!setup) {
     return {
-      title: "Setup not found | MySetup",
-      description: "The requested setup could not be found.",
+      title: 'Setup not found | MySetup',
+      description: 'The requested setup could not be found.',
     };
   }
 
@@ -23,13 +23,13 @@ export async function generateMetadata({ params }: { params: { id: string; usern
   return {
     title: `${setupTitle} | Setup Inspiration & Gear | MySetup`,
     description: `Explore ${username}'s stunning workspace setup and discover all the gear used. From desk accessories to complete setup inspiration, find everything you need.`,
-    keywords: `${username} setup, workspace inspiration, desk setup, gaming setup, setup ideas, workspace gear, desk accessories, ${setup.title || "workspace setup"}, mysetup`,
+    keywords: `${username} setup, workspace inspiration, desk setup, gaming setup, setup ideas, workspace gear, desk accessories, ${setup.title || 'workspace setup'}, mysetup`,
     openGraph: {
       title: `${setupTitle} | Setup Inspiration & Gear | MySetup`,
       description: `Explore ${username}'s stunning workspace setup and discover all the gear used. Find your dream setup inspiration.`,
-      type: "website",
-      siteName: "MySetup",
-      locale: "en_US",
+      type: 'website',
+      siteName: 'MySetup',
+      locale: 'en_US',
       ...(photoUrl && {
         images: [
           {
@@ -42,7 +42,7 @@ export async function generateMetadata({ params }: { params: { id: string; usern
       }),
     },
     twitter: {
-      card: photoUrl ? "summary_large_image" : "summary",
+      card: photoUrl ? 'summary_large_image' : 'summary',
       title: `${setupTitle} | MySetup`,
       description: `Explore ${username}'s stunning workspace setup and discover all the gear used.`,
       ...(photoUrl && {

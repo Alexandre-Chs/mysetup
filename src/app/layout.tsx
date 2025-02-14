@@ -1,12 +1,10 @@
 import type { Metadata } from 'next';
-import './globals.css';
 import { inter, montserrat } from './font';
 import { Toaster } from 'sonner';
 import Providers from './providers';
-import NavBar from '@/components/navbar/navBar';
-import ModalReceiveInfos from '@/components/modal/ModalReceiveInfos';
-import React from 'react';
 import Script from 'next/script';
+import './globals.css';
+import { ModalReceiveInfos, Navbar } from '@/components';
 
 export const metadata: Metadata = {
   title: 'My Setup - Find Setup Inspiration & Gear | Find Your Dream Workspace',
@@ -28,7 +26,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
       <head>{process.env.NODE_ENV === 'production' && <Script async src="https://analytics.mysetup.app/script.js" data-website-id={process.env.WEBSITE_ID} />}</head>
       <body>
         <Providers>
-          <NavBar />
+          <Navbar />
           {children}
           <Toaster />
           <ModalReceiveInfos />

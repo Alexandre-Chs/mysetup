@@ -1,9 +1,9 @@
-import { validateRequest } from "@/lib/auth/validate-request";
-import React from "react";
-import UserInfosModal from "./ModalUserInfos";
-import WelcomeModal from "./ModalWelcome";
+import { validateRequest } from '@/lib/auth/validate-request';
+import React from 'react';
+import UserInfosModal from './ModalUserInfos';
+import WelcomeModal from './ModalWelcome';
 
-const ModalReceiveInfos = async () => {
+export const ModalReceiveInfos = async () => {
   const { user } = await validateRequest();
   if (!user) return;
 
@@ -15,5 +15,3 @@ const ModalReceiveInfos = async () => {
     return <WelcomeModal user={user} />;
   }
 };
-
-export default ModalReceiveInfos;

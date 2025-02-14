@@ -1,23 +1,23 @@
-import React from "react";
-import UpVotes from "./upvote/SetupUpvote";
-import WrapperPhotosUser from "./media/WrapperPhotosUser";
-import WrapperDescriptionSetup from "./description/WrapperDescriptionSetup";
-import { User } from "@/types/types";
-import WrapperEquipmentSetup from "./equipment/WrapperEquipmentSetup";
-import { useSetupStore } from "@/store/SetupStore";
-import { useQuery } from "@tanstack/react-query";
-import { getSocialIcon } from "@/components/common/SocialIcons";
-import { useParams } from "next/navigation";
-import Border from "../ui/border";
-import Image from "next/image";
-import { getUserInfos } from "@/app/api/users/actions";
+import React from 'react';
+import UpVotes from './upvote/SetupUpvote';
+import WrapperPhotosUser from './media/WrapperPhotosUser';
+import WrapperDescriptionSetup from './description/WrapperDescriptionSetup';
+import { User } from '@/types/types';
+import WrapperEquipmentSetup from './equipment/WrapperEquipmentSetup';
+import { useSetupStore } from '@/store/SetupStore';
+import { useQuery } from '@tanstack/react-query';
+import { useParams } from 'next/navigation';
+import Border from '../ui/border';
+import Image from 'next/image';
+import { getUserInfos } from '@/app/api/users/actions';
+import { SocialIcons } from '../common/SocialIcons';
 
 const WrapperSetup = ({ currentUser, isOwner }: { currentUser: User | null; isOwner: boolean }) => {
   const setup = useSetupStore((state) => state.setup);
   const { username } = useParams();
 
   const { data: userInfos } = useQuery({
-    queryKey: ["userInfos", username],
+    queryKey: ['userInfos', username],
     queryFn: async () => {
       if (!currentUser) return null;
       return await getUserInfos(username as string);
@@ -41,7 +41,7 @@ const WrapperSetup = ({ currentUser, isOwner }: { currentUser: User | null; isOw
         <Border>
           <div className="flex items-center justify-center flex-1 row-span-1 h-full xl:min-h-auto flex-col">
             <div className="flex justify-center items-center flex-row gap-x-4 sm:gap-4 w-full px-4">
-              <Image alt="user profile picture" src={userInfos?.media?.url || "/default-user.jpg"} className="size-12 rounded-full" width={48} height={48} />
+              <Image alt="user profile picture" src={userInfos?.media?.url || '/default-user.jpg'} className="size-12 rounded-full" width={48} height={48} />
               <div>
                 <a href={`/${username}`} className="font-medium text-xl xl:text-base">
                   {username}
@@ -50,8 +50,8 @@ const WrapperSetup = ({ currentUser, isOwner }: { currentUser: User | null; isOw
                   {userInfos?.socialLinks
                     ? userInfos?.socialLinks.map((link: any) => (
                         <a key={link.id} href={link.link} target="_blank">
-                          {" "}
-                          {getSocialIcon(link.socialName)}{" "}
+                          {' '}
+                          {SocialIcons(link.socialName)}{' '}
                         </a>
                       ))
                     : null}

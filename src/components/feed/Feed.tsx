@@ -1,28 +1,14 @@
+'use client';
+
 import { GridStack } from 'gridstack';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Skeleton } from '../ui/skeleton';
-import FeedGrid from './FeedGrid';
 import { getPaginatedSetupPhotos } from '@/app/api/setups/media/actions';
-
-function random() {
-  const numbers = [2, 2, 2, 2, 2, 4, 4, 4];
-  const tabletNumbers = [4, 4, 4, 4, 4, 8, 8, 8];
-  const mobileNumbers = [6, 6, 6, 6, 6, 12, 12, 12];
-  const documentWidth = document.body.clientWidth;
-  const isMobile = documentWidth < 768;
-  const isTablet = documentWidth >= 768 && documentWidth < 1720;
-  if (isMobile) {
-    return mobileNumbers[Math.floor(Math.random() * mobileNumbers.length)];
-  } else if (isTablet) {
-    return tabletNumbers[Math.floor(Math.random() * tabletNumbers.length)];
-  }
-  return numbers[Math.floor(Math.random() * numbers.length)];
-}
+import { randomSetup } from '@/lib/feed/random-setup';
+import { Skeleton, FeedSetup } from '@/components';
 
 const Loader = () => {
   const [points, setPoints] = React.useState('.');
-
   useEffect(() => {
     const interval = setInterval(() => {
       setPoints((prev) => {
@@ -112,8 +98,8 @@ export const Feed = () => {
         if (loadedSetupIds.current.has(item.setupId)) return;
         loadedSetupIds.current.add(item.setupId);
         grid.addWidget({
-          w: random(),
-          h: random(),
+          w: randomSetup(),
+          h: randomSetup(),
           content: `
             <div class="relative w-full h-full overflow-hidden rounded-lg cursor-pointer group">
               <div
@@ -134,7 +120,7 @@ export const Feed = () => {
     } catch (error) {
       console.error('Error while loading feed:', error);
     }
-  }, [grid, page, totalPage]);
+  }, [grid, page, totalPage, fetching]);
 
   useEffect(() => {
     if (grid) {
@@ -144,7 +130,7 @@ export const Feed = () => {
 
   return (
     <InfiniteScroll dataLength={dataLength} next={getSetupPhotos} hasMore={page < totalPage} loader={<Loader />} endMessage={<EndOfList />}>
-      <FeedGrid />
+      <FeedSetup />
     </InfiniteScroll>
   );
 };
