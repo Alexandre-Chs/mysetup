@@ -1,20 +1,20 @@
-"use client";
+'use client';
 
-import { GrGoogle } from "react-icons/gr";
-import { useMutation } from "@tanstack/react-query";
-import { toast } from "sonner";
-import { loginWithGoogle, loginWithReddit } from "@/app/api/(auth)/signin/actions";
+import { GrGoogle } from 'react-icons/gr';
+import { useMutation } from '@tanstack/react-query';
+import { toast } from 'sonner';
+import { loginWithGoogle, loginWithReddit } from '@/app/api/(auth)/signin/actions';
 
-export const LoginProvider = () => {
+export const AuthLoginProviders = () => {
   const googleMutation = useMutation({
     mutationFn: async () => {
       return await loginWithGoogle();
     },
     onSuccess: () => {
-      console.log("success");
+      console.log('success');
     },
     onError: (error) => {
-      toast.error(error.message ?? "An error occurred");
+      toast.error(error.message ?? 'An error occurred');
     },
   });
 
@@ -23,10 +23,10 @@ export const LoginProvider = () => {
       return await loginWithReddit();
     },
     onSuccess: () => {
-      console.log("success");
+      console.log('success');
     },
     onError: (error) => {
-      toast.error(error.message ?? "An error occurred");
+      toast.error(error.message ?? 'An error occurred');
     },
   });
 

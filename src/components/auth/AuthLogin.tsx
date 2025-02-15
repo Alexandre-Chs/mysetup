@@ -1,38 +1,38 @@
-"use client";
+'use client';
 
-import { login } from "@/app/api/(auth)/signin/actions";
-import { validSchemaAuth } from "@/lib/zod/auth";
-import { MoveRight } from "lucide-react";
-import Link from "next/link";
-import React, { useState } from "react";
-import { toast } from "sonner";
+import { login } from '@/app/api/(auth)/signin/actions';
+import { validSchemaAuth } from '@/lib/zod/auth';
+import React, { useState } from 'react';
+import { toast } from 'sonner';
+import Link from 'next/link';
+import { MoveRight } from 'lucide-react';
 
-const AuthLogin = () => {
-  const [errorMessage, setErrorMessage] = useState("");
+export const AuthLogin = () => {
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.target as HTMLFormElement);
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
+    const email = formData.get('email') as string;
+    const password = formData.get('password') as string;
     const parseDataWithZod = validSchemaAuth.safeParse({
       email,
       password,
     });
 
     if (!parseDataWithZod.success) {
-      const errorMessages = parseDataWithZod.error.errors.map((error) => error.message).join(", ");
+      const errorMessages = parseDataWithZod.error.errors.map((error) => error.message).join(', ');
       setErrorMessage(errorMessages);
       return;
     }
 
     const result = await login(formData);
-    if (result && result.status === "error") {
+    if (result && result.status === 'error') {
       setErrorMessage(result.message);
       return;
     }
 
-    toast.success("Logged in successfully");
+    toast.success('Logged in successfully');
   };
 
   return (
@@ -76,5 +76,3 @@ const AuthLogin = () => {
     </div>
   );
 };
-
-export default AuthLogin;

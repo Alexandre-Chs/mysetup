@@ -1,5 +1,5 @@
-import ResetPasswordEmailTemplate from "@/lib/resend/template/ResetPassword";
-import { Resend } from "resend";
+import EmailResetPassword from '@/lib/resend/template/EmailResetPassword';
+import { Resend } from 'resend';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -7,10 +7,10 @@ export async function POST(req: Request) {
   const { email, verificationLink } = await req.json();
   try {
     const { data, error } = await resend.emails.send({
-      from: "Mysetup <contact@mysetup.app>",
+      from: 'Mysetup <contact@mysetup.app>',
       to: [email],
-      subject: "Reset your password",
-      react: ResetPasswordEmailTemplate(email, verificationLink),
+      subject: 'Reset your password',
+      react: EmailResetPassword(email, verificationLink),
     });
 
     if (error) {

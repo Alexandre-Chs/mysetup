@@ -1,18 +1,16 @@
-import Login from "@/components/auth/AuthLogin";
-import { LoginProvider } from "@/components/auth/AuthLoginProviders";
-import React from "react";
+import { AuthLogin, AuthLoginProviders } from '@/components';
 
-const Page = () => {
+const LoginPage = () => {
   return (
     <div className="flex flex-col items-center justify-center h-[90vh]">
       <div className="max-w-[18rem] w-full flex items-center justify-center flex-col">
         <h1 className="text-2xl font-medium text-white pb-6">Log in to My Setup</h1>
-        <LoginProvider />
+        <AuthLoginProviders />
         <p className="text-sm text-textColor pt-4 pb-3">or</p>
-        <Login />
+        <AuthLogin />
       </div>
     </div>
   );
 };
 
-export default Page;
+export default LoginPage;

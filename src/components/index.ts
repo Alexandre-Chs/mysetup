@@ -1,4 +1,5 @@
 // HOME
+export { Home } from '@components/home/Home';
 export { HomeAurora } from '@components/home/HomeAurora';
 
 // FEED
@@ -16,3 +17,12 @@ export { ModalReceiveInfos } from '@components/modal/ModalReceiveInfos';
 
 // UI
 export { Skeleton } from '@components/ui/skeleton';
+
+// AUTH
+export { AuthResetPassword } from '@components/auth/AuthResetPassword';
+export { AuthLoginProviders } from '@components/auth/AuthLoginProviders';
+export { AuthLogin } from '@components/auth/AuthLogin';
+export { AuthResetPasswordForm } from '@components/auth/AuthResetPasswordForm';
+
+// CAROUSEL
+export { SignupCarousel } from '@components/carousel/signup/SignupCarousel';

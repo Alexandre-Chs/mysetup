@@ -1,10 +1,7 @@
-import * as React from "react";
-import { Html } from "@react-email/components";
+import * as React from 'react';
+import { Html } from '@react-email/components';
 
-export async function ResetPasswordEmailTemplate(
-  email: string,
-  verifyLink: string
-) {
+export async function EmailResetPassword(email: string, verifyLink: string) {
   return (
     <Html lang="en">
       <p>Hello {email}</p>
@@ -17,4 +14,4 @@ export async function ResetPasswordEmailTemplate(
   );
 }
 
-export default ResetPasswordEmailTemplate;
+export default EmailResetPassword;
