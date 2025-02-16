@@ -3,7 +3,7 @@
 import { GridStack } from 'gridstack';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { getPaginatedSetupPhotos } from '@/app/api/setups/media/actions';
+import { getPaginatedsetupMedias } from '@/app/api/setups/media/actions';
 import { randomSetup } from '@/lib/feed/random-setup';
 import { Skeleton, FeedSetup } from '@/components';
 
@@ -34,7 +34,7 @@ const Loader = () => {
             <Skeleton className="w-20 h-20" />
           </div>
           <div className="flex items-center justify-center h-16">
-            <h2 className="text-2xl text-center font-semibold">We search setups for you{points}</h2>
+            <h2 className="text-2xl text-center font-semibold text-white">We search setups for you{points}</h2>
           </div>
           <div className="flex flex-row gap-4">
             <Skeleton className="w-20 h-20" />
@@ -83,12 +83,12 @@ export const Feed = () => {
   }, []);
 
   // Fonction pour récupérer les photos paginées
-  const getSetupPhotos = useCallback(async () => {
+  const getsetupMedias = useCallback(async () => {
     if (!grid || page >= totalPage || fetching) return;
     setFetching(true);
 
     try {
-      const { totalPage: fetchedTotalPage, data } = await getPaginatedSetupPhotos(page);
+      const { totalPage: fetchedTotalPage, data } = await getPaginatedsetupMedias(page);
 
       setTotalPage(fetchedTotalPage);
       setPage((prevPage) => prevPage + 1);
@@ -124,12 +124,12 @@ export const Feed = () => {
 
   useEffect(() => {
     if (grid) {
-      getSetupPhotos();
+      getsetupMedias();
     }
-  }, [grid, getSetupPhotos]);
+  }, [grid, getsetupMedias]);
 
   return (
-    <InfiniteScroll dataLength={dataLength} next={getSetupPhotos} hasMore={page < totalPage} loader={<Loader />} endMessage={<EndOfList />}>
+    <InfiniteScroll dataLength={dataLength} next={getsetupMedias} hasMore={page < totalPage} loader={<Loader />} endMessage={<EndOfList />}>
       <FeedSetup />
     </InfiniteScroll>
   );

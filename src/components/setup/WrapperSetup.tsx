@@ -9,7 +9,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
 import Border from '../ui/border';
 import Image from 'next/image';
-import { getUserInfos } from '@/app/api/users/actions';
+import { UserInfos } from '@/app/api/users/actions';
 import { SocialIcons } from '../common/SocialIcons';
 
 const WrapperSetup = ({ currentUser, isOwner }: { currentUser: User | null; isOwner: boolean }) => {
@@ -20,7 +20,7 @@ const WrapperSetup = ({ currentUser, isOwner }: { currentUser: User | null; isOw
     queryKey: ['userInfos', username],
     queryFn: async () => {
       if (!currentUser) return null;
-      return await getUserInfos(username as string);
+      return await UserInfos(username as string);
     },
   });
 
@@ -30,7 +30,7 @@ const WrapperSetup = ({ currentUser, isOwner }: { currentUser: User | null; isOw
     <div className="xl:h-[900px] w-full grid xl:grid-cols-4 xl:grid-rows-8 gap-6">
       <div className="xl:col-span-3 xl:row-span-6">
         <Border>
-          <WrapperPhotosUser photos={setup.setupPhotos} isOwner={isOwner} />
+          <WrapperPhotosUser photos={setup.setupMedias} isOwner={isOwner} />
         </Border>
       </div>
       <div className="xl:col-span-1 xl:row-span-6 order-3 max-h-[400px] min-h-[100px] xl:h-full xl:min-h-full xl:max-h-full">

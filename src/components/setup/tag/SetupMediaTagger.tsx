@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import { usePhotoEquipmentStore } from "@/store/PhotoEquipmentStore";
-import { useSetupStore } from "@/store/SetupStore";
-import { useRef, useState } from "react";
-import { Tooltip } from "@heroui/react";
-import { CircleX } from "lucide-react";
-import { transformUrlToAffiliate } from "@/app/api/linker/actions";
-import { getMainLangUser } from "@/utils/get-lang";
-import { deleteTagOnPhoto } from "@/app/api/setups/media/actions";
+import { usePhotoEquipmentStore } from '@/store/PhotoEquipmentStore';
+import { useSetupStore } from '@/store/SetupStore';
+import { useRef, useState } from 'react';
+import { Tooltip } from '@heroui/react';
+import { CircleX } from 'lucide-react';
+import { transformUrlToAffiliate } from '@/app/api/linker/actions';
+import { getMainLangUser } from '@/utils/get-lang';
+import { deleteTagOnPhoto } from '@/app/api/setups/media/actions';
 
 type SetupMediaTaggerProps = {
   src: string;
@@ -28,7 +28,7 @@ const SetupMediaTagger = ({ src, photoId, isOwner }: SetupMediaTaggerProps) => {
   const setSelectedPhotoId = usePhotoEquipmentStore((state) => state.setSelectedPhotoId);
 
   const setup = useSetupStore((state) => state.setup);
-  const setupPhoto = setup?.setupPhotos.find((photo: any) => photo.id === photoId);
+  const setupPhoto = setup?.setupMedias.find((photo: any) => photo.id === photoId);
   const tags = setupPhoto?.photoEquipments;
 
   const handleMouseMove = (e: React.MouseEvent<HTMLImageElement>) => {
@@ -56,7 +56,7 @@ const SetupMediaTagger = ({ src, photoId, isOwner }: SetupMediaTaggerProps) => {
     if (!url) return;
     const lang = getMainLangUser();
     const affiliateUrl = await transformUrlToAffiliate(url, lang);
-    window.open(affiliateUrl ? affiliateUrl : url, "newWindow");
+    window.open(affiliateUrl ? affiliateUrl : url, 'newWindow');
   };
 
   return (

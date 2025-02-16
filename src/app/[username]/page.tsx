@@ -1,19 +1,16 @@
-import { notFound } from 'next/navigation';
-import { listUserSetup } from '../api/setups/actions';
-import { WrapperProfile } from '@/components/user/profile/WrapperProfile';
+import { UserProfile } from '@/components/user/profile/UserProfile';
 
-export default async function Page({ params }: { params: { username: string } }) {
+type UsernamePageProps = {
+  params: {
+    username: string;
+  };
+};
+
+export default async function UsernamePage({ params }: UsernamePageProps) {
   const { username } = await params;
-  let setups;
-  try {
-    setups = await listUserSetup(username);
-  } catch (error) {
-    notFound();
-  }
-
   return (
     <div className="min-h-screen flex flex-col items-center justify-center w-full overflow-x-hidden pb-8">
-      <WrapperProfile setups={setups} currentUsername={username} />
+      <UserProfile username={username} />
     </div>
   );
 }

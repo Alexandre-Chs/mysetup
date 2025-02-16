@@ -1,12 +1,12 @@
-"use server";
+'use server';
 
-import { db } from "@/db/db";
-import { mediaTable, photoEquipmentTable, setupPhotoTable, setupTable, upVoteTable, userTable } from "@/db/schemas";
-import { validateRequest } from "@/lib/auth/validate-request";
-import { and, desc, eq, is, sql } from "drizzle-orm";
-import { revalidatePath } from "next/cache";
-import { deleteMedia } from "../../media/actions";
-import { generateIdFromEntropySize } from "lucia";
+import { db } from '@/db/db';
+import { mediaTable, photoEquipmentTable, setupPhotoTable, setupTable, upVoteTable, userTable } from '@/db/schemas';
+import { validateRequest } from '@/lib/auth/validate-request';
+import { and, desc, eq, is, sql } from 'drizzle-orm';
+import { revalidatePath } from 'next/cache';
+import { deleteMedia } from '../../media/actions';
+import { generateIdFromEntropySize } from 'lucia';
 
 //
 //#region deleteSetupPhoto
@@ -58,10 +58,10 @@ export async function deleteTagOnPhoto(idTag: string, idPhoto: string) {
 }
 
 //
-//#region getPaginatedSetupPhotos
+//#region getPaginatedsetupMedias
 //
 
-export async function getPaginatedSetupPhotos(page: number, limit: number = 20) {
+export async function getPaginatedsetupMedias(page: number, limit: number = 20) {
   const data = await db
     .select({
       mediaId: mediaTable.id,
@@ -125,7 +125,7 @@ export async function updateSetupPhoto(items: any) {
           height: item.h,
         })
         .where(eq(setupPhotoTable.id, item.id));
-    })
+    }),
   );
 }
 

@@ -1,14 +1,24 @@
-"use server";
+'use server';
 
-import { db } from "@/db/db";
-import { generateIdFromEntropySize } from "lucia";
-import { redirect } from "next/navigation";
-import { equipmentsTable, mediaTable, setupPhotoTable, setupTable, userTable } from "@/db/schemas";
-import { validateRequest } from "@/lib/auth/validate-request";
-import { DeleteObjectsCommand, ListObjectsV2Command, S3Client } from "@aws-sdk/client-s3";
-import { and, desc, eq } from "drizzle-orm";
-import { revalidatePath } from "next/cache";
-import { discordLog } from "../(utils)/actions";
+import { db } from '@/db/db';
+import { generateIdFromEntropySize } from 'lucia';
+import { redirect } from 'next/navigation';
+import { equipmentsTable, mediaTable, setupPhotoTable, setupTable, userTable } from '@/db/schemas';
+import { validateRequest } from '@/lib/auth/validate-request';
+import { DeleteObjectsCommand, ListObjectsV2Command, S3Client } from '@aws-sdk/client-s3';
+import { and, desc, eq } from 'drizzle-orm';
+import { revalidatePath } from 'next/cache';
+import { discordLog } from '../(utils)/actions';
+
+//
+// #region SetupById
+//
+
+export async function SetupById(setupId: string) {
+  return await db.query.setupTable.findFirst({
+    where: eq(setupTable.id, setupId),
+  });
+}
 
 //
 //#region createSetup
@@ -82,15 +92,15 @@ export async function createNewEquipments(
     type: string;
     name: string;
     url?: string | undefined;
-  }
+  },
 ) {
   const { user } = await validateRequest();
 
   const currentSetup = await db.select({ userId: setupTable.userId }).from(setupTable).where(eq(setupTable.id, setupId));
 
   if (!currentSetup || currentSetup[0].userId !== user!.id) {
-    console.log("User is not the owner of the setup");
-    return { status: "error", message: "You are not the owner of this setup" };
+    console.log('User is not the owner of the setup');
+    return { status: 'error', message: 'You are not the owner of this setup' };
   }
 
   await db.insert(equipmentsTable).values({
@@ -121,7 +131,7 @@ export async function deleteOneEquipment(elementName: string, setupId: string) {
   const currentSetup = await db.select({ userId: setupTable.userId }).from(setupTable).where(eq(setupTable.id, setupId));
 
   if (currentSetup[0].userId !== user!.id) {
-    return { status: "error", message: "You are not the owner of this setup" };
+    return { status: 'error', message: 'You are not the owner of this setup' };
   }
 
   await db.delete(equipmentsTable).where(and(eq(equipmentsTable.setupId, setupId), eq(equipmentsTable.name, elementName)));
@@ -137,7 +147,7 @@ export async function deleteSetup(setupId: string) {
   const { user } = await validateRequest();
 
   await db.transaction(async (tx) => {
-    const setupPhotos = await tx.select({ mediaId: setupPhotoTable.mediaId }).from(setupPhotoTable).where(eq(setupPhotoTable.setupId, setupId));
+    const setupMedias = await tx.select({ mediaId: setupPhotoTable.mediaId }).from(setupPhotoTable).where(eq(setupPhotoTable.setupId, setupId));
 
     await tx
       .update(setupTable)
@@ -150,7 +160,7 @@ export async function deleteSetup(setupId: string) {
 
     await tx.delete(setupTable).where(and(eq(setupTable.id, setupId), eq(setupTable.userId, user!.id)));
 
-    for (const photo of setupPhotos) {
+    for (const photo of setupMedias) {
       await tx.delete(mediaTable).where(eq(mediaTable.id, photo.mediaId));
     }
   });
@@ -195,7 +205,7 @@ async function deleteS3Folder(userId: string, setupId: string) {
 
     if (listedObjects.IsTruncated) await deleteS3Folder(userId, setupId);
   } catch (error) {
-    console.error("Error deleting S3 folder:", error);
+    console.error('Error deleting S3 folder:', error);
     throw error;
   }
 }
@@ -208,7 +218,7 @@ export async function getSetup(id: string, username: string) {
   const setup = (await db.query.setupTable.findFirst({
     where: eq(setupTable.id, id),
     with: {
-      setupPhotos: {
+      setupMedias: {
         with: {
           media: true,
           photoEquipments: {
@@ -229,7 +239,7 @@ export async function getSetup(id: string, username: string) {
   const thumbnailId = setup?.thumbnailId;
 
   if (setup) {
-    setup.setupPhotos.sort((a: any, b: any) => {
+    setup.setupMedias.sort((a: any, b: any) => {
       if (a.id === thumbnailId) return -1;
       if (b.id === thumbnailId) return 1;
       return 0;
@@ -272,23 +282,23 @@ export async function getThumbnailPhoto(thumbnailId: string) {
 }
 
 //
-//#region listUserSetup
+//#region UserSetups
 //
 
-export async function listUserSetup(username: string) {
+export async function UserSetups(username: string) {
   const user = await db.query.userTable.findFirst({
     where: eq(userTable.username, username),
   });
 
-  if (!user) {
-    throw new Error("User not found");
+  if (!user?.id) {
+    throw new Error('User not found');
   }
 
   const setups = await db.query.setupTable.findMany({
     where: eq(setupTable.userId, user.id),
     orderBy: [desc(setupTable.createdAt)],
     with: {
-      setupPhotos: {
+      setupMedias: {
         with: {
           media: true,
         },
@@ -297,8 +307,7 @@ export async function listUserSetup(username: string) {
   });
 
   setups.forEach((setup) => {
-    setup.setupPhotos.sort((a, b) => {
-      console.log(setup.thumbnailId, a.id, b.id);
+    setup.setupMedias.sort((a, b) => {
       if (a.id === setup.thumbnailId) return -1;
       if (b.id === setup.thumbnailId) return 1;
       return 0;
@@ -307,7 +316,7 @@ export async function listUserSetup(username: string) {
 
   return setups.map((setup) => ({
     ...setup,
-    photo: setup.setupPhotos[0]?.media ?? { url: "" },
+    photo: setup.setupMedias[0]?.media ?? { url: '' },
     user: {
       id: user.id,
       username: user.username,

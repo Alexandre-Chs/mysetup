@@ -1,10 +1,18 @@
-"use server";
+'use server';
 
-import { db } from "@/db/db";
-import { mediaTable, socialLinksTable, userProfileTable, userTable } from "@/db/schemas";
-import { validateRequest } from "@/lib/auth/validate-request";
-import { eq } from "drizzle-orm";
-import { revalidatePath } from "next/cache";
+import { db } from '@/db/db';
+import { mediaTable, socialLinksTable, userProfileTable, userTable } from '@/db/schemas';
+import { validateRequest } from '@/lib/auth/validate-request';
+import { eq } from 'drizzle-orm';
+import { revalidatePath } from 'next/cache';
+
+export async function User() {
+  const { user } = await validateRequest();
+  if (!user) {
+    return null;
+  }
+  return user;
+}
 
 //
 //#region setFirstVisit
@@ -31,10 +39,10 @@ export async function getFirstVisit() {
 }
 
 //
-//#region getUserInfos
+//#region UserInfos
 //
 
-export async function getUserInfos(username: string) {
+export async function UserInfos(username: string) {
   if (!username) return null;
 
   const user = await db.select().from(userTable).where(eq(userTable.username, username)).limit(1);
@@ -87,7 +95,7 @@ export async function updateProfile(data: any) {
         });
       }
     } catch (e) {
-      console.error("Error when updating profile", e);
+      console.error('Error when updating profile', e);
       throw e;
     } finally {
       revalidatePath(`/${user.username}`);

@@ -26,3 +26,9 @@ export { AuthResetPasswordForm } from '@components/auth/AuthResetPasswordForm';
 
 // CAROUSEL
 export { SignupCarousel } from '@components/carousel/signup/SignupCarousel';
+
+// USER
+export { UserProfileGlareCard } from '@components/user/profile/UserProfileGlareCard';
+
+// COMMON
+export { SocialIcons } from '@components/common/SocialIcons';
