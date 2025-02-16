@@ -11,12 +11,16 @@ import AvatarUpload from '../UserUploadAvatarMedia';
 import { updateProfile } from '@/app/api/users/actions';
 import { UserProfile, validUserInfosProfile } from '@/lib/zod/user';
 import { useUser } from '@/context/UserContext';
+import { UserInfos } from '@/app/api/users/actions';
+import type { ZodIssue } from 'zod';
 
 type SocialLink = {
   id: string;
   socialName: string;
   link: string;
 };
+
+type UserInfos = Awaited<ReturnType<typeof UserInfos> | null>;
 
 const socialLinksItems = [
   { name: 'discord', label: 'Discord' },
@@ -34,12 +38,13 @@ const socialLinksItems = [
   { name: 'youtube', label: 'Youtube' },
 ];
 
-const UserProfileUpdateInfos = ({ userInfos }: { userInfos: any }) => {
-  const { user } = useUser();
-  const [socialLinks, setSocialLinks] = useState<SocialLink[]>(userInfos.socialLinks ? userInfos.socialLinks : []);
+const UserProfileUpdateInfos = ({ userInfos }: { userInfos: UserInfos }) => {
+  const [socialLinks, setSocialLinks] = useState<SocialLink[]>(userInfos?.socialLinks ? userInfos?.socialLinks : []);
   const [profileDescription, setProfileDescription] = useState(userInfos?.profile?.profileDescription ? userInfos.profile.profileDescription : '');
+  const [validationErrors, setValidationErrors] = useState<ZodIssue[]>([]);
   const [open, setOpen] = useState(false);
-  const [validationErrors, setValidationErrors] = useState<any[]>([]);
+  const { user } = useUser();
+
   const handleDeleteSocialLink = (id: string) => {
     setSocialLinks((curr) => curr.filter((item) => item.id !== id));
   };
@@ -71,7 +76,7 @@ const UserProfileUpdateInfos = ({ userInfos }: { userInfos: any }) => {
 
   return (
     <>
-      {user?.id === userInfos.profile.userId && (
+      {user?.id === userInfos?.profile.userId && (
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild className="text-white cursor-pointer pointer-events-auto" onClick={() => setOpen(true)}>
             <Pencil size={20} />
@@ -84,7 +89,7 @@ const UserProfileUpdateInfos = ({ userInfos }: { userInfos: any }) => {
             <div className="grid gap-4 py-4">
               <div className="flex flex-col justify-center items-start gap-2">
                 <Label htmlFor="profileDescription">Avatar</Label>
-                <AvatarUpload media={userInfos.media} editable={true} />
+                <AvatarUpload media={userInfos?.media} editable={true} />
               </div>
               <div className="flex flex-col justify-center items-start gap-2">
                 <Label htmlFor="profileDescription">Profile Description</Label>

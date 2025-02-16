@@ -33,7 +33,6 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
     try {
       setIsLoading(true);
       const res = await User();
-      console.log('res', res);
       if (!res) {
         setUser(null);
         return;
